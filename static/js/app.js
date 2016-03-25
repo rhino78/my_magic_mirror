@@ -122,38 +122,38 @@
 			// TODO: Scrape this in python, add to DB and pull from Flask - http://www.forbes.com/sites/kevinkruse/2013/05/28/inspirational-quotes/
 			var quotes = [
 				{
-					content: "Strive not to be a success, but rather to be of value",
-					author: "Albert Einstein"
+					content: "Life is about making an impact, not making an income",
+					author: "Kevin Kruse"
 				},{
-					content: "The most difficult thing is the decision to act, the rest is merely tenacity",
-					author: "Amelia Earhart"
+					content: " Whatever the mind of man can conceive and believe, it can achieve",
+					author: " Napoleon Hill"
 				},{
-					content: " The best time to plant a tree was 20 years ago. The second best time is now",
-					author: "Chinese Proverb"
+					content: "I’ve missed more than 9000 shots in my career. I’ve lost almost 300 games. 26 times I’ve been trusted to take the game winning shot and missed. I’ve failed over and over and over again in my life. And that is why I succeed.",
+					author: "Michael Jordan"
 				},{
-					content: "Every child is an artist.  The problem is how to remain an artist once he grows up",
-					author: "Pablo Picasso"
+					content: "We become what we think about",
+					author: "Earl Nightingale"
 				},{
-					content: "Más vale la pena en el rostro que la mancha en el corazón",
-					author: "Miguel de Cervantes"
+					content: "Life is 10% what happens to me and 90% of how I react to it.",
+					author: "Charles Swindoll"
 				},{
-					content: "There is nothing to writing. All you do is sit down at a typewriter and bleed",
-					author: "Mark Twain"
+					content: "The mind is everything. What you think you become",
+					author: "Buddha"
 				},{
-					content: "You miss 100% of the shots you don't take. -Wayne Gretzky",
-					author: "Michael Scott"
+					content: "Eighty percent of success is showing up",
+					author: "Woody Allen"
 				},{
-					content: "Soy ateo gracias a Dios",
-					author: "Luis Buñuel"
+					content: "I am not a product of my circumstances. I am a product of my decisions",
+					author: "Stephen Covey"
 				},{
-					content: "Quisieron enterrarnos, pero no sabían que éramos semillas",
-					author: "Proverbio Mexicano"
+					content: "I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.",
+					author: "Maya Angelou"
 				},{
-					content: "There is a time when the operation of the machine becomes so odious, makes you so sick at heart, that you can't take part",
-					author: "Mario Savio"
+					content: "Whether you think you can or you think you can’t, you’re right",
+					author: "Henry Ford"
 				},{
-					content: "Those who do not move, do not notice their chains",
-					author: "Rosa Luxemburg"
+					content: "However difficult life may seem, there is always something you can do and succeed at",
+					author: "Stephen Hawking"
 				},{
 					content: "What are thooooooose?",
 					author: "Ryan Shave"
@@ -207,7 +207,7 @@
 					row.append($('<td/>').html(c.summary).addClass('description'));
 					row.append($('<td/>').html(c.date).addClass('days dimmed'));
 					table.append(row);
-					opacity -= 1 / cal.length;
+					//opacity -= 1 / cal.length;
 				};
 
 				$('.calendar').show();
