@@ -43,10 +43,10 @@ html {
 
 .lower-third {
   position: absolute;
-  top: 66.666%;
-  height: 200px;
-  margin-top: -100px;
-  line-height: 100px;
+  top: 66.666%;  
+  line-height: 22px;
+  font-size: 22px;
+
 }
 
 .center-hor {
@@ -54,6 +54,8 @@ html {
   right: 50px;
   left: 50px;
   text-align: center;
+  line-height: 22px;
+  font-size: 22px;
 }
 
 .bottom {
@@ -113,6 +115,8 @@ html {
 
 .light {
   font-family: "HelveticaNeue-UltraLight", sans-serif;
+  font-size: 22px;
+  line-height: 22px;
 }
 
 .icon {

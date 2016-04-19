@@ -6,6 +6,41 @@ var config = {
     latitude : "30.5344240",
     longitude: "-97.7204230"
   },
+  compliments: {
+        interval: 30000,
+        fadeInterval: 4000,
+        morning: [
+            'Good morning, handsome!',
+            'Enjoy your day!',
+            'How was your sleep?',
+            'Good morning kids!'
+        ],
+        afternoon: [
+            'Hello, beauty!',
+            'You look sexy!',
+            'Looking good today!',
+            'Nice Shirt',
+            'Need to change those pants',
+            'I like your hair',
+            'Maybe some different pants?',
+            'I like your ring',
+            'You look awesome',
+            'Thanks for the haircut',
+            'I love playing FIFA',
+            'I love playing PvZ Garden Warfare'
+        ],
+        evening: [
+            'Wow, you look hot!',
+            'You look nice!',
+            'Hi, sexy!', 
+            'bruh, looking good!',
+            'I like your shirt', 
+            'your hair is fabulous',
+            'your eyebrows are on fleek',
+            'you have good shoe game',
+            'what are thoooooooooooooooose?!?!'
+        ]
+    },
 
   calendar: {
         maximumEntries: 20, // Total Maximum Entries

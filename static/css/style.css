@@ -86,7 +86,9 @@ table {
 	top: 80%;
 	height: 200px;
 	margin-top: -100px;
-	line-height: 100px;	
+	line-height: 100px;
+	font-size: 52px;
+  	line-height: 52px;
 }
 
 .center-hor {

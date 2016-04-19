@@ -122,48 +122,55 @@
 			// TODO: Scrape this in python, add to DB and pull from Flask - http://www.forbes.com/sites/kevinkruse/2013/05/28/inspirational-quotes/
 			var quotes = [
 				{
-					content: "Life is about making an impact, not making an income",
-					author: "Kevin Kruse"
+					content: "You look nice!",
+					
 				},{
 					content: " Whatever the mind of man can conceive and believe, it can achieve",
-					author: " Napoleon Hill"
+					
 				},{
 					content: "I’ve missed more than 9000 shots in my career. I’ve lost almost 300 games. 26 times I’ve been trusted to take the game winning shot and missed. I’ve failed over and over and over again in my life. And that is why I succeed.",
-					author: "Michael Jordan"
+					
 				},{
 					content: "We become what we think about",
-					author: "Earl Nightingale"
+					
 				},{
 					content: "Life is 10% what happens to me and 90% of how I react to it.",
-					author: "Charles Swindoll"
+					
 				},{
 					content: "The mind is everything. What you think you become",
-					author: "Buddha"
+					
 				},{
 					content: "Eighty percent of success is showing up",
-					author: "Woody Allen"
+					
 				},{
 					content: "I am not a product of my circumstances. I am a product of my decisions",
-					author: "Stephen Covey"
+					
 				},{
 					content: "I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.",
-					author: "Maya Angelou"
+					
 				},{
 					content: "Whether you think you can or you think you can’t, you’re right",
-					author: "Henry Ford"
+					
 				},{
 					content: "However difficult life may seem, there is always something you can do and succeed at",
-					author: "Stephen Hawking"
+					
 				},{
 					content: "What are thooooooose?",
-					author: "Ryan Shave"
+					
 				}
 			];
 
 			var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-			$('.quote-content').html(randomQuote.content);
-			$('.quote-author').html(randomQuote.author);
+			$('.compliment').html(randomQuote.content);
+			//$('.quote-author').html(randomQuote.author);
+		}
+
+		function getCompliment(){
+			$.get("/get_compliment", function (data){
+				var complimemt = data.compliment;
+				$('.compliment').html(complimemt)
+			});
 		}
 
 		// NEWS TICKER
@@ -212,16 +219,17 @@
 
 				$('.calendar').show();
 				$('.calendar').append(table);
-				console.log(table);
 			});
 		}		
 
 		startTime();
 		getWeather();
-		getQuote();
+		//getQuote();
+		getCompliment();
+		//compliments.init()
 		getNews();
 		getCal();
-		//calendar.init();
+		
 	});
 
 })();

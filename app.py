@@ -1,17 +1,20 @@
 from flask import Flask, render_template, send_from_directory, jsonify
-#import urllib2
-import urllib.request
 import xml.etree.ElementTree as ET
 import subprocess
 from icalendar import Calendar, Event
+import datetime
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import time
 import urllib.request
 from operator import itemgetter
-from dateutil import parser
 import calendar
+import ical_parser
+from dateutil import parser
 import pytz
 from pytz import timezone
+import random
+
 
 
 app = Flask(__name__, static_url_path='/static', template_folder='./')
@@ -19,6 +22,21 @@ app = Flask(__name__, static_url_path='/static', template_folder='./')
 DEBUG = True
 PORT = 8001
 HOST = '127.0.0.1'
+
+def compliments():
+        currentTime = datetime.now()
+
+        evening = ['Wow, you look hot!','You look nice!','Hi, sexy!', 'bruh, looking good!','I like your shirt','your hair is fabulous','your eyebrows are on fleek','you have good shoe game','what are thoooooooooooooooose?!?!','Ready to go?']
+        afternoon=['Hello, beauty!','You look sexy!','Looking good today!','Nice Shirt','Need to change those pants','I like your hair','Maybe some different pants?','I like your ring','You look awesome','Thanks for the haircut','I love playing FIFA','I love playing PvZ Garden Warfare']
+        morning=['Good morning, handsome!','Enjoy your day!','How was your sleep?','Good morning kids!']
+
+        if currentTime.hour < 12:
+                return str(morning[random.randint(0,len(morning)-1)]);
+        elif 12 <= currentTime.hour < 18:
+                return str(afternoon[random.randint(0,len(afternoon)-1)]);
+        else:
+                return str(evening[random.randint(0,len(evening)-1)]);
+        
 
 def smart_date(date):
 	dt = parser.parse(date[:19])
@@ -54,6 +72,13 @@ def index():
 def serve_static(path):
 	return send_from_directory('static', path)
 
+@app.route('/get_compliment')
+def get_compliment():
+	#get all the compliments from the config and based on the current time/display a compliment
+	compliment = ""
+	compliment = str(compliments())
+	return jsonify({'compliment': compliment})
+
 @app.route('/get_news_headlines')
 def get_news_headlines():
 	xml_response = urllib.request.urlopen('http://feeds.bbci.co.uk/news/rss.xml?edition=us').read()
@@ -64,9 +89,7 @@ def get_news_headlines():
 		item_info = {}
 		item_info['title'] = item[0].text
 		item_info['description'] = item[1].text
-		results.append(item_info)
-
-	
+		results.append(item_info)	
 
 	return jsonify({'headlines': results})
 
@@ -76,13 +99,8 @@ def get_calendar():
         ics = urllib.request.urlopen(url).read()
         cal = Calendar.from_ical(ics)
         entries = []
-        
-        for event in cal.walk('vevent'):
-                if (event.get('summary') != None):
-                        event_info = {}
-                        event_info['summary'] = event.get('summary')
-                        event_info['date'] = str(event.get('dtstart').dt)
-                        entries.append(event_info)
+
+        entries = ical_parser.ical_parser(cal);
 
         sorted_events = sorted(entries, key=itemgetter('date'))
         filtered = [i for i in sorted_events if i['date'] >= time.strftime("%Y-%m-%d")]
