@@ -224,9 +224,7 @@
 
 		startTime();
 		getWeather();
-		//getQuote();
 		getCompliment();
-		//compliments.init()
 		getNews();
 		getCal();
 		

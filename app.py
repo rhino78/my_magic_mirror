@@ -10,6 +10,7 @@ import urllib.request
 from operator import itemgetter
 import calendar
 import ical_parser
+import compliments
 from dateutil import parser
 import pytz
 from pytz import timezone
@@ -22,20 +23,6 @@ app = Flask(__name__, static_url_path='/static', template_folder='./')
 DEBUG = True
 PORT = 8001
 HOST = '127.0.0.1'
-
-def compliments():
-        currentTime = datetime.now()
-
-        evening = ['Wow, you look hot!','You look nice!','Hi, sexy!', 'bruh, looking good!','I like your shirt','your hair is fabulous','your eyebrows are on fleek','you have good shoe game','what are thoooooooooooooooose?!?!','Ready to go?']
-        afternoon=['Hello, beauty!','You look sexy!','Looking good today!','Nice Shirt','Need to change those pants','I like your hair','Maybe some different pants?','I like your ring','You look awesome','Thanks for the haircut','I love playing FIFA','I love playing PvZ Garden Warfare']
-        morning=['Good morning, handsome!','Enjoy your day!','How was your sleep?','Good morning kids!']
-
-        if currentTime.hour < 12:
-                return str(morning[random.randint(0,len(morning)-1)]);
-        elif 12 <= currentTime.hour < 18:
-                return str(afternoon[random.randint(0,len(afternoon)-1)]);
-        else:
-                return str(evening[random.randint(0,len(evening)-1)]);
         
 
 def smart_date(date):
@@ -74,10 +61,7 @@ def serve_static(path):
 
 @app.route('/get_compliment')
 def get_compliment():
-	#get all the compliments from the config and based on the current time/display a compliment
-	compliment = ""
-	compliment = str(compliments())
-	return jsonify({'compliment': compliment})
+		return jsonify({'compliment': compliments.compliment()})
 
 @app.route('/get_news_headlines')
 def get_news_headlines():
