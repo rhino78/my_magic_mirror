@@ -153,6 +153,10 @@ html {
   line-height: 20px;
 }
 
+.hidden {
+  display: none;
+}
+
 .forecast-table .day,
 .forecast-table .temp-min,
 .forecast-table .temp-max {
@@ -173,9 +177,9 @@ html {
 }
 
 .calendar-table {
-  font-size: 10px;
-  line-height: 40px;
-  margin-top: 10px;
+  font-size: 110px;
+  line-height: 140px;
+  margin-top: 110px;
 }
 
 .calendar-table .calendar-icon {
