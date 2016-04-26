@@ -27,15 +27,67 @@
       window.alert("you said hello");
     };
 
-    var showWeather = function(){
-    	$("#compliment").show();
-    	window.alert("showing compliment");
+    var showcompliment = function(){
+    	
+    	//would be nice you reload the compliment here
+    	$("#compliment").show(1000);
+    };
 
+    var hidecompliment = function(){
+    	$("#compliment").hide(1000);
+    };
+
+    var hideweather = function(){
+    	$("#weather").hide(1000);
+    }; 
+
+    var showweather = function(){
+       $("#weather").show(1000);
+    }; 
+
+    var showcalendar = function(){
+       $("#calendar").show(1000);
+    };
+
+    var hidecalendar = function(){
+       $("#calendar").hide(1000);
+    };
+
+    var shownews = function(){
+       $("#news").show(1000);
+    };
+
+    var hidenews = function(){
+       $("#news").hide(1000);
+    };
+
+    var hideall = function(){
+       $("#calendar").hide(1000);
+       $("#compliment").hide(1000);
+       $("#weather").hide(1000);
+       $("#news").hide(1000);
+    };
+
+
+    var showall = function(){
+       $("#calendar").show(1000);
+       $("#compliment").show(1000);
+       $("#weather").show(1000);
+       $("#news").show(1000);
     };
 
     var commands = {
       'hello (there)': hello,
-      'weather': showWeather
+      'show all': showall,
+      'hide all': hideall,
+      'show compliment': showcompliment,
+      'hide compliment': hidecompliment,
+      'hide news': hidenews,
+      "show news": shownews,
+      'hide weather': hideweather,
+      'show weather': showweather,
+      'hide calendar': hidecalendar,
+      'show calendar': showcalendar
     };
 
     // OPTIONAL: activate debug mode for detailed logging in the console
@@ -64,9 +116,9 @@
 				<span class="timer-hour"></span><span class="time-colon">:</span><span class="timer-min"></span><span class="timer-suffix"></span>
 			</div>
 			
-			<div class="calendar"></div>
+			<div id="calendar"class="calendar"></div>
 		</div>
-		<div class="top right weather-container">
+		<div id= "weather" class="top right weather-container">
 			<div class="current-temp-container">
 				<span class="current-temp"></span>ºF <span class="current-weather-icon"></span>
 			</div>
@@ -75,12 +127,12 @@
 			<hr class="weather-separator">
 			<div class="weekly-forecast-container"></div>
 		</div>
-		<div id="compliment" class="hidden">
+		<div id="compliment">
 			<div class="lower-third center-hor">
 				<div class="compliment"></div>
 			</div>
 		</div>
-		<div class="bottom center-hor marquee-container">
+		<div id="news"class="bottom center-hor marquee-container">
 			<ul class="marquee"></ul>
 		</div>
 	</div>
