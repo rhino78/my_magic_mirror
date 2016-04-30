@@ -22,15 +22,22 @@
   // first we make sure annyang started succesfully
   if (annyang) {
 
-  	var hello = function() {
-      $("#hello").slideDown("slow");
-      window.alert("you said hello");
+    var showtrip = function(destination){
+      $.get("/get_trip/destination/" + destination, function (data){
+         var trip = data.trip;
+         $('.trip').html(trip);
+         $("#trip").show(1000)});
     };
 
     var showcompliment = function(){
-    	
-    	//would be nice you reload the compliment here
-    	$("#compliment").show(1000);
+      $.get("/get_compliment", function (data){
+         var complimemt = data.compliment;
+         $('.compliment').html(complimemt);
+      	 $("#compliment").show(1000)});
+    };
+
+    var hidetrip = function(){
+      $("#trip").hide(1000);
     };
 
     var hidecompliment = function(){
@@ -62,22 +69,22 @@
     };
 
     var hideall = function(){
-       $("#calendar").hide(1000);
-       $("#compliment").hide(1000);
-       $("#weather").hide(1000);
-       $("#news").hide(1000);
+       hidecalendar();
+       hidecompliment();
+       hideweather();
+       hidenews();
+       hidetrip();
     };
 
 
     var showall = function(){
-       $("#calendar").show(1000);
-       $("#compliment").show(1000);
-       $("#weather").show(1000);
-       $("#news").show(1000);
+       showcalendar();
+       showcompliment();
+       showweather();
+       shownews();
     };
 
     var commands = {
-      'hello (there)': hello,
       'show all': showall,
       'hide all': hideall,
       'show compliment': showcompliment,
@@ -87,21 +94,15 @@
       'hide weather': hideweather,
       'show weather': showweather,
       'hide calendar': hidecalendar,
-      'show calendar': showcalendar
+      'show calendar': showcalendar,
+      'how long is it to drive to *destination': showtrip,
+      'hide trip': hidetrip
+      
     };
 
-    // OPTIONAL: activate debug mode for detailed logging in the console
     annyang.debug();
-
-    // Add voice commands to respond to
     annyang.addCommands(commands);
-
-    // OPTIONAL: Set a language for speech recognition (defaults to English)
-    // For a full list of language codes, see the documentation:
-    // https://github.com/TalAter/annyang/blob/master/docs/README.md#languages
     annyang.setLanguage('en');
-
-    // Start listening. You can call this here, or attach this call to an event, button, etc.
     annyang.start();
 
   }
@@ -127,10 +128,9 @@
 			<hr class="weather-separator">
 			<div class="weekly-forecast-container"></div>
 		</div>
-		<div id="compliment">
-			<div class="lower-third center-hor">
+			<div id="compliment"class="lower-third center-hor">
 				<div class="compliment"></div>
-			</div>
+        <div id = "trip"class="trip"></div>
 		</div>
 		<div id="news"class="bottom center-hor marquee-container">
 			<ul class="marquee"></ul>
