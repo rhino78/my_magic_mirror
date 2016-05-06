@@ -6,7 +6,7 @@
 		var weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 		// Fade in once weather loads
-		$('.container').hide();
+		$('.container').show(1500);
 
 		// TIME
 		function checkTime(i) {
@@ -73,7 +73,7 @@
 				url: "https://api.forecast.io/forecast/" + config.weather_api_key + "/" + config.location.latitude + "," + config.location.longitude,
 				success: function(data) {
 					formatWeather(data);
-					$('.container').fadeIn(1500);
+					$('.container').show(1500);
 				}
 			});
 		}
@@ -116,60 +116,10 @@
 				$('.weekly-forecast-day').last().append("<span> " + Math.round(weather.daily.data[i].temperatureMax) + "º</span> / <span>" + Math.round(weather.daily.data[i].temperatureMin) + "º </span>");
 			}
 		}
-
-		// QUOTES
-		function getQuote() {
-			// TODO: Scrape this in python, add to DB and pull from Flask - http://www.forbes.com/sites/kevinkruse/2013/05/28/inspirational-quotes/
-			var quotes = [
-				{
-					content: "You look nice!",
-					
-				},{
-					content: " Whatever the mind of man can conceive and believe, it can achieve",
-					
-				},{
-					content: "I’ve missed more than 9000 shots in my career. I’ve lost almost 300 games. 26 times I’ve been trusted to take the game winning shot and missed. I’ve failed over and over and over again in my life. And that is why I succeed.",
-					
-				},{
-					content: "We become what we think about",
-					
-				},{
-					content: "Life is 10% what happens to me and 90% of how I react to it.",
-					
-				},{
-					content: "The mind is everything. What you think you become",
-					
-				},{
-					content: "Eighty percent of success is showing up",
-					
-				},{
-					content: "I am not a product of my circumstances. I am a product of my decisions",
-					
-				},{
-					content: "I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.",
-					
-				},{
-					content: "Whether you think you can or you think you can’t, you’re right",
-					
-				},{
-					content: "However difficult life may seem, there is always something you can do and succeed at",
-					
-				},{
-					content: "What are thooooooose?",
-					
-				}
-			];
-
-			var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-
-			$('.compliment').html(randomQuote.content);
-			//$('.quote-author').html(randomQuote.author);
-		}
-
 		function getCompliment(){
 			$.get("/get_compliment", function (data){
 				var complimemt = data.compliment;
-				$('.compliment').html(complimemt)
+				$('.compliment').html(complimemt).show(1500);
 			});
 		}
 
@@ -202,7 +152,7 @@
 			$.get("/get_calendar", function (data) {
 				var cal = data.calendar.slice(0, 20); //let's just get the first ten for now
 				var _is_new = true;
-				$('.calendar').hide();
+				$('.calendar').show(1500);
 
 				table = $('<table/>').addClass('xsmall').addClass('calendar-table');
 				opacity = 1;
@@ -217,7 +167,7 @@
 					//opacity -= 1 / cal.length;
 				};
 
-				$('.calendar').show();
+				$('.calendar').hide();
 				$('.calendar').append(table);
 			});
 		}		

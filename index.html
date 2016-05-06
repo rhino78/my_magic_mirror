@@ -68,6 +68,13 @@
        $("#news").hide(1000);
     };
 
+    var init_page = function(){
+      $("#calendar").hide();
+      $("#news").hide();
+      $("#weather").hide();
+      $("#compliment").hide();
+    };
+
     var hideall = function(){
        hidecalendar();
        hidecompliment();
@@ -96,7 +103,9 @@
       'hide calendar': hidecalendar,
       'show calendar': showcalendar,
       'how long is it to drive to *destination': showtrip,
-      'hide trip': hidetrip
+      'hide trip': hidetrip,
+      'hello': showcompliment,
+      'thank you': hideall
       
     };
 
@@ -118,6 +127,9 @@
 			</div>
 			
 			<div id="calendar"class="calendar"></div>
+      <script type="text/javascript">
+      $("calendar").hide();
+      </script>
 		</div>
 		<div id= "weather" class="top right weather-container">
 			<div class="current-temp-container">
@@ -142,6 +154,8 @@
 	<script src="static/js/config.js"></script>
 	<script src="static/js/icon-map.js"></script>	
 	<script src="static/js/app.js"></script>
+  <script type="text/javascript">init_page();</script>
+
 	
 </body>
 </html>
