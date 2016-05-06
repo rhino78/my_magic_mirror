@@ -3,6 +3,7 @@
 Built using Raspberry Pi (running Raspbian Jessie), Python/Flask and a bit of shell
 
 *Note:* There was a news ticker in there but it was a bit too choppy for my liking. The code is still in there though
+*Note:* the autostar command is in ~/config/lxsession/LXDE-pi
 
 
 ### **My notes**

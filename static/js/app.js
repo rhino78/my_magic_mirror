@@ -211,7 +211,7 @@
 				for (var i in cal) {
 					var c = cal[i];
 					var row = $('<tr/>').attr('id', 'event'+i).css('opacity',opacity).addClass('event');
-					row.append($('<td/>').html(c.summary).addClass('description'));
+					row.append($('<td/>').html(c.summary.substring(0,50)).addClass('description'));
 					row.append($('<td/>').html(c.date).addClass('days dimmed'));
 					table.append(row);
 					//opacity -= 1 / cal.length;
