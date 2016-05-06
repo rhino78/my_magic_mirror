@@ -11,10 +11,12 @@ from operator import itemgetter
 import calendar
 import ical_parser
 import compliments
+import trip_destination
 from dateutil import parser
 import pytz
 from pytz import timezone
 import random
+import json
 
 
 
@@ -62,6 +64,24 @@ def serve_static(path):
 @app.route('/get_compliment')
 def get_compliment():
 		return jsonify({'compliment': compliments.compliment()})
+
+@app.route('/get_trip/destination/<string:destination>')
+def get_trip(destination):
+        bingMapsKey = "AmlfKIzq70f2tVvlqiTm66fxARmbGTUjl0oF9IDkERG41alTKwjkI2FA9Gt5BK79"
+        origin = urllib.parse.quote('Round Rock, tx', safe='')
+        dest = urllib.parse.quote(destination, safe='')
+        url = 'http://dev.virtualearth.net/REST/V1/Routes?wp.0='+ str(origin)+'&wp.1='+ str(dest) +'&maxSolns=3&key=' + bingMapsKey
+        request = urllib.request.Request(url)
+        response = urllib.request.urlopen(request)
+        r = response.read().decode(encoding="utf-8")
+        result = json.loads(r)
+        itineraryItems = result["resourceSets"][0]["resources"][0]["routeLegs"][0]["itineraryItems"]
+        duration = 0
+        for i in itineraryItems:
+                duration += i["travelDuration"]
+
+        total_duration = trip_destination.trip_destination(duration)
+        return jsonify({'trip': "travel time to {0}: {1}".format(destination, total_duration)})
 
 @app.route('/get_news_headlines')
 def get_news_headlines():

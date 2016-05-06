@@ -22,34 +22,96 @@
   // first we make sure annyang started succesfully
   if (annyang) {
 
-  	var hello = function() {
-      $("#hello").slideDown("slow");
-      window.alert("you said hello");
+    var showtrip = function(destination){
+      $.get("/get_trip/destination/" + destination, function (data){
+         var trip = data.trip;
+         $('.trip').html(trip);
+         $("#trip").show(1000)});
     };
 
-    var showWeather = function(){
-    	$("#compliment").show();
-    	window.alert("showing compliment");
+    var showcompliment = function(){
+      $.get("/get_compliment", function (data){
+         var complimemt = data.compliment;
+         $('.compliment').html(complimemt);
+      	 $("#compliment").show(1000)});
+    };
 
+    var hidetrip = function(){
+      $("#trip").hide(1000);
+    };
+
+    var hidecompliment = function(){
+    	$("#compliment").hide(1000);
+    };
+
+    var hideweather = function(){
+    	$("#weather").hide(1000);
+    }; 
+
+    var showweather = function(){
+       $("#weather").show(1000);
+    }; 
+
+    var showcalendar = function(){
+       $("#calendar").show(1000);
+    };
+
+    var hidecalendar = function(){
+       $("#calendar").hide(1000);
+    };
+
+    var shownews = function(){
+       $("#news").show(1000);
+    };
+
+    var hidenews = function(){
+       $("#news").hide(1000);
+    };
+
+    var init_page = function(){
+      $("#calendar").hide();
+      $("#news").hide();
+      $("#weather").hide();
+      $("#compliment").hide();
+    };
+
+    var hideall = function(){
+       hidecalendar();
+       hidecompliment();
+       hideweather();
+       hidenews();
+       hidetrip();
+    };
+
+
+    var showall = function(){
+       showcalendar();
+       showcompliment();
+       showweather();
+       shownews();
     };
 
     var commands = {
-      'hello (there)': hello,
-      'weather': showWeather
+      'show all': showall,
+      'hide all': hideall,
+      'show compliment': showcompliment,
+      'hide compliment': hidecompliment,
+      'hide news': hidenews,
+      "show news": shownews,
+      'hide weather': hideweather,
+      'show weather': showweather,
+      'hide calendar': hidecalendar,
+      'show calendar': showcalendar,
+      'how long is it to drive to *destination': showtrip,
+      'hide trip': hidetrip,
+      'hello': showcompliment,
+      'thank you': hideall
+      
     };
 
-    // OPTIONAL: activate debug mode for detailed logging in the console
     annyang.debug();
-
-    // Add voice commands to respond to
     annyang.addCommands(commands);
-
-    // OPTIONAL: Set a language for speech recognition (defaults to English)
-    // For a full list of language codes, see the documentation:
-    // https://github.com/TalAter/annyang/blob/master/docs/README.md#languages
     annyang.setLanguage('en');
-
-    // Start listening. You can call this here, or attach this call to an event, button, etc.
     annyang.start();
 
   }
@@ -64,9 +126,12 @@
 				<span class="timer-hour"></span><span class="time-colon">:</span><span class="timer-min"></span><span class="timer-suffix"></span>
 			</div>
 			
-			<div class="calendar"></div>
+			<div id="calendar"class="calendar"></div>
+      <script type="text/javascript">
+      $("calendar").hide();
+      </script>
 		</div>
-		<div class="top right weather-container">
+		<div id= "weather" class="top right weather-container">
 			<div class="current-temp-container">
 				<span class="current-temp"></span>ºF <span class="current-weather-icon"></span>
 			</div>
@@ -75,12 +140,11 @@
 			<hr class="weather-separator">
 			<div class="weekly-forecast-container"></div>
 		</div>
-		<div id="compliment" class="hidden">
-			<div class="lower-third center-hor">
+			<div id="compliment"class="lower-third center-hor">
 				<div class="compliment"></div>
-			</div>
+        <div id = "trip"class="trip"></div>
 		</div>
-		<div class="bottom center-hor marquee-container">
+		<div id="news"class="bottom center-hor marquee-container">
 			<ul class="marquee"></ul>
 		</div>
 	</div>
@@ -90,6 +154,8 @@
 	<script src="static/js/config.js"></script>
 	<script src="static/js/icon-map.js"></script>	
 	<script src="static/js/app.js"></script>
+  <script type="text/javascript">init_page();</script>
+
 	
 </body>
 </html>
