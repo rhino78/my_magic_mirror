@@ -1,4 +1,6 @@
-from flask import Flask, render_template, send_from_directory, jsonify
+from flask import Flask, render_template, send_from_directory, jsonify, request, session
+from flask_socketio import SocketIO, emit, join_room, leave_room, \
+    close_room, rooms, disconnect
 import xml.etree.ElementTree as ET
 import subprocess
 from icalendar import Calendar, Event
@@ -17,10 +19,12 @@ import pytz
 from pytz import timezone
 import random
 import json
-
-
+import sys
+import redis
 
 app = Flask(__name__, static_url_path='/static', template_folder='./')
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
 
 DEBUG = True
 PORT = 8001
@@ -51,11 +55,125 @@ def smart_date(date):
 		return "{0} at {1}".format(calendar.day_name[dt.weekday()], dt.strftime("%I:%M %p"))
 	else:
 		return "in {0} days".format(diff.days)
+
+
+def background_thread():
+    """Example of how to send server generated events to clients."""
+    count = 0
+    while True:
+        socketio.sleep(10)
+        count += 1
+        socketio.emit('my response',
+                      {'data': 'Server generated event', 'count': count},
+                      namespace='/test')
 	
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+        phones = ["iphone", "android", "blackberry"]
+        agent = request.headers.get('User-Agent')
+        print(request.headers.get('User-Agent'))
+
+        if any(phone in agent.lower() for phone in phones):
+                return render_template('indexM.html')
+        else:
+                return render_template('index.html')
+
+@socketio.on('my event', namespace='/test')
+def test_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my response',
+         {'data': message['data'], 'count': session['receive_count']})
+
+
+@socketio.on('my broadcast event', namespace='/test')
+def test_broadcast_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my response',
+        'calendar',
+         broadcast=True)
+
+@socketio.on('my compliment event', namespace='/test')
+def test_compliment_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my compliment response',
+         'compliment',
+         broadcast=True)
+
+@socketio.on('my weather event', namespace='/test')
+def test_weather_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my weather response',
+         'weather',
+         broadcast=True)
+
+@socketio.on('my news event', namespace='/test')
+def test_news_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my news response',
+         'news',
+         broadcast=True)
+
+
+
+#@socketio.on('join', namespace='/test')
+#def join(message):
+#    join_room(message['room'])
+#    session['receive_count'] = session.get('receive_count', 0) + 1
+#    emit('my response',-
+  
+#         {'data': 'In rooms: ' + ', '.join(rooms()),
+#          'count': session['receive_count']})
+
+
+@socketio.on('leave', namespace='/test')
+def leave(message):
+    leave_room(message['room'])
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my response',
+         {'data': 'In rooms: ' + ', '.join(rooms()),
+          'count': session['receive_count']})
+
+
+@socketio.on('close room', namespace='/test')
+def close(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my response', {'data': 'Room ' + message['room'] + ' is closing.',
+                         'count': session['receive_count']},
+         room=message['room'])
+    close_room(message['room'])
+
+
+@socketio.on('my room event', namespace='/test')
+def send_room_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my response',
+         {'data': message['data'], 'count': session['receive_count']},
+         room=message['room'])
+
+
+@socketio.on('disconnect request', namespace='/test')
+def disconnect_request():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my response',
+         {'data': 'Disconnected!', 'count': session['receive_count']})
+    disconnect()
+
+
+@socketio.on('my ping', namespace='/test')
+def ping_pong():
+    emit('my pong')
+
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    emit('my connected response', {'data': 'Connected', 'count': 0})
+
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+    print('Client disconnected', request.sid)
+
 
 @app.route('/<path:path>')
 def serve_static(path):
@@ -65,23 +183,15 @@ def serve_static(path):
 def get_compliment():
 		return jsonify({'compliment': compliments.compliment()})
 
-@app.route('/get_trip/destination/<string:destination>')
-def get_trip(destination):
-        bingMapsKey = "AmlfKIzq70f2tVvlqiTm66fxARmbGTUjl0oF9IDkERG41alTKwjkI2FA9Gt5BK79"
-        origin = urllib.parse.quote('Round Rock, tx', safe='')
-        dest = urllib.parse.quote(destination, safe='')
-        url = 'http://dev.virtualearth.net/REST/V1/Routes?wp.0='+ str(origin)+'&wp.1='+ str(dest) +'&maxSolns=3&key=' + bingMapsKey
-        request = urllib.request.Request(url)
-        response = urllib.request.urlopen(request)
-        r = response.read().decode(encoding="utf-8")
-        result = json.loads(r)
-        itineraryItems = result["resourceSets"][0]["resources"][0]["routeLegs"][0]["itineraryItems"]
-        duration = 0
-        for i in itineraryItems:
-                duration += i["travelDuration"]
 
-        total_duration = trip_destination.trip_destination(duration)
-        return jsonify({'trip': "travel time to {0}: {1}".format(destination, total_duration)})
+
+@app.route('/display', methods=['POST'])
+def client_broadcast():
+    state = request.form['state']
+
+    # here you can store the message under a key in Memcached, Redis or another in-memory cache server
+
+    return jsonify(stored=True)
 
 @app.route('/get_news_headlines')
 def get_news_headlines():
@@ -107,7 +217,7 @@ def get_calendar():
         entries = ical_parser.ical_parser(cal);
 
         sorted_events = sorted(entries, key=itemgetter('date'))
-        filtered = [i for i in sorted_events if i['date'] >= time.strftime("%Y-%m-%d")]
+        filtered = [i for i in sorted_events if i['date'] >= time.strftime("%Y-%m-%d %H:%M:%S")]
 
         final =[]
         for f in filtered:
@@ -121,6 +231,9 @@ def get_calendar():
         
 
 if __name__ == '__main__':
-	app.run(debug=DEBUG, port=PORT, host=HOST)
+    #app.run(debug=DEBUG, port=PORT, host=HOST)
+    #app.run(debug=True, host='0.0.0.0', threaded=True, port=8080)        
+    socketio.run(app, debug=True, host='0.0.0.0', port=8080)
+    #print(request.headers.get('User-Agent'))
 
 

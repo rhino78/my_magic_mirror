@@ -164,10 +164,10 @@
 					row.append($('<td/>').html(c.summary.substring(0,50)).addClass('description'));
 					row.append($('<td/>').html(c.date).addClass('days dimmed'));
 					table.append(row);
-					//opacity -= 1 / cal.length;
+					opacity -= 1 / cal.length;
 				};
 
-				$('.calendar').hide();
+
 				$('.calendar').append(table);
 			});
 		}		

@@ -6,116 +6,125 @@
 	<title>Magic Mirror</title>
 	<link rel="stylesheet" href="static/css/weather-icons.min.css">
 	<link rel="stylesheet" href="static/css/style.css">
-	  <script>
-    var annyangScript = document.createElement('script');
-    if (/localhost/.exec(window.location)) {
-      annyangScript.src = "//localhost:8001/annyang.js"
-    } else {
-      annyangScript.src = "//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"
-    }
-    document.write(annyangScript.outerHTML)
-  </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script>
-  "use strict";
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            // Use a "/test" namespace.
+            // An application can open a connection on multiple namespaces, and
+            // Socket.IO will multiplex all those connections on a single
+            // physical channel. If you don't care about multiple channels, you
+            // can set the namespace to an empty string.
+            namespace = '/test';
 
-  // first we make sure annyang started succesfully
-  if (annyang) {
+            // Connect to the Socket.IO server.
+            // The connection URL has the following format:
+            //     http[s]://<domain>:<port>[/<namespace>]
+            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+            console.log(socket);
 
-    var showtrip = function(destination){
-      $.get("/get_trip/destination/" + destination, function (data){
-         var trip = data.trip;
-         $('.trip').html(trip);
-         $("#trip").show(1000)});
-    };
+            // Event handler for new connections.
+            // The callback function is invoked when a connection with the
+            // server is established.
+            socket.on('connect', function() {
+                //socket.emit('my event', {data: 'I\'m connected!'});
+            });
 
-    var showcompliment = function(){
-      $.get("/get_compliment", function (data){
-         var complimemt = data.compliment;
-         $('.compliment').html(complimemt);
-      	 $("#compliment").show(1000)});
-    };
+            // Event handler for server sent data.
+            // The callback function is invoked whenever the server emits data
+            // to the client. The data is then displayed in the "Received"
+            // section of the page.
+            socket.on('my response', function(msg) {
+                console.log('got a response');
+                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
+                
+                if ( $('#calendar').css('display') == 'none' ){
+                    console.log('showing calendar');
+                    $('#calendar').show(1500);
 
-    var hidetrip = function(){
-      $("#trip").hide(1000);
-    };
+                }
+                else
+                {
+                    console.log('hide calendar');
+                    $('#calendar').hide(1500);
 
-    var hidecompliment = function(){
-    	$("#compliment").hide(1000);
-    };
+                }
+            });
 
-    var hideweather = function(){
-    	$("#weather").hide(1000);
-    }; 
+            socket.on('my compliment response', function(msg) {
+                console.log('got a response');
+                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
+                
+                if ( $('#compliment').css('display') == 'none' ){
+                    console.log('showing compliment');
+                    $('#compliment').show(1500);
 
-    var showweather = function(){
-       $("#weather").show(1000);
-    }; 
+                }
+                else
+                {
+                    console.log('hide compliment');
+                    $('#compliment').hide(1500);
 
-    var showcalendar = function(){
-       $("#calendar").show(1000);
-    };
+                }
+            });
 
-    var hidecalendar = function(){
-       $("#calendar").hide(1000);
-    };
+            socket.on('my weather response', function(msg) {
+                console.log('got a response');
+                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
+                
+                if ( $('#weather').css('display') == 'none' ){
+                    console.log('showing weather');
+                    $('#weather').show(1500);
 
-    var shownews = function(){
-       $("#news").show(1000);
-    };
+                }
+                else
+                {
+                    console.log('hide weather');
+                    $('#weather').hide(1500);
 
-    var hidenews = function(){
-       $("#news").hide(1000);
-    };
+                }
+            });
 
-    var init_page = function(){
-      $("#calendar").hide();
-      $("#news").hide();
-      $("#weather").hide();
-      $("#compliment").hide();
-    };
+            socket.on('my news response', function(msg) {
+                console.log('got a response');
+                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
+                
+                if ( $('#news').css('display') == 'none' ){
+                    console.log('showing news');
+                    $('#news').show(1500);
 
-    var hideall = function(){
-       hidecalendar();
-       hidecompliment();
-       hideweather();
-       hidenews();
-       hidetrip();
-    };
+                }
+                else
+                {
+                    console.log('hide news');
+                    $('#news').hide(1500);
+
+                }
+            });
+
+            // Handlers for the different forms in the page.
+            // These accept data from the user and send it to the server in a
+            // variety of ways
+            $('form#emit').submit(function(event) {
+                socket.emit('my event', {data: $('#emit_data').val()});
+                console.log('emitting');
+                return false;
+            });
+            $('form#broadcast').submit(function(event) {
+                console.log('emitting');
+                socket.emit('my broadcast event', {data: $('#broadcast_data').val()});
+                return false;
+            });
+            
+            $('form#disconnect').submit(function(event) {
+                socket.emit('disconnect request');
+                return false;
+            });
+        });
+    </script>
 
 
-    var showall = function(){
-       showcalendar();
-       showcompliment();
-       showweather();
-       shownews();
-    };
-
-    var commands = {
-      'show all': showall,
-      'hide all': hideall,
-      'show compliment': showcompliment,
-      'hide compliment': hidecompliment,
-      'hide news': hidenews,
-      "show news": shownews,
-      'hide weather': hideweather,
-      'show weather': showweather,
-      'hide calendar': hidecalendar,
-      'show calendar': showcalendar,
-      'how long is it to drive to *destination': showtrip,
-      'hide trip': hidetrip,
-      'hello': showcompliment,
-      'thank you': hideall
-      
-    };
-
-    annyang.debug();
-    annyang.addCommands(commands);
-    annyang.setLanguage('en');
-    annyang.start();
-
-  }
-  </script>
 </head>
 
 <body>
@@ -125,11 +134,8 @@
 			<div class="full-time">
 				<span class="timer-hour"></span><span class="time-colon">:</span><span class="timer-min"></span><span class="timer-suffix"></span>
 			</div>
-			
 			<div id="calendar"class="calendar"></div>
-      <script type="text/javascript">
-      $("calendar").hide();
-      </script>
+
 		</div>
 		<div id= "weather" class="top right weather-container">
 			<div class="current-temp-container">
@@ -142,7 +148,6 @@
 		</div>
 			<div id="compliment"class="lower-third center-hor">
 				<div class="compliment"></div>
-        <div id = "trip"class="trip"></div>
 		</div>
 		<div id="news"class="bottom center-hor marquee-container">
 			<ul class="marquee"></ul>
@@ -154,8 +159,6 @@
 	<script src="static/js/config.js"></script>
 	<script src="static/js/icon-map.js"></script>	
 	<script src="static/js/app.js"></script>
-  <script type="text/javascript">init_page();</script>
 
-	
 </body>
 </html>
