@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content="600">
+	<title>Magic Mirror</title>
+	<link rel="stylesheet" href="static/css/weather-icons.min.css">
+	<link rel="stylesheet" href="static/css/style.css">
+	  <script>
+    var annyangScript = document.createElement('script');
+    if (/localhost/.exec(window.location)) {
+      annyangScript.src = "//localhost:8001/annyang.js"
+    } else {
+      annyangScript.src = "//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"
+    }
+    document.write(annyangScript.outerHTML)
+  </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+  "use strict";
+
+  // first we make sure annyang started succesfully
+  if (annyang) {
+
+    var showtrip = function(destination){
+      $.get("/get_trip/destination/" + destination, function (data){
+         var trip = data.trip;
+         $('.trip').html(trip);
+         $("#trip").show(1000)});
+    };
+
+    var showcompliment = function(){
+      $.get("/get_compliment", function (data){
+         var complimemt = data.compliment;
+         $('.compliment').html(complimemt);
+      	 $("#compliment").show(1000)});
+    };
+
+    var hidetrip = function(){
+      $("#trip").hide(1000);
+    };
+
+    var hidecompliment = function(){
+    	$("#compliment").hide(1000);
+    };
+
+    var hideweather = function(){
+    	$("#weather").hide(1000);
+    }; 
+
+    var showweather = function(){
+       $("#weather").show(1000);
+    }; 
+
+    var showcalendar = function(){
+       $("#calendar").show(1000);
+    };
+
+    var hidecalendar = function(){
+       $("#calendar").hide(1000);
+    };
+
+    var shownews = function(){
+       $("#news").show(1000);
+    };
+
+    var hidenews = function(){
+       $("#news").hide(1000);
+    };
+
+    var hideall = function(){
+       hidecalendar();
+       hidecompliment();
+       hideweather();
+       hidenews();
+       hidetrip();
+    };
+
+
+    var showall = function(){
+       showcalendar();
+       showcompliment();
+       showweather();
+       shownews();
+    };
+
+    var commands = {
+      'show all': showall,
+      'hide all': hideall,
+      'show compliment': showcompliment,
+      'hide compliment': hidecompliment,
+      'hide news': hidenews,
+      "show news": shownews,
+      'hide weather': hideweather,
+      'show weather': showweather,
+      'hide calendar': hidecalendar,
+      'show calendar': showcalendar,
+      'how long will it take to drive to *destination': showtrip,
+      'hide trip': hidetrip,
+      'hello': showcompliment,
+      'thank you': hideall,
+      'what is the weather like today':showweather
+      
+    };
+
+    annyang.debug();
+    annyang.addCommands(commands);
+    annyang.setLanguage('en');
+    annyang.start();
+
+  }
+  </script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="top left">
+			<div class="full-date"></div>
+			<div class="full-time">
+				<span class="timer-hour"></span><span class="time-colon">:</span><span class="timer-min"></span><span class="timer-suffix"></span>
+			</div>
+			
+			<div id="calendar"class="calendar"></div>
+		</div>
+		<div id= "weather" class="top right weather-container">
+			<div class="current-temp-container">
+				<span class="current-temp"></span>ºF <span class="current-weather-icon"></span>
+			</div>
+			<hr class="weather-separator">
+			<div class="hourly-change-container"></div>
+			<hr class="weather-separator">
+			<div class="weekly-forecast-container"></div>
+		</div>
+			<div id="compliment"class="lower-third center-hor">
+				<div class="compliment"></div>
+        
+
+		</div>
+		<div id="news"class="bottom center-hor marquee-container">
+			<ul class="marquee"></ul>
+		</div>
+	</div>
+	
+	<script src="static/node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="static/js/jquery.marquee.min.js"></script>
+	<script src="static/js/config.js"></script>
+	<script src="static/js/icon-map.js"></script>	
+	<script src="static/js/app.js"></script>
+	
+</body>
+</html>
