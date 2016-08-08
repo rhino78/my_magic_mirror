@@ -111,17 +111,6 @@ def test_news_message(message):
          broadcast=True)
 
 
-
-#@socketio.on('join', namespace='/test')
-#def join(message):
-#    join_room(message['room'])
-#    session['receive_count'] = session.get('receive_count', 0) + 1
-#    emit('my response',-
-  
-#         {'data': 'In rooms: ' + ', '.join(rooms()),
-#          'count': session['receive_count']})
-
-
 @socketio.on('leave', namespace='/test')
 def leave(message):
     leave_room(message['room'])
