@@ -25,10 +25,6 @@ import redis
 app = Flask(__name__, static_url_path='/static', template_folder='./')
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-
-DEBUG = True
-PORT = 8001
-HOST = '127.0.0.1'
         
 
 def smart_date(date):
@@ -231,9 +227,6 @@ def get_calendar():
         
 
 if __name__ == '__main__':
-    #app.run(debug=DEBUG, port=PORT, host=HOST)
-    #app.run(debug=True, host='0.0.0.0', threaded=True, port=8080)        
     socketio.run(app, debug=True, host='0.0.0.0', port=8080)
-    #print(request.headers.get('User-Agent'))
 
 
