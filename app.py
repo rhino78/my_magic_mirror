@@ -13,7 +13,7 @@ from operator import itemgetter
 import calendar
 import ical_parser
 import compliments
-import trip_destination
+import epl_table
 from dateutil import parser
 import pytz
 from pytz import timezone
@@ -22,10 +22,11 @@ import json
 import sys
 import redis
 
-app = Flask(__name__, static_url_path='/static', template_folder='./')
+app = Flask(__name__, static_url_path='/static', template_folder='./templates')
 app.config['SECRET_KEY'] = 'secret!'
+app.config['CURR_TEMPLATE'] = 'index'
 socketio = SocketIO(app)
-        
+      
 
 def smart_date(date):
 	dt = parser.parse(date[:19])
@@ -68,12 +69,17 @@ def background_thread():
 def index():
         phones = ["iphone", "android", "blackberry"]
         agent = request.headers.get('User-Agent')
-        print(request.headers.get('User-Agent'))
-
+        template = app.config['CURR_TEMPLATE']
+        
         if any(phone in agent.lower() for phone in phones):
-                return render_template('indexM.html')
-        else:
+                return render_template('indexM.html')                
+        elif template == 'index':
+                app.config['CURR_TEMPLATE'] = 'epl'
                 return render_template('index.html')
+        else:
+                app.config['CURR_TEMPLATE'] = 'index'
+                return render_template('epl.html')
+                
 
 @socketio.on('my event', namespace='/test')
 def test_message(message):
@@ -194,7 +200,7 @@ def get_news_headlines():
 
 @app.route('/get_calendar')
 def get_calendar():
-        url = 'http://p04-calendarws.icloud.com/ca/subscribe/1/H40m2cOJve9rWlCvSNhNKLL1XJs1U4XH96G1PqW2Zf9Ihvwm-q9hgdIMqj_LeOrB'
+        url = 'http://p27-calendars.icloud.com/published/2/sAKB2qXoM7Kj0E4v8n2nzd3naihwmKKZqvpklvflY9V-xB0-vg5pkFqB2dAyd_84'
         ics = urllib.request.urlopen(url).read()
         cal = Calendar.from_ical(ics)
         entries = []
@@ -213,6 +219,35 @@ def get_calendar():
 
 
         return jsonify({'calendar': final})
+
+@app.route('/get_epl')
+def get_epl():
+        current_table = []
+
+        current_table = epl_table.results();
+
+        final = []
+
+        for t in current_table:
+          team = {}
+          team['position'] = t.position
+          team['name'] = t.name
+          team['p'] = t.p
+          team['w'] = t.w
+          team['d'] = t.d
+          team['l'] = t.l
+          team['f'] = t.f
+          team['a'] = t.a
+          team['gd'] = t.gd
+          team['pt'] = t.pt
+          team['movement'] = t.movement
+          team['last_5'] = t.last_5
+          final.append(team)
+
+
+
+
+        return jsonify({'epl': final})
         
 
 if __name__ == '__main__':

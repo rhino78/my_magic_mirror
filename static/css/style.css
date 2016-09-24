@@ -217,6 +217,15 @@ hr {
   margin-top: 10px; 
 }
 
+.epl-table {
+  font-size: 20px;
+  line-height: 20px;
+  padding: 10px; 
+}
+
+.epl-table .table{
+	padding: 5px;
+}
 .calendar-table .calendar-icon {
   width: 1em;
   min-width: 1em;
