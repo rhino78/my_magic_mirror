@@ -123,6 +123,13 @@
 			});
 		}
 
+                function getSelfie(){
+			$.get("/get_selfie", function (data){
+                                  console.log("<img src='/static/selfies/"+data.image+"'<>/img>");
+				$('.selfie').append("<img src='/static/selfies/"+ data.image +"'></img>");
+			});
+		}
+
 		// NEWS TICKER
 		function getNews() {
 			$.get("/get_news_headlines", function (data) {
@@ -249,6 +256,7 @@
 		getCompliment();
 		getNews();
 		getCal();
+		getSelfie();
 		
 	});
 

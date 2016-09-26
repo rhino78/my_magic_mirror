@@ -116,6 +116,15 @@ def test_news_message(message):
          'news',
          broadcast=True)
 
+@socketio.on('my selfie event', namespace='/test')
+def test_news_message(message):
+    print('taking selfie')    
+    subprocess.call(['./webcam.sh'])    
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my selfie response',
+         'selfie',
+         broadcast=True)
+
 
 @socketio.on('leave', namespace='/test')
 def leave(message):
