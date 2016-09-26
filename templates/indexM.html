@@ -274,6 +274,10 @@ input[type="checkbox"] {
                 socket.emit('my news event', {data: $('#news_data').val()});
             });
 
+            $('#toggle_selfie').click(function(){
+                socket.emit('my selfie event', {data: $('#selfie_data').val()});
+            });
+
           });
 
 
@@ -318,6 +322,13 @@ input[type="checkbox"] {
       <input type="checkbox" id="toggle_news" name="" value="">
       <div class="toggle">
         <label for="toggle_news"><i></i></label>
+      </div>
+    </div>
+    <div class="item">
+      <p>Selfie</p>
+      <input type="checkbox" id="toggle_selfie" name="" value="">
+      <div class="toggle">
+        <label for="toggle_selfie"><i></i></label>
       </div>
     </div>
   </form>
