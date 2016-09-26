@@ -195,12 +195,12 @@
 					row.append($('<td/>').html("Against").addClass('table'));
 					row.append($('<td/>').html("Goal Diff").addClass('table'));
 					row.append($('<td/>').html("Points").addClass('table'));
-					row.append($('<td/>').html("Form").addClass('table'));
+					row.append($('<td/>').html("Form").addClass('form'));
 					table.append(row);
 
 				for (var i = 0; i < 19; i++) {
 					var e = the_table[i];
-					var row = $('<tr/>').attr('id', 'pos'+e.position+1).css('opacity',opacity).addClass('table');
+					var row = $('<tr/>').attr('id', 'pos'+e.position).css('opacity',opacity).addClass('table');
 					console.log(e.movement);
 					if (e.movement == "No movement") {
 						row.append($('<td/>').html("-").addClass('table'));
@@ -232,7 +232,7 @@
 					};
 					//ex W-W-W-W-W
 
-					row.append($('<td/>').html(form.substring(0, form.length -1)).addClass('table'));
+					row.append($('<td/>').html(form.substring(0, form.length -1)).addClass('form'));
 
 
 					table.append(row);						

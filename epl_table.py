@@ -25,7 +25,7 @@ def results():
         soup = BeautifulSoup(r.content, "html.parser")
         main = False
         team_list = []
-        mast_list = ['Man City', 'Everton', 'Tottenham', 'Arsenal', 'Chelsea', 'Liverpool', 'Man Utd', 'Crystal Palace', 'Watford', 'West Brom', 'Leicester', 'Hull', 'Middlesbrough', 'Southhampton', 'Swansea', 'Burnley', 'Bournemouth', 'West Ham', 'Sunderland', 'Stoke']
+        mast_list = ['Man City', 'Everton', 'Tottenham', 'Arsenal', 'Chelsea', 'Liverpool', 'Man Utd', 'Crystal Palace', 'Watford', 'West Brom', 'Leicester', 'Hull', 'Middlesbrough', 'Southampton', 'Swansea', 'Burnley', 'Bournemouth', 'West Ham', 'Sunderland', 'Stoke']
         for s in soup.strings:
                 if not s.isspace():
                         if s == "This table charts the Premier League teams":

@@ -217,6 +217,10 @@ hr {
   margin-top: 10px; 
 }
 
+.form {
+  font-size: 17px;
+}
+
 .epl-table {
   font-size: 20px;
   line-height: 20px;
