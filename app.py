@@ -75,7 +75,7 @@ def index():
                 return render_template('indexM.html')                
         elif template == 'index':
                 app.config['CURR_TEMPLATE'] = 'epl'
-                return render_template('index.html')
+                return render_template('epl.html')
         else:
                 app.config['CURR_TEMPLATE'] = 'index'
                 return render_template('epl.html')
@@ -229,6 +229,14 @@ def get_calendar():
 
         return jsonify({'calendar': final})
 
+@app.route('/get_lastmatch')
+def get_lastmatch():
+  return jsonify({'last_match': epl_table.last_match()})
+
+@app.route('/get_nextmatch')
+def get_nextmatch():
+  return jsonify({'next_match': epl_table.next_match()})
+
 @app.route('/get_epl')
 def get_epl():
         current_table = []
@@ -252,9 +260,6 @@ def get_epl():
           team['movement'] = t.movement
           team['last_5'] = t.last_5
           final.append(team)
-
-
-
 
         return jsonify({'epl': final})
         

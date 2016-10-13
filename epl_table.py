@@ -60,4 +60,33 @@ def results():
 
         return table
 
+def last_match():
+        url = 'http://www.bbc.com/sport/football/teams/arsenal'
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, "html.parser")
+        last = soup.find(id="last-match")
 
+        last_data = []
+
+        for s in last.strings:
+                test = str(s.strip())
+                if test and "View match report" not in test:
+                        last_data.append(test)
+
+        return last_data
+
+def next_match():
+        url = 'http://www.bbc.com/sport/football/teams/arsenal'
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, "html.parser")
+        next_match = soup.find(id="next-match")
+
+        next_data = []
+
+        for s in next_match.strings:
+
+                test = str(s.strip())
+                if test:
+                        next_data.append(test)
+
+        return next_data

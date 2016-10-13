@@ -179,6 +179,59 @@
 			});
 		}
 
+        function getNextMatch(){
+			$.get("/get_nextmatch", function (data) {
+				var next = data.next_match;
+				table = $('<table/>').addClass('xsmall').addClass('next_match');
+				var x = document.getElementsByClassName("next_match");
+				console.log(x);
+				x.style = "display: inline-block";
+
+				for(var i in next){
+					var n = next[i];
+					if (i == 2) {
+						//do nothing
+					}
+					else{
+					var row = $('<tr/>').attr('id', i).css('opacity',1).addClass('next');
+					row.append($('<td/>').html(n).addClass('next_match'));
+					table.append(row);
+				}
+				}
+				
+				$('.matches').append(table);
+
+			});
+		}
+
+		function getLastMatch(){
+			$.get("/get_lastmatch", function (data) {
+				var last = data.last_match;
+				
+				table = $('<table/>').addClass('xsmall').addClass('last_match').attr('id', 'last_match');
+				
+
+				for(var i in last){
+					var n = last[i];
+
+					if (i == 2) {
+						//do nothing
+					}
+					else{
+					var row = $('<tr/>').attr('id', i).css('opacity',1).addClass('last');
+					row.append($('<td/>').html(n).addClass('last_match'));
+					table.append(row);
+					}
+				}
+
+				$('.matches').append(table);
+
+				var x = document.getElementsByClassName("last_match");
+				console.log(x);
+				x.style = "display: inline-block";
+			});
+		}
+
 		function getEPL() {
 			$.get("/get_epl", function (data) {
 				
@@ -208,7 +261,6 @@
 				for (var i = 0; i < 19; i++) {
 					var e = the_table[i];
 					var row = $('<tr/>').attr('id', 'pos'+e.position).css('opacity',opacity).addClass('table');
-					console.log(e.movement);
 					if (e.movement == "No movement") {
 						row.append($('<td/>').html("-").addClass('table'));
 					}else if (e.movement == "Moving up") {
@@ -257,6 +309,9 @@
 		getNews();
 		getCal();
 		getSelfie();
+		getLastMatch();
+		getNextMatch();
+		
 		
 	});
 

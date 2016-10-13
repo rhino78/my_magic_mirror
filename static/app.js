@@ -123,7 +123,7 @@
 			});
 		}
 
-                function getSelfie(){
+        function getSelfie(){
 			$.get("/get_selfie", function (data){
                                   console.log("<img src='/static/selfies/"+data.image+"'<>/img>");
 				$('.selfie').append("<img src='/static/selfies/"+ data.image +"'></img>");
@@ -179,6 +179,10 @@
 			});
 		}
 
+		
+
+
+
 		function getEPL() {
 			$.get("/get_epl", function (data) {
 				
@@ -208,7 +212,7 @@
 				for (var i = 0; i < 19; i++) {
 					var e = the_table[i];
 					var row = $('<tr/>').attr('id', 'pos'+e.position+1).css('opacity',opacity).addClass('table');
-					console.log(e.movement);
+
 					if (e.movement == "No movement") {
 						row.append($('<td/>').html("-").addClass('table'));
 					}else if (e.movement == "Moving up") {
@@ -216,7 +220,6 @@
 
 					}else{
 						row.append($('<td/>').html("v").addClass('table'));
-
 					}
 					
 					row.append($('<td/>').html(e.position).addClass('table'));
@@ -256,7 +259,7 @@
 		getCompliment();
 		getNews();
 		getCal();
-		getSelfie();
+
 		
 	});
 
