@@ -75,7 +75,7 @@ def index():
                 return render_template('indexM.html')                
         elif template == 'index':
                 app.config['CURR_TEMPLATE'] = 'epl'
-                return render_template('epl.html')
+                return render_template('index.html')
         else:
                 app.config['CURR_TEMPLATE'] = 'index'
                 return render_template('epl.html')
