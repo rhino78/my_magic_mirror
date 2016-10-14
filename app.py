@@ -75,7 +75,7 @@ def index():
                 return render_template('indexM.html')                
         elif template == 'index':
                 app.config['CURR_TEMPLATE'] = 'epl'
-                return render_template('index.html')
+                return render_template('epl.html')
         else:
                 app.config['CURR_TEMPLATE'] = 'index'
                 return render_template('epl.html')
@@ -248,7 +248,7 @@ def get_epl():
         for t in current_table:
           team = {}
           team['position'] = t.position
-          team['name'] = t.name
+          team['name'] = t.name         
           team['p'] = t.p
           team['w'] = t.w
           team['d'] = t.d

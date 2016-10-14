@@ -258,7 +258,7 @@
 					row.append($('<td/>').html("Form").addClass('form'));
 					table.append(row);
 
-				for (var i = 0; i < 19; i++) {
+				for (var i = 0; i < 20; i++) {
 					var e = the_table[i];
 					var row = $('<tr/>').attr('id', 'pos'+e.position).css('opacity',opacity).addClass('table');
 					if (e.movement == "No movement") {
@@ -311,6 +311,7 @@
 		getSelfie();
 		getLastMatch();
 		getNextMatch();
+		
 		
 		
 	});

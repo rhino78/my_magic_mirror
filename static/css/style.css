@@ -183,11 +183,19 @@ hr {
 .next_match {
             display: inline-block;
             vertical-align: top;
+            border-spacing: 100px 500px;
+            padding: 10px;
+            padding-right: 50px;
+            font-size: 30px; 
         }
 
 .last_match {
             display: inline-block;
             vertical-align: top;
+            border-spacing: 100px 500px;
+            padding: 10px;
+            padding-right: 50px;
+            font-size: 30px;
         }
 
 /*-- Quote --*/
