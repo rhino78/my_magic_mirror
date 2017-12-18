@@ -125,6 +125,7 @@
 
         function getSelfie(){
 			$.get("/get_selfie", function (data){
+                                  console.log('selfie from main');
                                   console.log("<img src='/static/selfies/"+data.image+"'<>/img>");
 				$('.selfie').append("<img src='/static/selfies/"+ data.image +"'></img>");
 			});

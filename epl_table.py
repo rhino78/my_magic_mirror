@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-            
+from datetime import datetime
 
 class Teams():
 	position = ""
@@ -17,15 +17,19 @@ class Teams():
 	def __init__(self, name):
 		self.name = name
 		
-
+def my_time(string):
+        english_time = datetime.strptime(string, '%H:%M').time()
+        print(english_time)
+        return str('{0}:{1}'.format(english_time.hour-6, english_time.minute))
 
 def results():
+        print('getting results')
         url = 'http://www.bbc.com/sport/football/tables'
         r = requests.get(url)
         soup = BeautifulSoup(r.content, "html.parser")
         main = False
         team_list = []
-        mast_list = ['Man City', 'Everton', 'Tottenham', 'Arsenal', 'Chelsea', 'Liverpool', 'Man Utd', 'Crystal Palace', 'Watford', 'West Brom', 'Leicester', 'Hull', 'Middlesbrough', 'Southampton', 'Swansea', 'Burnley', 'Bournemouth', 'West Ham', 'Sunderland', 'Stoke']
+        mast_list = ['Manchester City', 'Everton', 'Tottenham Hotspur', 'Arsenal', 'Chelsea', 'Liverpool', 'Manchester United', 'Crystal Palace', 'Watford', 'West Bromwich Albion', 'Leicester City', 'Hull City', 'Middlesbrough', 'Southampton', 'Swansea City', 'Burnley', 'Bournemouth', 'West Ham United', 'Sunderland', 'Stoke City']
         for s in soup.strings:
                 if not s.isspace():
                         if s == "This table charts the Premier League teams":
@@ -55,7 +59,8 @@ def results():
                         n.a = team_list[k+6]
                         n.gd = team_list[k+7]
                         n.pt= team_list[k+8]
-                        n.last_5 = team_list[k+9], team_list[k+10], team_list[k+11], team_list[k+12], team_list[k+13]
+                        n.last_5 = team_list[k+16], team_list[k+15], team_list[k+14], team_list[k+13], team_list[k+12]
+                        print(n.position)
                         table.append(n)
 
         return table
@@ -69,9 +74,9 @@ def last_match():
         last_data = []
 
         for s in last.strings:
-                test = str(s.strip())
-                if test and "View match report" not in test:
-                        last_data.append(test)
+                text = str(s.strip())
+                if text and "View match report" not in text:
+                        last_data.append(text)
 
         return last_data
 
@@ -82,11 +87,12 @@ def next_match():
         next_match = soup.find(id="next-match")
 
         next_data = []
+        i = 0
 
         for s in next_match.strings:
-
-                test = str(s.strip())
-                if test:
-                        next_data.append(test)
+                i = i+1
+                text = str(s.strip())
+                if text:
+                        next_data.append(text)
 
         return next_data

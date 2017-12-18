@@ -71,6 +71,7 @@
 				type: 'GET',
 				dataType: 'jsonp',
 				url: "https://api.forecast.io/forecast/" + config.weather_api_key + "/" + config.location.latitude + "," + config.location.longitude,
+                                
 				success: function(data) {
 					formatWeather(data);
 					$('.container').show(1500);
@@ -125,8 +126,9 @@
 
                 function getSelfie(){
 			$.get("/get_selfie", function (data){
-                                  console.log("<img src='/static/selfies/"+data.image+"'<>/img>");
-				$('.selfie').append("<img src='/static/selfies/"+ data.image +"'></img>");
+                                  console.log('taking selfie');
+                                  console.log("<img src='/static/selfies/"+ data +"'<>/img>");
+				$('.selfie').append("<img src='/static/selfies/"+ data +"'></img>");
 			});
 		}
 
@@ -302,15 +304,14 @@
 			});
 		}		
 
-		getEPL();
+
 		startTime();
 		getWeather();
 		getCompliment();
 		getNews();
 		getCal();
 		getSelfie();
-		getLastMatch();
-		getNextMatch();
+		
 		
 		
 		

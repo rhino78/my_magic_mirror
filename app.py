@@ -8,6 +8,7 @@ import datetime
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import time
+from time import strftime
 import urllib.request
 from operator import itemgetter
 import calendar
@@ -21,12 +22,14 @@ import random
 import json
 import sys
 import redis
+import glob
+import os
 
 app = Flask(__name__, static_url_path='/static', template_folder='./templates')
 app.config['SECRET_KEY'] = 'secret!'
 app.config['CURR_TEMPLATE'] = 'index'
 socketio = SocketIO(app)
-      
+
 
 def smart_date(date):
 	dt = parser.parse(date[:19])
@@ -75,10 +78,10 @@ def index():
                 return render_template('indexM.html')                
         elif template == 'index':
                 app.config['CURR_TEMPLATE'] = 'epl'
-                return render_template('epl.html')
+                return render_template('index.html')
         else:
                 app.config['CURR_TEMPLATE'] = 'index'
-                return render_template('epl.html')
+                return render_template('index.html')
                 
 
 @socketio.on('my event', namespace='/test')
@@ -117,9 +120,10 @@ def test_news_message(message):
          broadcast=True)
 
 @socketio.on('my selfie event', namespace='/test')
-def test_news_message(message):
-    print('taking selfie')    
-    subprocess.call(['./webcam.sh'])    
+def test_selfie_message(message):
+    print('taking selfie')
+    subprocess.call(['sh /home/pi/my_magic_mirror/picam.sh'], shell=True)
+    print('selfie complete')
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my selfie response',
          'selfie',
@@ -193,6 +197,13 @@ def client_broadcast():
 
     return jsonify(stored=True)
 
+@app.route('/get_selfie')
+def get_selfie():
+        newest = max(glob.iglob('/home/pi/my_magic_mirror/static/selfies/*.jpg*'), key=os.path.getctime)
+        print(newest)
+        return newest
+        
+
 @app.route('/get_news_headlines')
 def get_news_headlines():
 	xml_response = urllib.request.urlopen('http://feeds.bbci.co.uk/news/rss.xml?edition=us').read()
@@ -209,15 +220,19 @@ def get_news_headlines():
 
 @app.route('/get_calendar')
 def get_calendar():
+        
         url = 'http://p27-calendars.icloud.com/published/2/sAKB2qXoM7Kj0E4v8n2nzd3naihwmKKZqvpklvflY9V-xB0-vg5pkFqB2dAyd_84'
         ics = urllib.request.urlopen(url).read()
         cal = Calendar.from_ical(ics)
         entries = []
-
         entries = ical_parser.ical_parser(cal);
 
         sorted_events = sorted(entries, key=itemgetter('date'))
+        #at this point, we don't need entries anymore
+        entries = []
         filtered = [i for i in sorted_events if i['date'] >= time.strftime("%Y-%m-%d %H:%M:%S")]
+        #now that we have filtered, we don't need sorted anymore either
+        sorted_events = []
 
         final =[]
         for f in filtered:
