@@ -28,16 +28,15 @@ def get_delta(year, month, day):
 
 def compliment():
     currentTime = datetime.datetime.now()
-    newmutants='there are {0} days until new mutants'.format(get_delta(2018,4,13))
-    starwars='there are {0} days until Star Wars the last Jedi!'.format(get_delta(2017,12,15))
     blackpanther='there are {0} days until black panther!'.format(get_delta(2018,2,16))
-    infinitywar='there are {0} days intil infnity war'.format(get_delta(2018,5,4))
+    springbreak='there are {0} days until spring break'.format(get_delta(2018,3,11))
+    summerbreak='there are {0} days until summer break'.format(get_delta(2018,5,29))
     
     tip, wisdom = get_tips()
     
-    evening = [blackpanther, starwars, infinitywar, tip, wisdom, newmutants, 'ready for bed?', 'boa noite']
-    afternoon = [blackpanther, starwars, infinitywar, tip, wisdom, newmutants, 'Good afternoon', 'boa tarde', 'Am I a cool mirror, or what?']
-    morning = [blackpanther, starwars, infinitywar, tip, wisdom,newmutants, 'bom dia', 'buen dia (spanish)', 'Bonjour (French)', 'Buongiorno (Italian)', 'guten Morgen (German)', 'Ohayo (Japanese)','Suprabhat (Hindi)', 'Good morning, beauty', 'Good Morning, Kids!']
+    evening = [blackpanther, springbreak, summerbreak, tip, wisdom, 'ready for bed?', 'boa noite']
+    afternoon = [blackpanther, springbreak, summerbreak, tip, wisdom, 'Good afternoon', 'boa tarde', 'Am I a cool mirror, or what?']
+    morning = [blackpanther, springbreak, summerbreak, tip, wisdom, 'bom dia', 'buen dia (spanish)', 'Bonjour (French)', 'Buongiorno (Italian)', 'guten Morgen (German)', 'Ohayo (Japanese)','Suprabhat (Hindi)', 'Good morning, beauty', 'Good Morning, Kids!']
     
 
     us = holidays.UnitedStates()
@@ -47,16 +46,16 @@ def compliment():
     us.append({"2018-11-02":"Birthday, Luisa!"})
     us.append({"2018-03-09":"Birthday, Thomas!"})
     us.append({"2018-11-15":"Birthday, Vovo'"})
-    us.append({"2017-11-22":"Birthday, Grammie"})
-    us.append({"2017-11-29":"Birthday, Grampa"})
-    us.append({"2017-11-28":"Birthday, Carlao"})
+    us.append({"2018-11-22":"Birthday, Grammie"})
+    us.append({"2018-11-29":"Birthday, Grampa"})
+    us.append({"2018-11-28":"Birthday, Carlao"})
     us.append({"2018-08-16":"Birthday, Uncle Ryan"})
     us.append({"2018-06-24":"Birthday, Auntie Jenny"})
     us.append({"2018-06-23":"Birthday,  Frederico!"})
     us.append({"2018-07-11":"Birthday, Augie"})
     us.append({"2018-04-01":"Birthday, Tio Caio"})
     us.append({"2018-02-09":"Birthday, Tia Carol"})
-    us.append({"2017-11-26":"Birthday, Marizilda"})
+    us.append({"2018-11-26":"Birthday, Marizilda"})
     us.append({"2018-05-10":"Birthday, Zeca"})
 
     if currentTime in us:
