@@ -22,7 +22,7 @@ then we add "python3 /my_magic_mirror/app.py" [to the etc/profile dir](https://w
 
 Next,we add the startup script to the boot sequence in ~/.config/lxsession/LXDE-pi like so:
 
-@chromium-browser --kiosk 0.0.0.0:8080
+@chromium-browser --kiosk --disable-session-crash-bubble 0.0.0.0:8080
 
 [Found this handy link to hide the mouse](https://jackbarber.co.uk/blog/2017-02-16-hide-raspberry-pi-mouse-cursor-in-raspbian-kiosk)
 
