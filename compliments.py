@@ -28,7 +28,6 @@ def get_delta(year, month, day):
 
 def compliment():
     currentTime = datetime.datetime.now()
-<<<<<<< HEAD
     summer='there are {0} days until summer break'.format(get_delta(2018,6,1))
     spring_break='there are {0} days until spring break'.format(get_delta(2018,3,11))
  
@@ -38,7 +37,6 @@ def compliment():
     afternoon = [summer, spring_break, tip, wisdom, 'Good afternoon', 'boa tarde', 'Am I a cool mirror, or what?']
     morning = [summer, spring_break, tip, wisdom, 'bom dia', 'buen dia (spanish)', 'Bonjour (French)', 'Buongiorno (Italian)', 'guten Morgen (German)', 'Ohayo (Japanese)','Suprabhat (Hindi)', 'Good morning, beauty', 'Good Morning, Kids!']
  
-=======
     blackpanther='there are {0} days until black panther!'.format(get_delta(2018,2,16))
     springbreak='there are {0} days until spring break'.format(get_delta(2018,3,11))
     summerbreak='there are {0} days until summer break'.format(get_delta(2018,5,29))
@@ -49,8 +47,6 @@ def compliment():
     afternoon = [blackpanther, springbreak, summerbreak, tip, wisdom, 'Good afternoon', 'boa tarde', 'Am I a cool mirror, or what?']
     morning = [blackpanther, springbreak, summerbreak, tip, wisdom, 'bom dia', 'buen dia (spanish)', 'Bonjour (French)', 'Buongiorno (Italian)', 'guten Morgen (German)', 'Ohayo (Japanese)','Suprabhat (Hindi)', 'Good morning, beauty', 'Good Morning, Kids!']
     
->>>>>>> f9c96920d26d634c56f25fc4beaeb5656131dc17
-
     us = holidays.UnitedStates()
     us.append({"2018-08-29":"Birthday, Ryan! You are the best dad ever!"})
     us.append({"2018-01-03":"Birthday, Carol!"})
