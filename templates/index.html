@@ -8,130 +8,6 @@
 	<link rel="stylesheet" href="static/css/style.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
-            // Use a "/test" namespace.
-            // An application can open a connection on multiple namespaces, and
-            // Socket.IO will multiplex all those connections on a single
-            // physical channel. If you don't care about multiple channels, you
-            // can set the namespace to an empty string.
-            namespace = '/test';
-
-            // Connect to the Socket.IO server.
-            // The connection URL has the following format:
-            //     http[s]://<domain>:<port>[/<namespace>]
-            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
-            console.log(socket);
-
-            // Event handler for new connections.
-            // The callback function is invoked when a connection with the
-            // server is established.
-            socket.on('connect', function() {
-                //socket.emit('my event', {data: 'I\'m connected!'});
-            });
-
-            // Event handler for server sent data.
-            // The callback function is invoked whenever the server emits data
-            // to the client. The data is then displayed in the "Received"
-            // section of the page.
-            socket.on('my response', function(msg) {
-                console.log('got a response');
-                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
-                
-                if ( $('#calendar').css('display') == 'none' ){
-                    console.log('showing calendar');
-                    $('#calendar').show(1500);
-
-                }
-                else
-                {
-                    console.log('hide calendar');
-                    $('#calendar').hide(1500);
-
-                }
-            });
-
-            socket.on('my compliment response', function(msg) {
-                console.log('got a response');
-                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
-                
-                if ( $('#compliment').css('display') == 'none' ){
-                    console.log('showing compliment');
-                    $('#compliment').show(1500);
-
-                }
-                else
-                {
-                    console.log('hide compliment');
-                    $('#compliment').hide(1500);
-
-                }
-            });
-
-            socket.on('my weather response', function(msg) {
-                console.log('got a response');
-                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
-                
-                if ( $('#weather').css('display') == 'none' ){
-                    console.log('showing weather');
-                    $('#weather').show(1500);
-
-                }
-                else
-                {
-                    console.log('hide weather');
-                    $('#weather').hide(1500);
-
-                }
-            });
-
-            socket.on('my news response', function(msg) {
-                console.log('got a response');
-                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
-                
-                if ( $('#news').css('display') == 'none' ){
-                    console.log('showing news');
-                    $('#news').show(1500);
-
-                }
-                else
-                {
-                    console.log('hide news');
-                    $('#news').hide(1500);
-
-                }
-            });
-
-
-	    socket.on('my selfie response', function(msg) {
-                console.log('got a response');
-                console.log('Received #' + msg.count + ': ' + JSON.stringify(msg.data));
-		$('#selfie').delay(10000).fadeIn(300).delay(10000).fadeOut(300);
-             });
-
-            // Handlers for the different forms in the page.
-            // These accept data from the user and send it to the server in a
-            // variety of ways
-            $('form#emit').submit(function(event) {
-                socket.emit('my event', {data: $('#emit_data').val()});
-                console.log('emitting');
-                return false;
-            });
-            $('form#broadcast').submit(function(event) {
-                console.log('emitting');
-                socket.emit('my broadcast event', {data: $('#broadcast_data').val()});
-                return false;
-            });
-            
-            $('form#disconnect').submit(function(event) {
-                socket.emit('disconnect request');
-                return false;
-            });
-        });
-    </script>
-
-
 </head>
 
 <body>
@@ -145,7 +21,6 @@
                 <span class="timer-suffix"></span>
 			</div>
 			<div id="calendar"class="calendar"></div>
-                        <div id="selfie"class="selfie" style="display: none;"></div>
 
 		</div>
 		<div id= "weather" class="top right weather-container">

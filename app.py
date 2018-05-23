@@ -1,6 +1,4 @@
 from flask import Flask, render_template, send_from_directory, jsonify, request, session
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
 import xml.etree.ElementTree as ET
 import subprocess
 from icalendar import Calendar, Event
@@ -14,10 +12,8 @@ from operator import itemgetter
 import calendar
 import ical_parser
 import compliments
-import epl_table
 from dateutil import parser
 import pytz
-from pytz import timezone
 import random
 import json
 import sys
@@ -28,8 +24,6 @@ import os
 app = Flask(__name__, static_url_path='/static', template_folder='./templates')
 app.config['SECRET_KEY'] = 'secret!'
 app.config['CURR_TEMPLATE'] = 'index'
-socketio = SocketIO(app)
-
 
 def smart_date(date):
 	dt = parser.parse(date[:19])
@@ -57,152 +51,14 @@ def smart_date(date):
 		return "in {0} days".format(diff.days)
 
 
-def background_thread():
-    """Example of how to send server generated events to clients."""
-    count = 0
-    while True:
-        socketio.sleep(10)
-        count += 1
-        socketio.emit('my response',
-                      {'data': 'Server generated event', 'count': count},
-                      namespace='/test')
-	
-
 @app.route('/')
 def index():
-        phones = ["iphone", "android", "blackberry"]
-        agent = request.headers.get('User-Agent')
-        template = app.config['CURR_TEMPLATE']
-        
-        if any(phone in agent.lower() for phone in phones):
-                return render_template('indexM.html')                
-        elif template == 'index':
-                app.config['CURR_TEMPLATE'] = 'epl'
-                return render_template('index.html')
-        else:
-                app.config['CURR_TEMPLATE'] = 'index'
-                return render_template('index.html')
-                
-
-@socketio.on('my event', namespace='/test')
-def test_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my response',
-         {'data': message['data'], 'count': session['receive_count']})
-
-
-@socketio.on('my broadcast event', namespace='/test')
-def test_broadcast_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my response',
-        'calendar',
-         broadcast=True)
-
-@socketio.on('my compliment event', namespace='/test')
-def test_compliment_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my compliment response',
-         'compliment',
-         broadcast=True)
-
-@socketio.on('my weather event', namespace='/test')
-def test_weather_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my weather response',
-         'weather',
-         broadcast=True)
-
-@socketio.on('my news event', namespace='/test')
-def test_news_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my news response',
-         'news',
-         broadcast=True)
-
-@socketio.on('my selfie event', namespace='/test')
-def test_selfie_message(message):
-    print('taking selfie')
-    subprocess.call(['sh /home/pi/my_magic_mirror/picam.sh'], shell=True)
-    print('selfie complete')
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my selfie response',
-         'selfie',
-         broadcast=True)
-
-
-@socketio.on('leave', namespace='/test')
-def leave(message):
-    leave_room(message['room'])
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my response',
-         {'data': 'In rooms: ' + ', '.join(rooms()),
-          'count': session['receive_count']})
-
-
-@socketio.on('close room', namespace='/test')
-def close(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my response', {'data': 'Room ' + message['room'] + ' is closing.',
-                         'count': session['receive_count']},
-         room=message['room'])
-    close_room(message['room'])
-
-
-@socketio.on('my room event', namespace='/test')
-def send_room_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my response',
-         {'data': message['data'], 'count': session['receive_count']},
-         room=message['room'])
-
-
-@socketio.on('disconnect request', namespace='/test')
-def disconnect_request():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my response',
-         {'data': 'Disconnected!', 'count': session['receive_count']})
-    disconnect()
-
-
-@socketio.on('my ping', namespace='/test')
-def ping_pong():
-    emit('my pong')
-
-
-@socketio.on('connect', namespace='/test')
-def test_connect():
-    emit('my connected response', {'data': 'Connected', 'count': 0})
-
-
-@socketio.on('disconnect', namespace='/test')
-def test_disconnect():
-    print('Client disconnected', request.sid)
-
-
-@app.route('/<path:path>')
-def serve_static(path):
-	return send_from_directory('static', path)
+    return render_template('index.html')
 
 @app.route('/get_compliment')
 def get_compliment():
 		return jsonify({'compliment': compliments.compliment()})
 
-
-
-@app.route('/display', methods=['POST'])
-def client_broadcast():
-    state = request.form['state']
-
-    # here you can store the message under a key in Memcached, Redis or another in-memory cache server
-
-    return jsonify(stored=True)
-
-@app.route('/get_selfie')
-def get_selfie():
-        newest = max(glob.iglob('/home/pi/my_magic_mirror/static/selfies/*.jpg*'), key=os.path.getctime)
-        print(newest)
-        return newest
-        
 
 @app.route('/get_news_headlines')
 def get_news_headlines():
@@ -220,20 +76,17 @@ def get_news_headlines():
 
 @app.route('/get_calendar')
 def get_calendar():
-        
         url = 'http://p27-calendars.icloud.com/published/2/sAKB2qXoM7Kj0E4v8n2nzd3naihwmKKZqvpklvflY9V-xB0-vg5pkFqB2dAyd_84'
         ics = urllib.request.urlopen(url).read()
         cal = Calendar.from_ical(ics)
         entries = []
-        entries = ical_parser.ical_parser(cal);
-
+        entries = ical_parser.ical_parser(cal)
         sorted_events = sorted(entries, key=itemgetter('date'))
         #at this point, we don't need entries anymore
         entries = []
         filtered = [i for i in sorted_events if i['date'] >= time.strftime("%Y-%m-%d %H:%M:%S")]
         #now that we have filtered, we don't need sorted anymore either
         sorted_events = []
-
         final =[]
         for f in filtered:
         	info = {}
@@ -241,45 +94,9 @@ def get_calendar():
         	info['date'] = smart_date(f['date'])
         	final.append(info)
 
-
         return jsonify({'calendar': final})
 
-@app.route('/get_lastmatch')
-def get_lastmatch():
-  return jsonify({'last_match': epl_table.last_match()})
-
-@app.route('/get_nextmatch')
-def get_nextmatch():
-  return jsonify({'next_match': epl_table.next_match()})
-
-@app.route('/get_epl')
-def get_epl():
-        current_table = []
-
-        current_table = epl_table.results();
-
-        final = []
-
-        for t in current_table:
-          team = {}
-          team['position'] = t.position
-          team['name'] = t.name         
-          team['p'] = t.p
-          team['w'] = t.w
-          team['d'] = t.d
-          team['l'] = t.l
-          team['f'] = t.f
-          team['a'] = t.a
-          team['gd'] = t.gd
-          team['pt'] = t.pt
-          team['movement'] = t.movement
-          team['last_5'] = t.last_5
-          final.append(team)
-
-        return jsonify({'epl': final})
-        
-
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=8080)
 
 
