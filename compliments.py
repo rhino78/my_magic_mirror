@@ -7,17 +7,21 @@ import string
 from bs4 import BeautifulSoup
 
 def get_tips():
-    url = "http://fuckinghomepage.com/"
-    r = requests.get(url)
-    soup = BeautifulSoup(r.content, "html.parser")
-    str = soup.p.text
-    str = str[str.index('.')-len(str)+2:]
-    tip = string.capwords(str)
-    #now we get the words of wisdom
-    row = soup.find_all('p')[1:7]
-    wisdom = string.capwords(row[1].string)
-
-    return tip, wisdom
+    try:
+        url = "http://fuckinghomepage.com/"
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, "html.parser")
+        str = soup.p.text
+        str = str[str.index('.')-len(str)+2:]
+        tip = string.capwords(str)
+        #now we get the words of wisdom
+        row = soup.find_all('p')[1:7]
+        wisdom = string.capwords(row[1].string)
+    except:
+        tip = 'if you do your homework, good things will come'
+        wisdom = 'Love your father'
+    finally:
+        return tip, wisdom
     
 
 def get_delta(year, month, day):
