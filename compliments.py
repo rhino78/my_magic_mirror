@@ -22,8 +22,8 @@ def get_tips():
         str = soup.p.text
         str = str[str.index('.')-len(str)+2:]
         tip = string.capwords(str)
-    	if 'fucking' in tip:
-    		tip = 'Ryan Shave is the best dad ever'
+        if 'fucking' in tip:
+            tip = 'Ryan Shave is the best dad ever'
         #now we get the words of wisdom
         row = soup.find_all('p')[1:7]
         wisdom = string.capwords(row[1].string)
