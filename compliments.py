@@ -10,11 +10,13 @@ from bs4 import BeautifulSoup
 def get_tips():
     try:
         url = "http://fuckinghomepage.com/"
-        r = requests.get(url)
+        r = requests.get(url, verify=False)
         soup = BeautifulSoup(r.content, "html.parser")
         str = soup.p.text
         str = str[str.index('.')-len(str)+2:]
         tip = string.capwords(str)
+	if 'fucking' in tip:
+		tip = 'Ryan Shave is the best dad ever'
         #now we get the words of wisdom
         row = soup.find_all('p')[1:7]
         wisdom = string.capwords(row[1].string)
@@ -24,18 +26,6 @@ def get_tips():
     finally:
         return tip, wisdom
 
-def get_showerthought():
-    thoughts = []
-    reddit = praw.Reddit(client_id='JgiAaoEUbf86tA',
-                         client_secret='bz4rt2sUhhQs0suOR_2uq4QuIhA',
-                         password='thomas08',
-                         user_agent='testscript by /u/rhino_78',
-                         username='rhino_78')
-    for submission in reddit.subreddit('Showerthoughts').hot(limit=2):
-        thoughts.append(submission.title)
-
-    return thoughts[1]
-
 def get_delta(year, month, day):
     c = datetime.now()
     b = datetime(year,month,day)
@@ -43,14 +33,11 @@ def get_delta(year, month, day):
     return(b-a).days
 
 def compliment():
-    summerbreak='there are {0} days until summer break'.format(get_delta(2018,5,29))
-    showerthought = get_showerthought()
-    print(showerthought)
     tip, wisdom = get_tips()
 
-    evening = [showerthought, summerbreak, tip, wisdom, 'ready for bed?', 'boa noite']
-    afternoon = [showerthought, summerbreak, tip, wisdom, 'Good afternoon', 'boa tarde (Portuguese)', 'buon pomeriggio (Italian)', 'guten Nachmittag (German)', 'bonne apres-midid(French)', 'Kon''ichiwa (Japanese)']
-    morning = [showerthought, summerbreak, tip, wisdom, 'bom dia', 'buen dia (spanish)', 'Bonjour (French)', 'Buongiorno (Italian)', 'guten Morgen (German)', 'Ohayo (Japanese)','Suprabhat (Hindi)', 'Good morning, beauty', 'Good Morning, Kids!']
+    evening = [tip, wisdom, 'ready for bed?', 'boa noite']
+    afternoon = [tip, wisdom, 'Good afternoon', 'boa tarde (Portuguese)', 'buon pomeriggio (Italian)', 'guten Nachmittag (German)', 'bonne apres-midid(French)', 'Kon''ichiwa (Japanese)']
+    morning = [tip, wisdom, 'bom dia', 'buen dia (spanish)', 'Bonjour (French)', 'Buongiorno (Italian)', 'guten Morgen (German)', 'Ohayo (Japanese)','Suprabhat (Hindi)', 'Good morning, beauty', 'Good Morning, Kids!']
     
     us = holidays.UnitedStates()
     us.append({str(datetime.now().year) + "-08-29":"Birthday, Ryan! You are the best dad ever!"})
