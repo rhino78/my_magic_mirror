@@ -7,6 +7,13 @@ import requests
 import string
 from bs4 import BeautifulSoup
 
+def get_random_compliment():
+        url = "http://toykeeper.net/programs/mad/compliments"
+        r = requests.get(url, verify=False)
+        soup = BeautifulSoup(r.content, "html.parser")
+        str = soup.find_all('h3')
+        return str[0].text
+
 def get_tips():
     try:
         url = "http://fuckinghomepage.com/"
@@ -15,8 +22,8 @@ def get_tips():
         str = soup.p.text
         str = str[str.index('.')-len(str)+2:]
         tip = string.capwords(str)
-	if 'fucking' in tip:
-		tip = 'Ryan Shave is the best dad ever'
+    	if 'fucking' in tip:
+    		tip = 'Ryan Shave is the best dad ever'
         #now we get the words of wisdom
         row = soup.find_all('p')[1:7]
         wisdom = string.capwords(row[1].string)
@@ -34,11 +41,12 @@ def get_delta(year, month, day):
 
 def compliment():
     tip, wisdom = get_tips()
+    compliment = get_random_compliment()
 
-    evening = [tip, wisdom, 'ready for bed?', 'boa noite']
-    afternoon = [tip, wisdom, 'Good afternoon', 'boa tarde (Portuguese)', 'buon pomeriggio (Italian)', 'guten Nachmittag (German)', 'bonne apres-midid(French)', 'Kon''ichiwa (Japanese)']
-    morning = [tip, wisdom, 'bom dia', 'buen dia (spanish)', 'Bonjour (French)', 'Buongiorno (Italian)', 'guten Morgen (German)', 'Ohayo (Japanese)','Suprabhat (Hindi)', 'Good morning, beauty', 'Good Morning, Kids!']
-    
+    evening = [tip, wisdom, compliment]
+    afternoon = [tip, wisdom, compliment]
+    morning = [tip, wisdom, compliment]
+
     us = holidays.UnitedStates()
     us.append({str(datetime.now().year) + "-08-29":"Birthday, Ryan! You are the best dad ever!"})
     us.append({str(datetime.now().year) + "-01-03":"Birthday, Carol!"})
