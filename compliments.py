@@ -7,28 +7,17 @@ import requests
 import string
 from bs4 import BeautifulSoup
 
-def get_random_compliment():
-        url = "http://toykeeper.net/programs/mad/compliments"
-        r = requests.get(url, verify=False)
-        soup = BeautifulSoup(r.content, "html.parser")
-        str = soup.find_all('h3')
-        return str[0].text
-
 def get_tips():
     try:
         url = "http://fuckinghomepage.com/"
         r = requests.get(url, verify=False)
         soup = BeautifulSoup(r.content, "html.parser")
         str = soup.p.text
-        str = str[str.index('.')-len(str)+2:]
-        tip = string.capwords(str)
-        if 'fucking' in tip:
-            tip = 'Ryan Shave is the best dad ever'
+        tip = 'if you do your homework, good things will come'
         #now we get the words of wisdom
         row = soup.find_all('p')[1:7]
         wisdom = string.capwords(row[1].string)
     except:
-        tip = 'if you do your homework, good things will come'
         wisdom = 'Love your father'
     finally:
         return tip, wisdom
@@ -41,11 +30,10 @@ def get_delta(year, month, day):
 
 def compliment():
     tip, wisdom = get_tips()
-    compliment = get_random_compliment()
+    summerbreak = 'there are {0} days until summer break'.format(get_detla(2020, 5, 21))
+    springbreak = 'there are {0} days until spring break'.format(get_detla(2020, 3, 13))
 
-    evening = [tip, wisdom, compliment]
-    afternoon = [tip, wisdom, compliment]
-    morning = [tip, wisdom, compliment]
+    compliment = [tip, wisdom, "you? me? cars 2?", "poo-poo, pee-pee", "bruhhhhh", "what are thooooooooose", summerbreak, springbreak]
 
     us = holidays.UnitedStates()
     us.append({str(datetime.now().year) + "-08-29":"Birthday, Ryan! You are the best dad ever!"})
@@ -70,8 +58,8 @@ def compliment():
         return 'Happy ' + str(us.get(datetime.now()))
 
     if datetime.now().hour <= 11:
-        return str(morning[random.randint(0,len(morning)-1)]);
+        return str(compliment[random.randint(0,len(compliment)-1)]);
     elif 12 <= datetime.now().hour < 17:
-        return str(afternoon[random.randint(0,len(afternoon)-1)]);
+        return str(compliment[random.randint(0,len(compliment)-1)]);
     else:
-        return str(evening[random.randint(0,len(evening)-1)]);
+        return str(compliment[random.randint(0,len(compliment)-1)]);
