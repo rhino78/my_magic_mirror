@@ -30,8 +30,8 @@ def get_delta(year, month, day):
 
 def compliment():
     tip, wisdom = get_tips()
-    summerbreak = 'there are {0} days until summer break'.format(get_detla(2020, 5, 21))
-    springbreak = 'there are {0} days until spring break'.format(get_detla(2020, 3, 13))
+    summerbreak = 'there are {0} days until summer break'.format(get_delta(2020, 5, 21))
+    springbreak = 'there are {0} days until spring break'.format(get_delta(2020, 3, 13))
 
     compliment = [tip, wisdom, "you? me? cars 2?", "poo-poo, pee-pee", "bruhhhhh", "what are thooooooooose", summerbreak, springbreak]
 
