@@ -5,6 +5,7 @@ import holidays
 from datetime import datetime
 import requests
 import string
+import COVID19Py
 from bs4 import BeautifulSoup
 
 def get_tips():
@@ -28,12 +29,20 @@ def get_delta(year, month, day):
     a = datetime(c.year, c.month, c.day)
     return(b-a).days
 
+def getCovid():
+    covid = COVID19Py.COVID19()
+    location = covid.getLocationByCountryCode("US")
+    deaths = location[0]['latest']['deaths']
+    deaths = 'There are currently {} deaths in the US related to COVID19'.format(deaths)
+    cases = location[0]['latest']['confirmed']
+    cases = 'There are currently {} confirmed cases. in the US'.format(cases) 
+    return deaths, cases
+    
 def compliment():
     tip, wisdom = get_tips()
-    summerbreak = 'there are {0} days until summer break'.format(get_delta(2020, 5, 21))
-    springbreak = 'there are {0} days until spring break'.format(get_delta(2020, 3, 13))
+    deaths, cases = getCovid()
 
-    compliment = [tip, wisdom, "you? me? cars 2?", "poo-poo, pee-pee", "bruhhhhh", "what are thooooooooose", summerbreak, springbreak]
+    compliment = [tip, wisdom, deaths, cases ]
 
     us = holidays.UnitedStates()
     us.append({str(datetime.now().year) + "-08-29":"Birthday, Ryan! You are the best dad ever!"})
