@@ -33,11 +33,11 @@ def getCovid():
     covid = COVID19Py.COVID19()
     location = covid.getLocationByCountryCode("US")
     deaths = location[0]['latest']['deaths']
-    deaths = 'There are currently {} deaths in the US related to COVID19'.format(deaths)
+    deaths = "There are currently {:,} deaths in the US related to COVID19".format(deaths)
     cases = location[0]['latest']['confirmed']
-    cases = 'There are currently {} confirmed cases. in the US'.format(cases) 
+    cases = "There are currently {:,} confirmed cases in the US".format(cases) 
     return deaths, cases
-    
+
 def compliment():
     tip, wisdom = get_tips()
     deaths, cases = getCovid()
