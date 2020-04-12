@@ -40,11 +40,11 @@ def getTips():
     finally:
         return tip, wisdom
 
-def writeNew(d):
+def writeNew(cases):
     with open("covidhistory", "w+") as f:
         d  = datetime.now()-timedelta(days=1)
-        f.write("{0} {1}".format(d.strftime("%m%d%Y"),500000))
-        f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y"),d))
+        f.write("{0} {1}\n".format(d.strftime("%m%d%Y"),500000))
+        f.write("{0} {1}\n".format(datetime.now().strftime("%m%d%Y"),cases))
 
 def getDelta(year, month, day):
     c = datetime.now()
