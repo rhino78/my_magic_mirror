@@ -40,17 +40,17 @@ def getTips():
     finally:
         return tip, wisdom
 
+def writeNew(d):
+    with open("covidhistory", "w+") as f:
+	d  = datetime.now()-timedelta(days=1)
+	f.write("{0} {1}".format(d.strftime("%m%d%Y"),500000))
+	f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y"),d))
+
 def getDelta(year, month, day):
     c = datetime.now()
     b = datetime(year,month,day)
     a = datetime(c.year, c.month, c.day)
     return(b-a).days
-
-def writeNew(d):
-    with open('covidhistory', 'w+') as f:
-        f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y") - 
-            timedelta(days=1),500000))
-        f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y"),dead))
 
 def getYesterday(cases):
     if not path.exists('covidhistory'):
@@ -58,7 +58,7 @@ def getYesterday(cases):
 
     with open('covidhistory') as f:
         lines = f.read().splitlines()
-    
+
     # expecting mmddyyyy 1111111 format
     # we have data for today
     if lines[len(lines)-1].split()[0] == datetime.now().strftime("%m%d%Y"):
