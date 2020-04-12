@@ -2,13 +2,30 @@ import praw
 import random
 import datetime
 import holidays
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import string
+from os import path
 import COVID19Py
 from bs4 import BeautifulSoup
 
-def get_tips():
+def compliment():
+    tip, wisdom = getTips()
+    deaths, cases = getCovid()
+    compliment = [tip, wisdom, deaths, cases ]
+    us = getHolidays()
+
+    if datetime.now() in us:
+        return 'Happy ' + str(us.get(datetime.now()))
+
+    if datetime.now().hour <= 11:
+        return str(compliment[random.randint(0,len(compliment)-1)]);
+    elif 12 <= datetime.now().hour < 17:
+        return str(compliment[random.randint(0,len(compliment)-1)]);
+    else:
+        return str(compliment[random.randint(0,len(compliment)-1)]);
+
+def getTips():
     try:
         url = "http://fuckinghomepage.com/"
         r = requests.get(url, verify=False)
@@ -23,11 +40,35 @@ def get_tips():
     finally:
         return tip, wisdom
 
-def get_delta(year, month, day):
+def getDelta(year, month, day):
     c = datetime.now()
     b = datetime(year,month,day)
     a = datetime(c.year, c.month, c.day)
     return(b-a).days
+
+def writeNew(d):
+    with open('covidhistory', 'w+') as f:
+        f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y") - 
+            timedelta(days=1),500000))
+        f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y"),dead))
+
+def getYesterday(cases):
+    if not path.exists('covidhistory'):
+        writeNew(cases)
+
+    with open('covidhistory') as f:
+        lines = f.read().splitlines()
+    
+    # expecting mmddyyyy 1111111 format
+    # we have data for today
+    if lines[len(lines)-1].split()[0] == datetime.now().strftime("%m%d%Y"):
+        return lines[len(lines)-2].split()[1]
+    else:
+        with open('covidhistory', 'a') as f:
+            f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y"), cases))
+
+        return lines[len(lines)-1].split()[1]
+
 
 def getCovid():
     covid = COVID19Py.COVID19()
@@ -35,15 +76,17 @@ def getCovid():
     deaths = location[0]['latest']['deaths']
     deaths = "There are currently {:,} deaths in the US related to COVID19".format(deaths)
     cases = location[0]['latest']['confirmed']
-    cases = "There are currently {:,} confirmed cases in the US".format(cases) 
+    yesterdayData = getYesterday(cases)
+    delta = int(cases) - int(yesterdayData)
+
+    if delta > 0:
+        cases = "There are currently {0:,} confirmed cases in the US. An increase of {1} from yesterday.".format(cases, delta) 
+    else:
+        cases = "There are currently {0:,} confirmed cases in the US. A decrease of {1} from yesterday - YAY!".format(cases, delta) 
+
     return deaths, cases
 
-def compliment():
-    tip, wisdom = get_tips()
-    deaths, cases = getCovid()
-
-    compliment = [tip, wisdom, deaths, cases ]
-
+def getHolidays():
     us = holidays.UnitedStates()
     us.append({str(datetime.now().year) + "-08-29":"Birthday, Ryan! You are the best dad ever!"})
     us.append({str(datetime.now().year) + "-01-03":"Birthday, Carol!"})
@@ -62,13 +105,5 @@ def compliment():
     us.append({str(datetime.now().year) + "-02-09":"Birthday, Tia Carol"})
     us.append({str(datetime.now().year) + "-11-26":"Birthday, Marizilda"})
     us.append({str(datetime.now().year) + "-05-10":"Birthday, Zeca"})
+    return us
 
-    if datetime.now() in us:
-        return 'Happy ' + str(us.get(datetime.now()))
-
-    if datetime.now().hour <= 11:
-        return str(compliment[random.randint(0,len(compliment)-1)]);
-    elif 12 <= datetime.now().hour < 17:
-        return str(compliment[random.randint(0,len(compliment)-1)]);
-    else:
-        return str(compliment[random.randint(0,len(compliment)-1)]);
