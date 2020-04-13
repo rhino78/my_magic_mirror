@@ -7,6 +7,7 @@ import requests
 import string
 from os import path
 import COVID19Py
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from bs4 import BeautifulSoup
 
 def compliment():
@@ -28,6 +29,7 @@ def compliment():
 def getTips():
     try:
         url = "http://fuckinghomepage.com/"
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         r = requests.get(url, verify=False)
         soup = BeautifulSoup(r.content, "html.parser")
         str = soup.p.text
