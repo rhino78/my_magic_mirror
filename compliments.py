@@ -43,7 +43,7 @@ def getTips():
         return tip, wisdom
 
 def writeNew(cases):
-    with open("covidhistory", "w+") as f:
+    with open("/home/pi/my_magic_mirror/covidhistory", "w") as f:
         d  = datetime.now()-timedelta(days=1)
         f.write("{0} {1}\n".format(d.strftime("%m%d%Y"),500000))
         f.write("{0} {1}\n".format(datetime.now().strftime("%m%d%Y"),cases))
@@ -55,10 +55,10 @@ def getDelta(year, month, day):
     return(b-a).days
 
 def getYesterday(cases):
-    if not path.exists('covidhistory'):
+    if not path.exists("/home/pi/my_magic_mirror/covidhistory"):
         writeNew(cases)
 
-    with open('covidhistory') as f:
+    with open("/home/pi/my_magic_mirror/covidhistory") as f:
         lines = f.read().splitlines()
 
     # expecting mmddyyyy 1111111 format
@@ -66,7 +66,7 @@ def getYesterday(cases):
     if lines[len(lines)-1].split()[0] == datetime.now().strftime("%m%d%Y"):
         return lines[len(lines)-2].split()[1]
     else:
-        with open('covidhistory', 'a') as f:
+        with open("/home/pi/my_magic_miirror/covidhistory", "a") as f:
             f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y"), cases))
 
         return lines[len(lines)-1].split()[1]
