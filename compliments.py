@@ -66,27 +66,33 @@ def getYesterday(cases):
     if lines[len(lines)-1].split()[0] == datetime.now().strftime("%m%d%Y"):
         return lines[len(lines)-2].split()[1]
     else:
-        with open("/home/pi/my_magic_miirror/covidhistory", "a") as f:
-            f.write("{0} {1}".format(datetime.now().strftime("%m%d%Y"), cases))
+        with open("/home/pi/my_magic_mirror/covidhistory", "a") as f:
+            f.write("{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
 
         return lines[len(lines)-1].split()[1]
 
 
 def getCovid():
-    covid = COVID19Py.COVID19()
-    location = covid.getLocationByCountryCode("US")
-    deaths = location[0]['latest']['deaths']
-    deaths = "There are currently {:,} deaths in the US related to COVID19".format(deaths)
-    cases = location[0]['latest']['confirmed']
-    yesterdayData = getYesterday(cases)
-    delta = int(cases) - int(yesterdayData)
+    try:
+        covid = COVID19Py.COVID19()
+        location = covid.getLocationByCountryCode("US")
+        deaths = location[0]['latest']['deaths']
+        deaths = "There are currently {:,} deaths in the US related to COVID19".format(deaths)
+        cases = location[0]['latest']['confirmed']
+        yesterdayData = getYesterday(cases)
+        delta = int(cases) - int(yesterdayData)
 
-    if delta > 0:
-        cases = "There are currently {0:,} confirmed cases in the US. An increase of {1} from yesterday.".format(cases, delta) 
-    else:
-        cases = "There are currently {0:,} confirmed cases in the US. A decrease of {1} from yesterday - YAY!".format(cases, delta) 
+        if delta > 0:
+                cases = "There are currently {0:,} confirmed cases in the US. An increase of {1:,} from yesterday.".format(cases, delta)
+        else:
+                cases = "There are currently {0:,} confirmed cases in the US. A decrease of {1:,} from yesterday - YAY!".format(cases, delta)
 
-    return deaths, cases
+    except:
+        deaths = "Things are not great"
+        cases = "Not Looking good"
+    finally:
+        return deaths, cases
+
 
 def getHolidays():
     us = holidays.UnitedStates()
