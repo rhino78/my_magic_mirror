@@ -42,10 +42,10 @@ def getTips():
     finally:
         return tip, wisdom
 
-def writeNew(cases):
-    with open("/home/pi/my_magic_mirror/covidhistory", "w") as f:
+def writeNew(cases, historyfile):
+    with open(historyfile, "w") as f:
         d  = datetime.now()-timedelta(days=1)
-        f.write("{0} {1}\n".format(d.strftime("%m%d%Y"),500000))
+        f.write("{0} {1}\n".format(d.strftime("%m%d%Y"),500))
         f.write("{0} {1}\n".format(datetime.now().strftime("%m%d%Y"),cases))
 
 def getDelta(year, month, day):
@@ -54,11 +54,11 @@ def getDelta(year, month, day):
     a = datetime(c.year, c.month, c.day)
     return(b-a).days
 
-def getYesterday(cases):
-    if not path.exists("/home/pi/my_magic_mirror/covidhistory"):
-        writeNew(cases)
+def getPrev(cases, historyfile):
+    if not path.exists(historyfile):
+        writeNew(cases, historyfile)
 
-    with open("/home/pi/my_magic_mirror/covidhistory") as f:
+    with open(historyfile) as f:
         lines = f.read().splitlines()
 
     # expecting mmddyyyy 1111111 format
@@ -66,7 +66,7 @@ def getYesterday(cases):
     if lines[len(lines)-1].split()[0] == datetime.now().strftime("%m%d%Y"):
         return lines[len(lines)-2].split()[1]
     else:
-        with open("/home/pi/my_magic_mirror/covidhistory", "a") as f:
+        with open(historyfile, "a") as f:
             f.write("{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
 
         return lines[len(lines)-1].split()[1]
@@ -77,15 +77,23 @@ def getCovid():
         covid = COVID19Py.COVID19()
         location = covid.getLocationByCountryCode("US")
         deaths = location[0]['latest']['deaths']
-        deaths = "There are currently {:,} deaths in the US related to COVID19".format(deaths)
         cases = location[0]['latest']['confirmed']
-        yesterdayData = getYesterday(cases)
-        delta = int(cases) - int(yesterdayData)
+        prevCases = getPrev(cases, '/home/rhino/github/my_magic_mirror/covidhistory')
+        #prevCases = getPrev(cases, '/home/pi/my_magic_mirror/covidhistory')
+        prevDeaths = getPrev(deaths, '/home/rhino/github/my_magic_mirror/coviddeaths')
+        #prevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
+        delta = int(cases) - int(prevCases)
+        changedeaths = int(deaths) - int(prevDeaths)
 
         if delta > 0:
-                cases = "There are currently {0:,} confirmed cases in the US. An increase of {1:,} from yesterday.".format(cases, delta)
+            cases = "There are currently {0:,} confirmed cases in the US. An increase of {1:,} from yesterday.".format(cases, delta)
         else:
-                cases = "There are currently {0:,} confirmed cases in the US. A decrease of {1:,} from yesterday - YAY!".format(cases, delta)
+            cases = "There are currently {0:,} confirmed cases in the US. A decrease of {1:,} from yesterday - YAY!".format(cases, delta)
+
+        if delta > 0:
+            deaths = "{0:,} People have died from COVID19 in the US :( An increase of {1:,} from yesterday.".format(deaths, changedeaths)
+        else:
+            deaths = "{0:,} People have died from COVID19 in the US :( An decrease of {1:,} from yesterday. :)".format(deaths, changedeaths)
 
     except:
         deaths = "Things are not great"
