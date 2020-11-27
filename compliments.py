@@ -77,10 +77,17 @@ def getCovid():
         location = covid.getLocationByCountryCode("US")
         deaths = location[0]['latest']['deaths']
         cases = location[0]['latest']['confirmed']
+<<<<<<< HEAD
         #prevCases = getPrev(cases, '/home/rhino/github/my_magic_mirror/covidhistory')
         prevCases = getPrev(cases, '/home/pi/my_magic_mirror/covidhistory')
         #prevDeaths = getPrev(deaths, '/home/rhino/github/my_magic_mirror/coviddeaths')
         prevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
+=======
+        prevCases = getPrev(cases, '/home/rhino/github/my_magic_mirror/covidhistory')
+        #prevCases = getPrev(cases, '/home/pi/my_magic_mirror/covidhistory')
+        prevDeaths = getPrev(deaths, '/home/rhino/github/my_magic_mirror/coviddeaths')
+        #prevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
+>>>>>>> 0b519659f54f0e7792e47e2655530fc9b77e8433
         delta = int(cases) - int(prevCases)
         changedeaths = int(deaths) - int(prevDeaths)
 
