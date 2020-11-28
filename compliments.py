@@ -34,6 +34,8 @@ def getTips():
         soup = BeautifulSoup(r.content, "html.parser")
         str = soup.p.text
         #now we get the words of wisdom
+        #adding a note here
+
         row = soup.find_all('p')[1:7]
         wisdom = string.capwords(row[1].string)
     except:
