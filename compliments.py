@@ -79,7 +79,7 @@ def getCovid():
         location = covid.getLocationByCountryCode("US")
         deaths = location[0]['latest']['deaths']
         cases = location[0]['latest']['confirmed']
-        # hprevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
+        # prevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
         delta = int(cases) - int(prevCases)
         changedeaths = int(deaths) - int(prevDeaths)
 
