@@ -1,0 +1,15 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: trailing-whitespace
+-   repo: local
+    hooks:
+    -   id: unittests
+        name: unittest
+        entry: python -m complimenttest
+        language: python
+        'types': [python]
+        pass_filenames: false
+        stages: [commit]
+        additional_dependencies: ['praw', 'holidays', 'COVID19Py', 'bs4']
