@@ -14,8 +14,8 @@ from bs4 import BeautifulSoup
 def compliment():
     wisdom = getTips()
     deaths, cases = getCovid()
-    compliment = [wisdom, deaths, cases]
     stage = getStage()
+    compliment = [stage, wisdom, deaths, cases]
     us = getHolidays()
 
     if datetime.now() in us:
