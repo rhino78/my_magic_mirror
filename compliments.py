@@ -15,6 +15,7 @@ def compliment():
     wisdom = getTips()
     deaths, cases = getCovid()
     compliment = [wisdom, deaths, cases]
+    stage = getStage()
     us = getHolidays()
 
     if datetime.now() in us:
@@ -26,6 +27,14 @@ def compliment():
         return str(compliment[random.randint(0, len(compliment) - 1)])
     else:
         return str(compliment[random.randint(0, len(compliment) - 1)])
+
+def getStage():
+    r = requests.get("https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information#:~:text=Austin%2DTravis%20County%20is%20currently,%2D19%20Risk%2DBased%20Guidelines.")
+    soup = BeautifulSoup(r.text, 'html.parser')
+    stage = soup.findAll('p')
+    longtext = stage[4].text
+    results = longtext.split(".")
+    return results[0]
 
 
 def getTips():
