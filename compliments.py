@@ -73,11 +73,12 @@ def getPrev(cases, historyfile):
 
 def getCovid():
     try:
-        covid = COVID19Py.COVID19(url="https://cvtapi.nl")
+        covid = COVID19Py.COVID19()
         location = covid.getLocationByCountryCode("US")
         deaths = location[0]['latest']['deaths']
         cases = location[0]['latest']['confirmed']
-        # hprevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
+        prevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
+        prevCases = getPrev(cases, '/home/pi/my_magic_mirror/covidhistory')
         delta = int(cases) - int(prevCases)
         changedeaths = int(deaths) - int(prevDeaths)
 
