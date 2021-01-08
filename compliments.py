@@ -83,16 +83,10 @@ def getCovid():
     try:
         covid = COVID19Py.COVID19()
         location = covid.getLocationByCountryCode("US")
-<<<<<<< HEAD
         deaths = location[0]['latest']['deaths']
         cases = location[0]['latest']['confirmed']
         prevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
         prevCases = getPrev(cases, '/home/pi/my_magic_mirror/covidhistory')
-=======
-        deaths = location[0]["latest"]["deaths"]
-        cases = location[0]["latest"]["confirmed"]
-        # prevDeaths = getPrev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
->>>>>>> f22e05f012bd744ed0cf6fc206578a6c0cafde13
         delta = int(cases) - int(prevCases)
         changedeaths = int(deaths) - int(prevDeaths)
 
