@@ -11,6 +11,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from bs4 import BeautifulSoup
 
 
+
 def compliment():
     wisdom = getTips()
     deaths, cases = getCovid()
