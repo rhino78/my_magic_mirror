@@ -12,6 +12,7 @@ class TestCompliments(unittest.TestCase):
         results = [v, covid, stage, tips, holi]
         self.assertEqual(5, len(results))
         self.assertIsNot(None, v)
+        self.assertIsNot(None, stage)
 
 
 if __name__ == '__main__':
