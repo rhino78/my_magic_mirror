@@ -7,6 +7,7 @@ class TestCompliments(unittest.TestCase):
         v = compliments.compliment()
         covid = compliments.getCovid()
         stage = compliments.getStage()
+        print(stage)
         tips = compliments.getTips()
         holi = compliments.getHolidays()
         results = [v, covid, stage, tips, holi]

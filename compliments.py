@@ -33,7 +33,12 @@ def getStage():
     r = requests.get("https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information#:~:text=Austin%2DTravis%20County%20is%20currently,%2D19%20Risk%2DBased%20Guidelines.")
     soup = BeautifulSoup(r.text, 'html.parser')
     stage = soup.findAll('strong')
-    longtext = stage[1].text
+    c = "currently in Stage"
+    for s in stage:
+        foo = str(s)
+        if c in foo:
+            longtext = foo
+            longtext = longtext.replace('<strong>', '')
     results = longtext.split(".")
     return results[0]
 
