@@ -16,7 +16,9 @@ def compliment():
     wisdom = getTips()
     deaths, cases = getCovid()
     stage = getStage()
-    compliment = [stage, wisdom, deaths, cases]
+    summer = getSummer()
+
+    compliment = [stage, wisdom, deaths, cases, summer]
     us = getHolidays()
 
     if datetime.now() in us:
@@ -41,6 +43,10 @@ def getStage():
             longtext = longtext.replace('<strong>', '')
     results = longtext.split(".")
     return results[0]
+
+
+def getSummer():
+    return "There are {0} days until summer!".format(getDelta(2021, 5, 27))
 
 
 def getTips():
