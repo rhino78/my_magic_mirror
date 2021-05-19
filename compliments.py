@@ -46,7 +46,10 @@ def getStage():
 
 
 def getSummer():
-    return "There are {0} days until summer!".format(getDelta(2021, 5, 27))
+    if getDelta(2021, 5, 27) > 0:
+        return "There are {0} days until summer!".format(getDelta(2021, 5, 27))
+    else:
+        return "There are {0} days until school starts".format(getDelta(2021, 8, 18))
 
 
 def getTips():
