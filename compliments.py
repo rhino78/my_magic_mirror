@@ -130,7 +130,7 @@ def getHolidays():
     us.append(
         {
             str(datetime.now().year)
-            + "-08-29": "Birthday, Ryan! You are the best dad ever!"
+            + "-08-29": "Birthday, Ryan! You are the best dad ever!!"
         }
     )
     us.append({str(datetime.now().year) + "-01-03": "Birthday, Carol!"})
