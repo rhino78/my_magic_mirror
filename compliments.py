@@ -46,10 +46,8 @@ def getStage():
 
 
 def getSummer():
-    if getDelta(2021, 8, 29) > 0:
-        return "There are {0} days until dads birthday!".format(getDelta(2021, 8, 29))
-    else:
-        return "There are {0} days until dads birthday!".format(getDelta(2022, 8, 29))
+    if getDelta(2021, 12, 17) > 0:
+        return "There are {0} days until christmas break!".format(getDelta(2021, 8, 29))
 
 
 def getTips():
@@ -115,22 +113,10 @@ def getCovid():
         changedeaths = int(deaths) - int(prevDeaths)
 
         if delta > 0:
-            cases = "There are currently {0:,} confirmed cases in the US. An increase of {1:,} from yesterday.".format(
-                cases, delta
-            )
-        else:
-            cases = "There are currently {0:,} confirmed cases in the US. A decrease of {1:,} from yesterday - YAY!".format(
-                cases, delta
-            )
+            cases = "{0:,} got covid yesterday.".format(delta)
 
         if delta > 0:
-            deaths = "{0:,} People have died from COVID19 in the US :( An increase of {1:,} from yesterday.".format(
-                deaths, changedeaths
-            )
-        else:
-            deaths = "{0:,} People have died from COVID19 in the US :( An decrease of {1:,} from yesterday. :)".format(
-                deaths, changedeaths
-            )
+            deaths = "{0:,} People have died from COVID19 in the US yesterday.".format(changedeaths)
 
     except:
         deaths = "COVID sucks"
