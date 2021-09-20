@@ -113,7 +113,7 @@ def getCovid():
         changedeaths = int(deaths) - int(prevDeaths)
 
         if delta > 0:
-            cases = "{0:,} got covid yesterday.".format(delta)
+            cases = "{0:,} new people got covid yesterday.".format(delta)
 
         if delta > 0:
             deaths = "{0:,} People have died from COVID19 in the US yesterday.".format(changedeaths)
