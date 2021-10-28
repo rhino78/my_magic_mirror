@@ -14,6 +14,7 @@ class TestCompliments(unittest.TestCase):
         """tests the covid stage"""
         covidstage = compliments.getstage()
         self.assertIsNotNone(covidstage)
+        self.assertNotEqual("travis county is overrun by zombies", covidstage)
 
     def testcovid(self):
         """tests the covid compliment"""
@@ -34,11 +35,13 @@ class TestCompliments(unittest.TestCase):
         """tests that we get the kanye compliment"""
         kanye = compliments.getkanye()
         self.assertIsNotNone(kanye)
+        self.assertNotEqual(kanye, "kanye is awesome")
 
     def testquote(self):
         """tests that we got a good quote"""
         quote = compliments.getquote()
         self.assertIsNotNone(quote)
+        self.assertNotEqual("dad quotes are cool", quote)
 
     def testmom(self):
         """tests that we got a good mom quote"""

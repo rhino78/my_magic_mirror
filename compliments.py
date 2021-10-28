@@ -34,38 +34,52 @@ def compliment():
 
 def getyomomma():
     """returns a yo momma joke from a public API """
+    results = "yo momma is very fat"
     joke = requests.get('https://yomomma-api.herokuapp.com/jokes')
-    jsonres = joke.json()
-    return jsonres["joke"]
+    if joke.status_code == 200:
+        jsonres = joke.json()
+        if len(jsonres) >0:
+            results = jsonres["joke"]
+    return results
 
 
 def getquote():
     """returns a random quote from this cool api"""
+    results = "dad quotes are cool"
     randomquote = requests.get('https://quote-garden.herokuapp.com/api/v3/quotes/random')
-    jsonres = randomquote.json()
-    data = jsonres['data']
-    return data[0]['quoteText'] + " -" + data[0]['quoteAuthor']
+    if randomquote.status_code == 200:
+        jsonres = randomquote.json()
+        if len(jsonres) >0:
+            data = jsonres['data']
+            results = data[0]['quoteText'] + " -" + data[0]['quoteAuthor']
+    return results
 
 def getkanye():
     """returns a random kanye quote from this cool api"""
+    results = "kanye is awesome"
     kanye = requests.get('https://api.kanye.rest')
-    jsonres = kanye.json()
-    return jsonres['quote'] + " - kanye"
+    if kanye.status_code == 200:
+        jsonres = kanye.json()
+        if len(jsonres) >0:
+            results = jsonres['quote'] + " - kanye"
+    return results
 
 def getstage():
     """returns a the current coronavirus stage from travis county"""
+    results = "travis county is overrun by zombies"
     travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information#:~:text=Austin%2DTravis%20County%20is%20currently,%2D19%20Risk%2DBased%20Guidelines."
     request = requests.get(travisurl)
-    soup = BeautifulSoup(request.text, 'html.parser')
-    stages = soup.findAll('strong')
-    current = "currently in Stage"
-    for stage in stages:
-        thisstage = str(stage)
-        if current in thisstage:
-            longtext = thisstage
-            longtext = longtext.replace('<strong>', '')
-    results = longtext.split(".")
-    return results[0]
+    if request.status_code == 200:
+        soup = BeautifulSoup(request.text, 'html.parser')
+        stages = soup.findAll('strong')
+        current = "currently in Stage"
+        for stage in stages:
+            thisstage = str(stage)
+            if current in thisstage:
+                longtext = thisstage
+                longtext = longtext.replace('<strong>', '')
+        results = longtext.split(".")
+        return results[0]
 
 
 def getsummer():
