@@ -1,9 +1,17 @@
 """ a tes suite for all tests in compliments"""
 import unittest
 import compliments
+import api_interface
+
 
 class TestCompliments(unittest.TestCase):
     """ a test class to test all compliments """
+
+    def testlist(self):
+        """test the list function"""
+        listresult = api_interface.getquotes()
+        print(len(listresult))
+        self.assertIsNotNone(listresult)
 
     def testcompliment(self):
         """test the overall compliments"""
@@ -12,45 +20,45 @@ class TestCompliments(unittest.TestCase):
 
     def testcovidstage(self):
         """tests the covid stage"""
-        covidstage = compliments.getstage()
+        covidstage = api_interface.getstage()
         self.assertIsNotNone(covidstage)
         self.assertNotEqual("travis county is overrun by zombies", covidstage)
 
     def testcovid(self):
         """tests the covid compliment"""
-        covid = compliments.getcovid()
+        covid = api_interface.getcovid()
         self.assertIsNotNone(covid)
 
     def teststage(self):
         """test the current stage compliment"""
-        stage = compliments.getstage()
+        stage = api_interface.getstage()
         self.assertIsNotNone(stage)
 
     def testsummer(self):
         """test the summer compliment"""
-        summer = compliments.getsummer()
+        summer = api_interface.getsummer()
         self.assertIsNotNone(summer)
 
     def testkanye(self):
         """tests that we get the kanye compliment"""
-        kanye = compliments.getkanye()
+        kanye = api_interface.getkanye()
         self.assertIsNotNone(kanye)
         self.assertNotEqual(kanye, "kanye is awesome")
 
     def testquote(self):
         """tests that we got a good quote"""
-        quote = compliments.getquote()
+        quote = api_interface.getquote()
         self.assertIsNotNone(quote)
         self.assertNotEqual("dad quotes are cool", quote)
 
     def testmom(self):
         """tests that we got a good mom quote"""
-        mom = compliments.getyomomma()
+        mom = api_interface.getyomomma()
         self.assertIsNotNone(mom)
 
     def testtips(self):
         """ tests that we got a good tip"""
-        tips = compliments.gettips()
+        tips = api_interface.gettips()
         self.assertIsNotNone(tips)
 
     def testholiday(self):

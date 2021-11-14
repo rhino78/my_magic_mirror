@@ -70,7 +70,7 @@ def get_news_headlines():
 		item_info = {}
 		item_info['title'] = item[0].text
 		item_info['description'] = item[1].text
-		results.append(item_info)	
+		results.append(item_info)
 
 	return jsonify({'headlines': results})
 
@@ -97,6 +97,6 @@ def get_calendar():
         return jsonify({'calendar': final})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=False, host='0.0.0.0', port=8080)
 
 
