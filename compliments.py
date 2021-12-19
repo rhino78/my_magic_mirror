@@ -19,7 +19,6 @@ def compliment():
 
     return str(complimentlist[random.randint(0, len(complimentlist) - 1)])
 
-
 def getholidays():
     """if today is a holiday, display that all day"""
     usholidays = holidays.UnitedStates()
