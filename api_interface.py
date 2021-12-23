@@ -83,7 +83,7 @@ def getstage():
 
 def getsummer():
     """returns the countdown to christmas break"""
-    if getdelta(2021, 12, 17) > 0:
+    if getdelta(2022, 1, 6) > 0:
         return "There are {0} days until christmas break is over. wamp wamp".format(getdelta(2022, 1, 6))
     return "I love christmas"
 
