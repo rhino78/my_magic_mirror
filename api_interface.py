@@ -63,9 +63,10 @@ def getquote():
 def getstage():
     """returns a the current coronavirus stage from travis county"""
     results = "travis county is overrun by zombies"
-    travisurl = "https://www.traviscountytx.gov/news/2020/' \
-            '1945-novel-coronavirus-covid-19-information#:~:text=' \
-            'Austin%2DTravis%20County%20is%20currently,%2D19%20Risk%2DBased%20Guidelines."
+    travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information"
+    # travisurl = "https://www.traviscountytx.gov/news/2020/' \
+    #         '1945-novel-coronavirus-covid-19-information#:~:text=' \
+    #         'Austin%2DTravis%20County%20is%20currently,%2D19%20Risk%2DBased%20Guidelines."
     request = requests.get(travisurl)
     if request.status_code == 200:
         soup = BeautifulSoup(request.text, 'html.parser')
