@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from icalendar import Calendar
 import datetime
 import time
-import urll'ib.request
+import urllib.request
 from operator import itemgetter
 import calendar
 import ical_parser
