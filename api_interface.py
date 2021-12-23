@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+
 def getquotes():
     """returns a list of all the quotes"""
     results = []
@@ -23,15 +24,17 @@ def getquotes():
     results.append(cases)
     return results
 
+
 def getyomomma():
     """returns a yo momma joke from a public API """
     results = "yo momma is very fat"
     joke = requests.get('https://yomomma-api.herokuapp.com/jokes')
     if joke.status_code == 200:
         jsonres = joke.json()
-        if len(jsonres) >0:
+        if len(jsonres) > 0:
             results = jsonres["joke"]
     return results
+
 
 def getkanye():
     """returns a random kanye quote from this cool api"""
@@ -39,20 +42,23 @@ def getkanye():
     kanye = requests.get('https://api.kanye.rest')
     if kanye.status_code == 200:
         jsonres = kanye.json()
-        if len(jsonres) >0:
+        if len(jsonres) > 0:
             results = jsonres['quote'] + " - kanye"
     return results
+
 
 def getquote():
     """returns a random quote from this cool api"""
     results = "dad quotes are cool"
-    randomquote = requests.get('https://quote-garden.herokuapp.com/api/v3/quotes/random')
+    randomquote = requests.get(
+            'https://quote-garden.herokuapp.com/api/v3/quotes/random')
     if randomquote.status_code == 200:
         jsonres = randomquote.json()
-        if len(jsonres) >0:
+        if len(jsonres) > 0:
             data = jsonres['data']
             results = data[0]['quoteText'] + " -" + data[0]['quoteAuthor']
     return results
+
 
 def getstage():
     """returns a the current coronavirus stage from travis county"""
@@ -72,8 +78,8 @@ def getstage():
                 longtext = longtext.replace('<strong>', '')
                 results = longtext.split(".")
         return results[0]
-    #return the default
     return results
+
 
 def getsummer():
     """returns the countdown to christmas break"""
@@ -81,12 +87,15 @@ def getsummer():
         return "There are {0} days until christmas break is over. wamp wamp".format(getdelta(2022, 1, 6))
     return "I love christmas"
 
+
 def getdelta(year, month, day):
     """returns the time between today and date in argument"""
     currentdate = datetime.now()
     givendate = datetime(year, month, day)
-    converteddate = datetime(currentdate.year, currentdate.month, currentdate.day)
+    converteddate = datetime(
+            currentdate.year, currentdate.month, currentdate.day)
     return (givendate - converteddate).days
+
 
 def gettips():
     """returns tips of the day from an awesome website"""
@@ -99,6 +108,7 @@ def gettips():
         row = soup.find_all("p")[1:7]
         results = string.capwords(row[1].string)
     return results
+
 
 def getcovid():
     """get the count of covid cases and deaths to display"""
@@ -124,12 +134,16 @@ def getcovid():
     finally:
         return deaths, cases
 
+
 def writenew(cases, historyfile):
     """writes new cases to the file onthe server"""
     with open(historyfile, "w") as fileofhistory:
         datedelta = datetime.now() - timedelta(days=1)
-        fileofhistory.write("{0} {1}\n".format(datedelta.strftime("%m%d%Y"), 500))
-        fileofhistory.write("{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
+        fileofhistory.write(
+                "{0} {1}\n".format(datedelta.strftime("%m%d%Y"), 500))
+        fileofhistory.write(
+                "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
+
 
 def getprev(cases, historyfile):
     """returns the count of the cases from the previous day"""
@@ -144,7 +158,8 @@ def getprev(cases, historyfile):
     if lines[len(lines) - 1].split()[0] == datetime.now().strftime("%m%d%Y"):
         return lines[len(lines) - 2].split()[1]
 
-    #if we don't have data for today
+    # if we don't have data for today
     with open(historyfile, "a") as fileofhistory:
-        fileofhistory.write("{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
+        fileofhistory.write(
+                "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
         return lines[len(lines) - 1].split()[1]
