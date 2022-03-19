@@ -1,4 +1,4 @@
-""" a tes suite for all tests in compliments"""
+""" a test suite for all tests in compliments"""
 import unittest
 import compliments
 import api_interface
@@ -20,8 +20,6 @@ class TestCompliments(unittest.TestCase):
     def testcovidstage(self):
         """tests the covid stage"""
         covidstage = api_interface.getstage()
-        print("the covid stage is : {}".format(covidstage))
-        print(covidstage)
         self.assertIsNotNone(covidstage)
         self.assertNotEqual("travis county is overrun by zombies", covidstage)
 
@@ -33,8 +31,6 @@ class TestCompliments(unittest.TestCase):
     def teststage(self):
         """test the current stage compliment"""
         stage = api_interface.getstage()
-        print("the covid stage is: {}".format(stage))
-        print(stage)
         self.assertIsNotNone(stage)
 
     def testsummer(self):

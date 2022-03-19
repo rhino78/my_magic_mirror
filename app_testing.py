@@ -1,8 +1,6 @@
-import os
-import flaskr
 import unittest
-import tempfile
 from app import app
+
 
 class FlaskrTestCase(unittest.TestCase):
 
@@ -14,8 +12,7 @@ class FlaskrTestCase(unittest.TestCase):
 
     def test_self(self):
         result = self.app.get('/')
-        print(result)
-        self.assertEqual(result.status_code, 500)
+        self.assertEqual(result.status_code, 200)
 
     def test_cal(self):
         result = self.app.get('/get_calendar')
@@ -29,9 +26,7 @@ class FlaskrTestCase(unittest.TestCase):
         result = self.app.get('/get_compliment')
         self.assertEqual(result.status_code, 200)
         self.assertTrue(result.data)
-        
-        
-        
+
 
 if __name__ == '__main__':
     unittest.main()
