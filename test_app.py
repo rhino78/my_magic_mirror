@@ -1,4 +1,7 @@
 import unittest
+import ical_parser
+import urllib.request
+from icalendar import Calendar
 from app import app
 
 
@@ -13,6 +16,16 @@ class FlaskrTestCase(unittest.TestCase):
     def test_self(self):
         result = self.app.get('/')
         self.assertEqual(result.status_code, 200)
+
+    def test_app(self):
+        url = 'http://p27-calendars.icloud.com/published/2/sAKB2qXoM7Kj0E4v8n2nzd3naihwmKKZqvpklvflY9V-xB0-vg5pkFqB2dAyd_84'
+        ics = urllib.request.urlopen(url).read()
+        cal = Calendar.from_ical(ics)
+        entries = []
+        entries = ical_parser.ical_parser(cal)
+        self.assertIsNotNone(entries)
+        # for e in entries:
+        #     print(e)
 
     def test_cal(self):
         result = self.app.get('/get_calendar')
