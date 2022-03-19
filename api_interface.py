@@ -1,4 +1,11 @@
-"""a class to handle all the api interfaces"""
+"""
+a class to handle all the api interfaces
+we use this to connect to an external api
+all of these functions return a string
+TODO: error handling and/or size constraints
+I've noticed that at times the text is really large
+and makes the screen terrible :\
+"""
 from os import path
 from datetime import datetime, timedelta
 import string
@@ -51,7 +58,7 @@ def getquote():
     """returns a random quote from this cool api"""
     results = "dad quotes are cool"
     randomquote = requests.get(
-            'https://quote-garden.herokuapp.com/api/v3/quotes/random')
+        'https://quote-garden.herokuapp.com/api/v3/quotes/random')
     if randomquote.status_code == 200:
         jsonres = randomquote.json()
         if len(jsonres) > 0:
@@ -83,9 +90,9 @@ def getstage():
 
 
 def getsummer():
-    """returns the countdown to christmas break"""
-    if getdelta(2022, 1, 6) > 0:
-        return "There are {0} days until christmas break is over. wamp wamp".format(getdelta(2022, 1, 6))
+    """returns the countdown to spring break"""
+    if getdelta(2022, 5, 26) > 0:
+        return "There are {0} days until summer break!".format(getdelta(2022, 5, 26))
     return "I love christmas"
 
 
@@ -94,7 +101,7 @@ def getdelta(year, month, day):
     currentdate = datetime.now()
     givendate = datetime(year, month, day)
     converteddate = datetime(
-            currentdate.year, currentdate.month, currentdate.day)
+        currentdate.year, currentdate.month, currentdate.day)
     return (givendate - converteddate).days
 
 
@@ -127,7 +134,8 @@ def getcovid():
             cases = "{0:,} new people got covid yesterday.".format(delta)
 
         if delta > 0:
-            deaths = "{0:,} People have died from COVID19 in the US yesterday.".format(changedeaths)
+            deaths = "{0:,} People have died from COVID19 in the US yesterday.".format(
+                changedeaths)
 
     except:
         deaths = "COVID sucks"
@@ -141,9 +149,9 @@ def writenew(cases, historyfile):
     with open(historyfile, "w") as fileofhistory:
         datedelta = datetime.now() - timedelta(days=1)
         fileofhistory.write(
-                "{0} {1}\n".format(datedelta.strftime("%m%d%Y"), 500))
+            "{0} {1}\n".format(datedelta.strftime("%m%d%Y"), 500))
         fileofhistory.write(
-                "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
+            "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
 
 
 def getprev(cases, historyfile):
@@ -162,5 +170,5 @@ def getprev(cases, historyfile):
     # if we don't have data for today
     with open(historyfile, "a") as fileofhistory:
         fileofhistory.write(
-                "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
+            "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
         return lines[len(lines) - 1].split()[1]
