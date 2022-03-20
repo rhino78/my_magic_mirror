@@ -1,4 +1,6 @@
 import unittest
+from operator import itemgetter
+import time
 import ical_parser
 import urllib.request
 from icalendar import Calendar
@@ -23,9 +25,12 @@ class FlaskrTestCase(unittest.TestCase):
         cal = Calendar.from_ical(ics)
         entries = []
         entries = ical_parser.ical_parser(cal)
-        self.assertIsNotNone(entries)
-        # for e in entries:
-        #     print(e)
+        sorted_events = sorted(entries, key=itemgetter('date'))
+        filtered = [i for i in sorted_events if i['date'] >= time.strftime(
+            "%Y-%m-%d %H:%M:%S")]
+        self.assertIsNotNone(filtered)
+        for e in filtered:
+            print(e)
 
     def test_cal(self):
         result = self.app.get('/get_calendar')
