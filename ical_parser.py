@@ -3,8 +3,11 @@ import pytz
 from dateutil.relativedelta import relativedelta
 
 
-def process_event(summary, ev_date, entries, rule):
+def process_event(summary, ev_date, entries, rule, until):
     d = datetime.timedelta(days=1)
+    todays_date = datetime.datetime.today()
+    uct = pytz.UTC
+    localized_start = uct.localize(todays_date)
 
     if rule == "DAILY":
         d = datetime.timedelta(days=1)
@@ -15,12 +18,21 @@ def process_event(summary, ev_date, entries, rule):
     elif rule == "YEARLY":
         d = datetime.timedelta(days=365)
 
-    for _ in range(0, 1):
+    for _ in range(0, 52):
+        # increment the date
         ev_date = ev_date + d
-        event_info = {}
-        event_info['summary'] = summary
-        event_info['date'] = str(ev_date)
-        entries.append(event_info)
+
+        # if we reach the until date - we don't need to process anymore
+        if ev_date > until:
+            return
+
+        # we only want to add an entry if its in the future
+        if localized_start < ev_date:
+            event_info = {}
+            event_info['summary'] = summary
+            event_info['date'] = str(ev_date)
+            print('adding {} to entries with a date of {}'.format(summary, ev_date))
+            entries.append(event_info)
 
 
 def ical_parser(cal):
@@ -45,7 +57,7 @@ def ical_parser(cal):
 
                     if until > localized_start:
                         process_event(event.get('summary'),
-                                      ev_date, entries, rule)
+                                      ev_date, entries, rule, until)
 
             else:
                 # here we have single events
