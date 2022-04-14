@@ -10,6 +10,11 @@ class TestCompliments(unittest.TestCase):
     def testlist(self):
         """test the list function"""
         listresult = api_interface.getquotes()
+
+        foo = list(filter(None, listresult))
+        print(len(listresult))
+        print(len(foo))
+
         self.assertIsNotNone(listresult)
 
     def testcompliment(self):
@@ -21,17 +26,20 @@ class TestCompliments(unittest.TestCase):
         """tests the covid stage"""
         covidstage = api_interface.getstage()
         self.assertIsNotNone(covidstage)
+        print("covid stage: ")
+        print(covidstage)
         self.assertNotEqual("travis county is overrun by zombies", covidstage)
+
+    # def testcovid2(self):
+    #     covidstage = api_interface.getstagealt()
+    #     self.assertIsNotNone(covidstage)
+    #     print(covidstage)
+    #     self.assertNotEqual("travis county is overrun by zombies", covidstage)
 
     def testcovid(self):
         """tests the covid compliment"""
         covid = api_interface.getcovid()
         self.assertIsNotNone(covid)
-
-    def teststage(self):
-        """test the current stage compliment"""
-        stage = api_interface.getstage()
-        self.assertIsNotNone(stage)
 
     def testsummer(self):
         """test the summer compliment"""
@@ -54,6 +62,7 @@ class TestCompliments(unittest.TestCase):
         """tests that we got a good mom quote"""
         mom = api_interface.getyomomma()
         self.assertIsNotNone(mom)
+        self.assertNotEqual("yo momma is very fat", mom)
 
     def testtips(self):
         """ tests that we got a good tip"""

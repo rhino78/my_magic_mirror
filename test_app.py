@@ -29,8 +29,6 @@ class FlaskrTestCase(unittest.TestCase):
         filtered = [i for i in sorted_events if i['date'] >= time.strftime(
             "%Y-%m-%d %H:%M:%S")]
         self.assertIsNotNone(filtered)
-        for e in filtered:
-            print(e)
 
     def test_cal(self):
         result = self.app.get('/get_calendar')

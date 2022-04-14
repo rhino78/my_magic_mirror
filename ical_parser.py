@@ -31,7 +31,6 @@ def process_event(summary, ev_date, entries, rule, until):
             event_info = {}
             event_info['summary'] = summary
             event_info['date'] = str(ev_date)
-            print('adding {} to entries with a date of {}'.format(summary, ev_date))
             entries.append(event_info)
 
 

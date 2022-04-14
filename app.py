@@ -78,7 +78,6 @@ def get_calendar():
     cal = Calendar.from_ical(ics)
     entries = []
     entries = ical_parser.ical_parser(cal)
-    print('the parser returned: {}'.format(len(entries)))
     sorted_events = sorted(entries, key=itemgetter('date'))
     # at this point, we don't need entries anymore
     entries = []
@@ -86,7 +85,6 @@ def get_calendar():
         "%Y-%m-%d %H:%M:%S")]
     # now that we have filtered, we don't need sorted anymore either
     sorted_events = []
-    print('the sorted count is :{}'.format(len(filtered)))
     final = []
     for f in filtered:
         info = {}

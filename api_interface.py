@@ -40,6 +40,7 @@ def getyomomma():
         jsonres = joke.json()
         if len(jsonres) > 0:
             results = jsonres["joke"]
+
     return results
 
 
@@ -64,10 +65,26 @@ def getquote():
         if len(jsonres) > 0:
             data = jsonres['data']
             results = data[0]['quoteText'] + " -" + data[0]['quoteAuthor']
+
     return results
 
 
 def getstage():
+    """returns a the current coronavirus stage from travis county"""
+    results = "travis county is overrun by zombies"
+    travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information"
+    request = requests.get(travisurl)
+    if request.status_code == 200:
+        soup = BeautifulSoup(request.text, 'html.parser')
+        for p in soup.find_all('p'):
+            img = p.find('img', alt=True)
+            if img is not None:
+                results = img['alt']
+
+    return results
+
+
+def getstageold():
     """returns a the current coronavirus stage from travis county"""
     results = "travis county is overrun by zombies"
     travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information"
@@ -147,6 +164,7 @@ def getcovid():
 def writenew(cases, historyfile):
     """writes new cases to the file onthe server"""
     with open(historyfile, "w") as fileofhistory:
+        datedelta = datetime.now() - timedelta(days=1)
         datedelta = datetime.now() - timedelta(days=1)
         fileofhistory.write(
             "{0} {1}\n".format(datedelta.strftime("%m%d%Y"), 500))
