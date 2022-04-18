@@ -29,7 +29,10 @@ def getquotes():
     results.append(getyomomma())
     results.append(deaths)
     results.append(cases)
-    return results
+
+    # some of the results are lengthy and cause the page to look bad
+    filtered_results = [word for word in results if len(word) < 150]
+    return filtered_results
 
 
 def getyomomma():

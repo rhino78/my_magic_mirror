@@ -10,11 +10,14 @@ class TestCompliments(unittest.TestCase):
     def testlist(self):
         """test the list function"""
         listresult = api_interface.getquotes()
+        test = [word for word in listresult if len(word) < 150]
+        print(len(test))
 
-        foo = list(filter(None, listresult))
+        for t in test:
+            print(len(t))
+            print(t)
+
         print(len(listresult))
-        print(len(foo))
-
         self.assertIsNotNone(listresult)
 
     def testcompliment(self):
