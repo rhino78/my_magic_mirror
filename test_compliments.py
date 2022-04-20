@@ -40,8 +40,13 @@ class TestCompliments(unittest.TestCase):
     #     self.assertNotEqual("travis county is overrun by zombies", covidstage)
 
     def testcovid(self):
-        """tests the covid compliment"""
+        """
+        tests the covid compliment
+        We do not expect to get COVID Sucks, Wear a Mask
+        """
         covid = api_interface.getcovid()
+        self.assertNotEqual("COVID sucks", covid[0])
+        self.assertNotEqual("Wear a Mask", covid[1])
         self.assertIsNotNone(covid)
 
     def testsummer(self):

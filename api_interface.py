@@ -183,11 +183,14 @@ def getprev(cases, historyfile):
     with open(historyfile) as fileofhistory:
         lines = fileofhistory.read().splitlines()
 
+        print(lines[0], lines[1])
+        print(len(lines))
     # expecting mmddyyyy 1111111 format
     # we have data for today
     if lines[len(lines) - 1].split()[0] == datetime.now().strftime("%m%d%Y"):
         return lines[len(lines) - 2].split()[1]
 
+    print('bruh')
     # if we don't have data for today
     with open(historyfile, "a") as fileofhistory:
         fileofhistory.write(
