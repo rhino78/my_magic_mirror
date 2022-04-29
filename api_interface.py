@@ -2,13 +2,12 @@
 a class to handle all the api interfaces
 we use this to connect to an external api
 all of these functions return a string
-TODO: error handling and/or size constraints
-I've noticed that at times the text is really large
-and makes the screen terrible :\
 """
 from os import path
 from datetime import datetime, timedelta
 import string
+import logging
+import enum
 import COVID19Py
 import requests
 from bs4 import BeautifulSoup
@@ -16,8 +15,18 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
+class Default(enum.Enum):
+    kanye = "kanye is awesome"
+    yomomma = "yo momma is very fat"
+    dad = "dad quotes are cool"
+    travis = "travis county is overrun by zombies"
+    father = "Love your father"
+
+
 def getquotes():
     """returns a list of all the quotes"""
+    logging.basicConfig(filename='unittest.log',
+                        encoding='utf-8', level=logging.ERROR)
     results = []
     deaths, cases = getcovid()
 
@@ -30,15 +39,26 @@ def getquotes():
     results.append(deaths)
     results.append(cases)
 
-    # some of the results are lengthy and cause the page to look bad
+    DO_NOT_CARE_LIST = [Default.kanye, Default.yomomma,
+                        Default.dad, Default.travis, Default.father]
+
     filtered_results = [word for word in results if len(word) < 150]
+
+    for f in filtered_results:
+        if f in DO_NOT_CARE_LIST:
+            filtered_results.remove(f)
+
     return filtered_results
 
 
 def getyomomma():
     """returns a yo momma joke from a public API """
-    results = "yo momma is very fat"
+    results = str(Default.yomomma)
     joke = requests.get('https://yomomma-api.herokuapp.com/jokes')
+    if joke.status_code != 200:
+        logging.error(
+            'got an error while getting yomomma: {}'.format(joke.status_code))
+
     if joke.status_code == 200:
         jsonres = joke.json()
         if len(jsonres) > 0:
@@ -49,8 +69,14 @@ def getyomomma():
 
 def getkanye():
     """returns a random kanye quote from this cool api"""
-    results = "kanye is awesome"
+    results = str(Default.kanye)
     kanye = requests.get('https://api.kanye.rest')
+
+    if kanye.status_code != 200:
+        logging.error(
+            'could not get a kanye quote: {}'.format(kanye.status_code))
+        return results
+
     if kanye.status_code == 200:
         jsonres = kanye.json()
         if len(jsonres) > 0:
@@ -60,9 +86,15 @@ def getkanye():
 
 def getquote():
     """returns a random quote from this cool api"""
-    results = "dad quotes are cool"
+    results = str(Default.dad)
     randomquote = requests.get(
         'https://quote-garden.herokuapp.com/api/v3/quotes/random')
+
+    if randomquote.status_code != 200:
+        logging.error('got an error getting a random quote: {}'.format(
+            randomquote.status_code))
+        return results
+
     if randomquote.status_code == 200:
         jsonres = randomquote.json()
         if len(jsonres) > 0:
@@ -74,9 +106,15 @@ def getquote():
 
 def getstage():
     """returns a the current coronavirus stage from travis county"""
-    results = "travis county is overrun by zombies"
+    results = str(Default.travis)
     travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information"
     request = requests.get(travisurl)
+
+    if request.status_code != 200:
+        logging.error('got an error while getting the travis county update: {}'.format(
+            request.status_code))
+        return results
+
     if request.status_code == 200:
         soup = BeautifulSoup(request.text, 'html.parser')
         for p in soup.find_all('p'):
@@ -84,28 +122,6 @@ def getstage():
             if img is not None:
                 results = img['alt']
 
-    return results
-
-
-def getstageold():
-    """returns a the current coronavirus stage from travis county"""
-    results = "travis county is overrun by zombies"
-    travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information"
-    # travisurl = "https://www.traviscountytx.gov/news/2020/' \
-    #         '1945-novel-coronavirus-covid-19-information#:~:text=' \
-    #         'Austin%2DTravis%20County%20is%20currently,%2D19%20Risk%2DBased%20Guidelines."
-    request = requests.get(travisurl)
-    if request.status_code == 200:
-        soup = BeautifulSoup(request.text, 'html.parser')
-        stages = soup.findAll('strong')
-        current = "currently in Stage"
-        for stage in stages:
-            thisstage = str(stage)
-            if current in thisstage:
-                longtext = thisstage
-                longtext = longtext.replace('<strong>', '')
-                results = longtext.split(".")
-        return results[0]
     return results
 
 
@@ -127,10 +143,16 @@ def getdelta(year, month, day):
 
 def gettips():
     """returns tips of the day from an awesome website"""
-    results = "Love your father"
+    results = str(Default.father)
     url = "http://fuckinghomepage.com/"
     urllib3.disable_warnings()
     response = requests.get(url, verify=False)
+
+    if response.status_code != 200:
+        logging.error('got an error getting the covid stage: {}',
+                      response.status_code)
+        return results
+
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
         row = soup.find_all("p")[1:7]
@@ -183,14 +205,9 @@ def getprev(cases, historyfile):
     with open(historyfile) as fileofhistory:
         lines = fileofhistory.read().splitlines()
 
-        print(lines[0], lines[1])
-        print(len(lines))
-    # expecting mmddyyyy 1111111 format
-    # we have data for today
     if lines[len(lines) - 1].split()[0] == datetime.now().strftime("%m%d%Y"):
         return lines[len(lines) - 2].split()[1]
 
-    print('bruh')
     # if we don't have data for today
     with open(historyfile, "a") as fileofhistory:
         fileofhistory.write(

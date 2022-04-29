@@ -10,14 +10,6 @@ class TestCompliments(unittest.TestCase):
     def testlist(self):
         """test the list function"""
         listresult = api_interface.getquotes()
-        test = [word for word in listresult if len(word) < 150]
-        print(len(test))
-
-        for t in test:
-            print(len(t))
-            print(t)
-
-        print(len(listresult))
         self.assertIsNotNone(listresult)
 
     def testcompliment(self):
@@ -29,15 +21,7 @@ class TestCompliments(unittest.TestCase):
         """tests the covid stage"""
         covidstage = api_interface.getstage()
         self.assertIsNotNone(covidstage)
-        print("covid stage: ")
-        print(covidstage)
         self.assertNotEqual("travis county is overrun by zombies", covidstage)
-
-    # def testcovid2(self):
-    #     covidstage = api_interface.getstagealt()
-    #     self.assertIsNotNone(covidstage)
-    #     print(covidstage)
-    #     self.assertNotEqual("travis county is overrun by zombies", covidstage)
 
     def testcovid(self):
         """
