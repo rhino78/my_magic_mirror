@@ -10,6 +10,8 @@ class TestCompliments(unittest.TestCase):
     def testlist(self):
         """test the list function"""
         listresult = api_interface.getquotes()
+        for l in listresult:
+            print(l)
         self.assertIsNotNone(listresult)
 
     def testcompliment(self):

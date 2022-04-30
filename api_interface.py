@@ -45,7 +45,7 @@ def getquotes():
     filtered_results = [word for word in results if len(word) < 150]
 
     for f in filtered_results:
-        if f in DO_NOT_CARE_LIST:
+        if f in str(DO_NOT_CARE_LIST):
             filtered_results.remove(f)
 
     return filtered_results
