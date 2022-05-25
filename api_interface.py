@@ -3,12 +3,12 @@ a class to handle all the api interfaces
 we use this to connect to an external api
 all of these functions return a string
 """
-from os import path
-from datetime import datetime, timedelta
+# from os import path
+from datetime import datetime  # , timedelta
 import string
 import logging
 import enum
-import COVID19Py
+# import COVID19Py
 import requests
 from bs4 import BeautifulSoup
 import urllib3
@@ -28,16 +28,16 @@ def getquotes():
     logging.basicConfig(filename='unittest.log',
                         encoding='utf-8', level=logging.ERROR)
     results = []
-    deaths, cases = getcovid()
+    # deaths, cases = getcovid()
 
     results.append(gettips())
-    results.append(getstage())
+    # results.append(getstage())
     results.append(getsummer())
     results.append(getkanye())
     results.append(getquote())
     results.append(getyomomma())
-    results.append(deaths)
-    results.append(cases)
+    # results.append(deaths)
+    # results.append(cases)
 
     DO_NOT_CARE_LIST = [Default.kanye, Default.yomomma,
                         Default.dad, Default.travis, Default.father]
@@ -104,31 +104,31 @@ def getquote():
     return results
 
 
-def getstage():
-    """returns a the current coronavirus stage from travis county"""
-    results = str(Default.travis)
-    travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information"
-    request = requests.get(travisurl)
+# def getstage():
+#     """returns a the current coronavirus stage from travis county"""
+#     results = str(Default.travis)
+#     travisurl = "https://www.traviscountytx.gov/news/2020/1945-novel-coronavirus-covid-19-information"
+#     request = requests.get(travisurl)
 
-    if request.status_code != 200:
-        logging.error('got an error while getting the travis county update: {}'.format(
-            request.status_code))
-        return results
+#     if request.status_code != 200:
+#         logging.error('got an error while getting the travis county update: {}'.format(
+#             request.status_code))
+#         return results
 
-    if request.status_code == 200:
-        soup = BeautifulSoup(request.text, 'html.parser')
-        for p in soup.find_all('p'):
-            img = p.find('img', alt=True)
-            if img is not None:
-                results = img['alt']
+#     if request.status_code == 200:
+#         soup = BeautifulSoup(request.text, 'html.parser')
+#         for p in soup.find_all('p'):
+#             img = p.find('img', alt=True)
+#             if img is not None:
+#                 results = img['alt']
 
-    return results
+#     return results
 
 
 def getsummer():
     """returns the countdown to spring break"""
-    if getdelta(2022, 5, 26) > 0:
-        return "There are {0} days until summer break!".format(getdelta(2022, 5, 26))
+    if getdelta(2022, 8, 17) > 0:
+        return "There are {0} days until summer is over! - muahahahahaha".format(getdelta(2022, 8, 17))
     return "I love christmas"
 
 
@@ -159,57 +159,56 @@ def gettips():
         results = string.capwords(row[1].string)
     return results
 
+# def getcovid():
+#     """get the count of covid cases and deaths to display"""
+#     try:
+#         covid = COVID19Py.COVID19()
+#         location = covid.getLocationByCountryCode("US")
+#         deaths = location[0]['latest']['deaths']
+#         cases = location[0]['latest']['confirmed']
+#         prevdeaths = getprev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
+#         prevcases = getprev(cases, '/home/pi/my_magic_mirror/covidhistory')
+#         delta = int(cases) - int(prevcases)
+#         changedeaths = int(deaths) - int(prevdeaths)
 
-def getcovid():
-    """get the count of covid cases and deaths to display"""
-    try:
-        covid = COVID19Py.COVID19()
-        location = covid.getLocationByCountryCode("US")
-        deaths = location[0]['latest']['deaths']
-        cases = location[0]['latest']['confirmed']
-        prevdeaths = getprev(deaths, '/home/pi/my_magic_mirror/coviddeaths')
-        prevcases = getprev(cases, '/home/pi/my_magic_mirror/covidhistory')
-        delta = int(cases) - int(prevcases)
-        changedeaths = int(deaths) - int(prevdeaths)
+#         if delta > 0:
+#             cases = "{0:,} new people got covid yesterday.".format(delta)
 
-        if delta > 0:
-            cases = "{0:,} new people got covid yesterday.".format(delta)
+#         if delta > 0:
+#             deaths = "{0:,} People have died from COVID19 in the US yesterday.".format(
+#                 changedeaths)
 
-        if delta > 0:
-            deaths = "{0:,} People have died from COVID19 in the US yesterday.".format(
-                changedeaths)
-
-    except:
-        deaths = "COVID sucks"
-        cases = "Wear a mask"
-    finally:
-        return deaths, cases
-
-
-def writenew(cases, historyfile):
-    """writes new cases to the file onthe server"""
-    with open(historyfile, "w") as fileofhistory:
-        datedelta = datetime.now() - timedelta(days=1)
-        datedelta = datetime.now() - timedelta(days=1)
-        fileofhistory.write(
-            "{0} {1}\n".format(datedelta.strftime("%m%d%Y"), 500))
-        fileofhistory.write(
-            "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
+#     except:
+#         deaths = "COVID sucks"
+#         cases = "Wear a mask"
+#     finally:
+#         return deaths, cases
 
 
-def getprev(cases, historyfile):
-    """returns the count of the cases from the previous day"""
-    if not path.exists(historyfile):
-        writenew(cases, historyfile)
+# def writenew(cases, historyfile):
+#     """writes new cases to the file onthe server"""
+#     with open(historyfile, "w") as fileofhistory:
+#         datedelta = datetime.now() - timedelta(days=1)
+#         datedelta = datetime.now() - timedelta(days=1)
+#         fileofhistory.write(
+#             "{0} {1}\n".format(datedelta.strftime("%m%d%Y"), 500))
+#         fileofhistory.write(
+#             "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
 
-    with open(historyfile) as fileofhistory:
-        lines = fileofhistory.read().splitlines()
 
-    if lines[len(lines) - 1].split()[0] == datetime.now().strftime("%m%d%Y"):
-        return lines[len(lines) - 2].split()[1]
+# def getprev(cases, historyfile):
+#     """returns the count of the cases from the previous day"""
+#     if not path.exists(historyfile):
+#         writenew(cases, historyfile)
 
-    # if we don't have data for today
-    with open(historyfile, "a") as fileofhistory:
-        fileofhistory.write(
-            "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
-        return lines[len(lines) - 1].split()[1]
+#     with open(historyfile) as fileofhistory:
+#         lines = fileofhistory.read().splitlines()
+
+#     if lines[len(lines) - 1].split()[0] == datetime.now().strftime("%m%d%Y"):
+#         return lines[len(lines) - 2].split()[1]
+
+#     # if we don't have data for today
+#     with open(historyfile, "a") as fileofhistory:
+#         fileofhistory.write(
+#             "{0} {1}\n".format(datetime.now().strftime("%m%d%Y"), cases))
+#         return lines[len(lines) - 1].split()[1]
