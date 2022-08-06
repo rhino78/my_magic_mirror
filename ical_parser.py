@@ -37,12 +37,17 @@ def process_event(summary, ev_date, entries, rule, until):
 def ical_parser(cal):
     entries = []
     todays_date = datetime.datetime.today()
+    uct = pytz.UTC
+    localized_start = uct.localize(todays_date)
+    print(f'todays localized date is: {localized_start}')
 
     for event in cal.walk('vevent'):
         if (event.get('summary') is not None):
             event_start = str(event.get('dtstart').dt)
+            # seems dumb but I do this to strip the times off
             event_start = datetime.datetime.strptime(
                 event_start[:10], '%Y-%m-%d')
+
             event_info = {}
             if (event.get('rrule')):
                 rule = event.get('rrule')['FREQ'][0]
@@ -51,15 +56,13 @@ def ical_parser(cal):
                 if 'UNTIL' in event.get('rrule'):
                     until = event.get('rrule')['UNTIL'][0]
 
-                    uct = pytz.UTC
-                    localized_start = uct.localize(todays_date)
-
                     if until > localized_start:
                         process_event(event.get('summary'),
                                       ev_date, entries, rule, until)
 
             else:
                 # here we have single events
+                # wondering if it's today's date what will happen?
                 if todays_date < event_start:
                     event_info = {}
                     event_info['summary'] = event.get('summary')
