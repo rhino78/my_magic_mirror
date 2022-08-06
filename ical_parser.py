@@ -39,7 +39,6 @@ def ical_parser(cal):
     todays_date = datetime.datetime.today()
     uct = pytz.UTC
     localized_start = uct.localize(todays_date)
-    print(f'todays localized date is: {localized_start}')
 
     for event in cal.walk('vevent'):
         if (event.get('summary') is not None):

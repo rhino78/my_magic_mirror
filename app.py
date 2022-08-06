@@ -33,8 +33,8 @@ def smart_date(raw_date):
             return "Today at {}".format(dt.strftime("%I:%M %p"))
         elif tomorrow.day == dt.day:
             return "Tomorrow at {}".format(dt.strftime("%I:%M %p"))
-        elif tomorrow_plus_1.day == dt.day:
-            return f"{0} at {1}".format(
+        elif diff.days < 7:
+            return "{0} at {1}".format(
                 calendar.day_name[dt.weekday()], dt.strftime("%I:%M %p"))
         else:
             return "in {} days".format(diff.days)
@@ -84,8 +84,6 @@ def get_calendar():
     for f in filtered:
         info = {}
         info['summary'] = f['summary']
-        bruh = f['summary']
-        print(f'working {bruh}')
         info['date'] = smart_date(f['date'])
         final.append(info)
 
