@@ -1,3 +1,5 @@
+import datetime
+import logging
 import unittest
 from operator import itemgetter
 import time
@@ -6,6 +8,8 @@ import urllib.request
 from icalendar import Calendar
 from app import app
 
+log = logging.getLogger(__name__)
+
 
 class FlaskrTestCase(unittest.TestCase):
 
@@ -13,13 +17,16 @@ class FlaskrTestCase(unittest.TestCase):
         # creates a test client
         self.app = app.test_client()
         # propagate the exceptions to the test client
-        self.app.testing = True
+        # self.app.testing = True
 
     def test_self(self):
         result = self.app.get('/')
         self.assertEqual(result.status_code, 200)
 
     def test_app(self):
+        loglevel = logging.DEBUG
+        logging.basicConfig(level=loglevel)
+
         url = 'http://p27-calendars.icloud.com/published/2/sAKB2qXoM7Kj0E4v8n2nzd3naihwmKKZqvpklvflY9V-xB0-vg5pkFqB2dAyd_84'
         ics = urllib.request.urlopen(url).read()
         cal = Calendar.from_ical(ics)
