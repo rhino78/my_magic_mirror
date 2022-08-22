@@ -81,8 +81,12 @@ def get_calendar():
     # now that we have filtered, we don't need sorted anymore either
     sorted_events = []
     final = []
+
     for f in filtered:
         info = {}
+        test = f['summary']
+        foo = f['date']
+        print(f'{test}: {foo}')
         info['summary'] = f['summary']
         info['date'] = smart_date(f['date'])
         final.append(info)
