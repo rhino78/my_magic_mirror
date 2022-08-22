@@ -103,7 +103,7 @@ def getsummer():
     """returns the countdown to spring break"""
     if getdelta(2022, 8, 17) > 0:
         return "There are {0} days until summer is over! - muahahahahaha".format(getdelta(2022, 8, 17))
-    return "I love christmas"
+    return "Hello Handsome"
 
 
 def getdelta(year, month, day):
