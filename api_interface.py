@@ -102,7 +102,7 @@ def getquote():
 def getsummer():
     """returns the countdown to spring break"""
     if getdelta(2022, 12, 15) > 0:
-        return "There are {0} days until wintrer break is over!".format(getdelta(2022, 12, 15))
+        return "There are {0} days until winter break!".format(getdelta(2022, 12, 15))
     return "Hello Handsome"
 
 
