@@ -17,10 +17,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Default(enum.Enum):
     kanye = "kanye is awesome"
-    yomomma = "yo momma is very fat"
     dad = "dad quotes are cool"
-    travis = "travis county is overrun by zombies"
-    father = "Love your father"
+    father = "love your father"
 
 
 def getquotes():
@@ -32,10 +30,8 @@ def getquotes():
     results.append(getsummer())
     results.append(getkanye())
     results.append(getquote())
-    results.append(getyomomma())
 
-    DO_NOT_CARE_LIST = [Default.kanye, Default.yomomma,
-                        Default.dad, Default.travis, Default.father]
+    DO_NOT_CARE_LIST = [Default.kanye, Default.dad, Default.father]
 
     filtered_results = [word for word in results if len(word) < 150]
 
@@ -44,22 +40,6 @@ def getquotes():
             filtered_results.remove(f)
 
     return filtered_results
-
-
-def getyomomma():
-    """returns a yo momma joke from a public API """
-    results = str(Default.yomomma)
-    joke = requests.get('https://yomomma-api.herokuapp.com/jokes')
-    if joke.status_code != 200:
-        logging.error(
-            'got an error while getting yomomma: {}'.format(joke.status_code))
-
-    if joke.status_code == 200:
-        jsonres = joke.json()
-        if len(jsonres) > 0:
-            results = jsonres["joke"]
-
-    return results
 
 
 def getkanye():
@@ -101,8 +81,8 @@ def getquote():
 
 def getsummer():
     """returns the countdown to spring break"""
-    if getdelta(2022, 12, 15) > 0:
-        return "There are {0} days until winter break!".format(getdelta(2022, 12, 15))
+    if getdelta(2023, 1, 4) > 0:
+        return "There are {0} days until winter break is over - wamp wamp".format(getdelta(2023, 1, 4))
     return "Hello Handsome"
 
 
