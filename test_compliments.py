@@ -19,22 +19,6 @@ class TestCompliments(unittest.TestCase):
         complimentresult = compliments.compliment()
         self.assertIsNotNone(complimentresult)
 
-    # def testcovidstage(self):
-    #     """tests the covid stage"""
-    #     covidstage = api_interface.getstage()
-    #     self.assertIsNotNone(covidstage)
-    #     self.assertNotEqual("travis county is overrun by zombies", covidstage)
-
-    # def testcovid(self):
-    #     """
-    #     tests the covid compliment
-    #     We do not expect to get COVID Sucks, Wear a Mask
-    #     """
-    #     covid = api_interface.getcovid()
-    #     self.assertNotEqual("COVID sucks", covid[0])
-    #     self.assertNotEqual("Wear a Mask", covid[1])
-    #     self.assertIsNotNone(covid)
-
     def testsummer(self):
         """test the summer compliment"""
         summer = api_interface.getsummer()
@@ -51,12 +35,6 @@ class TestCompliments(unittest.TestCase):
         quote = api_interface.getquote()
         self.assertIsNotNone(quote)
         self.assertNotEqual("dad quotes are cool", quote)
-
-    def testmom(self):
-        """tests that we got a good mom quote"""
-        mom = api_interface.getyomomma()
-        self.assertIsNotNone(mom)
-        self.assertNotEqual("yo momma is very fat", mom)
 
     def testtips(self):
         """ tests that we got a good tip"""
