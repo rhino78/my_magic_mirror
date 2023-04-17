@@ -16,6 +16,7 @@ class TestCompliments(unittest.TestCase):
 
     def testcompliment(self):
         """test the overall compliments"""
+        compliments.compliment()
         complimentresult = compliments.compliment()
         self.assertIsNotNone(complimentresult)
 

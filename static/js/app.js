@@ -50,7 +50,6 @@
       }
 
       //see if we can get the day in here also
-
       $(".full-date").html(
 		weekdayNames[today.getDay()]
       	+",  " +
@@ -67,15 +66,9 @@
 
         // WEATHER
         function getWeather() {
-			$.ajax({
-				type: 'GET',
-				dataType: 'jsonp',
-				url: "https://api.forecast.io/forecast/" + config.weather_api_key + "/" + config.location.latitude + "," + config.location.longitude,
-
-				success: function(data) {
-					formatWeather(data);
-					$('.container').show(1500);
-				}
+			$.get("/get_weather", function (data){
+				formatWeather(data);
+			$('.container').show(1500);
 			});
 		}
 
@@ -84,16 +77,15 @@
 		  var dayOfWeek = new Date().getDay();
 		  var arrangedDays = (days.splice(dayOfWeek)).concat(days);
 
-		  // current weather
-			$('.current-temp').html(Math.round(weather.currently.temperature));
-			$('.current-weather-icon').addClass(weatherIcons[weather.currently.icon]);
-			//$('.prob-rain').html(Math.round(weather.daily.data[0].precipProbability * 100));
 
-			console.log(weather);
+		  // current weather
+			$('.current-temp').html(JSON.parse(weather['weather']['current_condition'][0]['FeelsLikeF']));
+			$('.current-weather-icon').addClass(weatherIDIcons[JSON.parse(weather['weather']['current_condition'][0]['weatherCode'])]);
+
 			// hourly change weather
-			for (var j = 1; j <= 12; j+=3) {
-				var time = new Date(weather.hourly.data[j].time * 1000);
-				var hour = time.getHours();
+			for (var j = 0; j <= 7; j+=1) {
+				var mytime = new Date();
+				var hour = mytime.getHours() + j;
 
 				if (hour > 12) {
 					hour = hour - 12 + 'PM';
@@ -105,16 +97,16 @@
 
 				$('.hourly-change-container').append("<div class='hourly-change'></div>");
 				$('.hourly-change').last().append("<span class='hourly-change-label'>" + hour + " </span>");
-				$('.hourly-change').last().append("<span class='" + weatherIcons[weather.hourly.data[j].icon] + "'</span>");
-				$('.hourly-change').last().append("<span> " + Math.round(weather.hourly.data[j].temperature) + "º </span>");
+				$('.hourly-change').last().append("<span class='" + weatherIDIcons[JSON.parse(weather['weather']['weather'][0]['hourly'][j]['weatherCode'])] + "'</span>" );
+				$('.hourly-change').last().append("<span> " + JSON.parse(weather['weather']['weather'][0]['hourly'][j]['FeelsLikeF']) + "º </span>");
 			}
 
 			// daily weather
-			for (var i = 0; i < 7; i++) {
+			for (var i = 0; i < 3; i++) {
 				$('.weekly-forecast-container').append("<div class='weekly-forecast-day'></div>");
 				$('.weekly-forecast-day').last().append("<span class='day-label'>" + arrangedDays[i] + " </span>");
-				$('.weekly-forecast-day').last().append("<span class='" + weatherIcons[weather.daily.data[i].icon] +"'></span>");
-				$('.weekly-forecast-day').last().append("<span> " + Math.round(weather.daily.data[i].temperatureMax) + "º</span> / <span>" + Math.round(weather.daily.data[i].temperatureMin) + "º </span>");
+				$('.weekly-forecast-day').last().append("<span class='" + weatherIDIcons[JSON.parse(weather['weather']['weather'][i]['hourly'][0]['weatherCode'])] +"'></span>");
+				$('.weekly-forecast-day').last().append("<span> " + JSON.parse(weather['weather']['weather'][i]['maxtempF']) + "º</span> / <span>" + JSON.parse(weather['weather']['weather'][i]['mintempF']) + "º </span>");
 			}
 		}
 		function getCompliment(){

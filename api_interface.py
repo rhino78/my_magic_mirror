@@ -34,7 +34,6 @@ def getquotes():
     DO_NOT_CARE_LIST = [Default.kanye, Default.dad, Default.father]
 
     filtered_results = [word for word in results if len(word) < 150]
-
     for f in filtered_results:
         if f in str(DO_NOT_CARE_LIST):
             filtered_results.remove(f)
@@ -80,9 +79,9 @@ def getquote():
 
 
 def getsummer():
-    """returns the countdown to spring break"""
-    if getdelta(2023, 1, 4) > 0:
-        return "There are {0} days until winter break is over - wamp wamp".format(getdelta(2023, 1, 4))
+    """returns the countdown to summer break"""
+    if getdelta(2023, 5, 25) > 0:
+        return "There are {0} days until summer break starts!!".format(getdelta(2023, 5, 25))
     return "Hello Handsome"
 
 
@@ -103,7 +102,7 @@ def gettips():
     response = requests.get(url, verify=False)
 
     if response.status_code != 200:
-        logging.error('got an error getting the covid stage: {}',
+        logging.error('got an error getting the homepage: {}',
                       response.status_code)
         return results
 

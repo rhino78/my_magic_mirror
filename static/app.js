@@ -1,3 +1,5 @@
+//var console = new window;
+console.log("bruh")
 (function() {
 
 	$(document).ready(function() {
@@ -67,15 +69,19 @@
 
     // WEATHER
     function getWeather() {
-			$.ajax({
-				type: 'GET',
-				dataType: 'jsonp',
-				url: "https://api.forecast.io/forecast/" + config.weather_api_key + "/" + config.location.latitude + "," + config.location.longitude,
-				success: function(data) {
-					formatWeather(data);
-					$('.container').show(1500);
-				}
+			$.get("/get_weather", function (data){
+				formatWeather(data);
+				$('.container').show(1500);
 			});
+			//$.ajax({
+			//	type: 'GET',
+			//	dataType: 'jsonp',
+			//	url: "https://api.forecast.io/forecast/" + config.weather_api_key + "/" + config.location.latitude + "," + config.location.longitude,
+			//	success: function(data) {
+			//		formatWeather(data);
+			//		$('.container').show(1500);
+			//	}
+			//});
 		}
 
 		function formatWeather(weather) {
@@ -84,11 +90,12 @@
 		  var arrangedDays = (days.splice(dayOfWeek)).concat(days);
 
 		  // current weather
-			$('.current-temp').html(Math.round(weather.currently.temperature));
-			$('.current-weather-icon').addClass(weatherIcons[weather.currently.icon]);
+			//$('.current-temp').html(Math.round(weather.currently.temperature));
+			$('.current-temp').html(Math.round(weather[current_temperature]));
+			$('.current-weather-icon').addClass(weatherIcons['cloudy']);
+			//$('.current-weather-icon').addClass(weatherIcons[weather.currently.icon]);
 			//$('.prob-rain').html(Math.round(weather.daily.data[0].precipProbability * 100));
 
-			console.log(weather);
 			// hourly change weather
 			for (var j = 1; j <= 12; j+=3) {
 				var time = new Date(weather.hourly.data[j].time * 1000);
@@ -104,16 +111,20 @@
 
 				$('.hourly-change-container').append("<div class='hourly-change'></div>");
 				$('.hourly-change').last().append("<span class='hourly-change-label'>" + hour + " </span>");
-				$('.hourly-change').last().append("<span class='" + weatherIcons[weather.hourly.data[j].icon] + "'</span>");
+				$('.hourly-change').last().append("<span class='" + weatherIcons["cloudy"] + "'</span>");
+				//$('.hourly-change').last().append("<span class='" + weatherIcons[weather.hourly.data[j].icon] + "'</span>");
 				$('.hourly-change').last().append("<span> " + Math.round(weather.hourly.data[j].temperature) + "º </span>");
+				//$('.hourly-change').last().append("<span> " + Math.round(weather.hourly.data[j].temperature) + "º </span>");
 			}
 			
 			// daily weather
 			for (var i = 0; i < 7; i++) {
 				$('.weekly-forecast-container').append("<div class='weekly-forecast-day'></div>");
 				$('.weekly-forecast-day').last().append("<span class='day-label'>" + arrangedDays[i] + " </span>");
-				$('.weekly-forecast-day').last().append("<span class='" + weatherIcons[weather.daily.data[i].icon] +"'></span>");
-				$('.weekly-forecast-day').last().append("<span> " + Math.round(weather.daily.data[i].temperatureMax) + "º</span> / <span>" + Math.round(weather.daily.data[i].temperatureMin) + "º </span>");
+				$('.weekly-forecast-day').last().append("<span class='" + weatherIcons['cloudy'] +"'></span>");
+				//$('.weekly-forecast-day').last().append("<span class='" + weatherIcons[weather.daily.data[i].icon] +"'></span>");
+				$('.weekly-forecast-day').last().append("<span> " + Math.round(weather["maxtempF"]) + "º</span> / <span>" + Math.round(weather["mintempF"]) + "º </span>");
+				//$('.weekly-forecast-day').last().append("<span> " + Math.round(weather.daily.data[i].temperatureMax) + "º</span> / <span>" + Math.round(weather.daily.data[i].temperatureMin) + "º </span>");
 			}
 		}
 		function getCompliment(){

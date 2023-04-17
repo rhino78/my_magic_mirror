@@ -1,4 +1,6 @@
 import datetime
+import json
+import requests
 import logging
 import unittest
 from operator import itemgetter
@@ -24,9 +26,6 @@ class FlaskrTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
 
     def test_app(self):
-        loglevel = logging.DEBUG
-        logging.basicConfig(level=loglevel)
-
         url = 'http://p27-calendars.icloud.com/published/2/sAKB2qXoM7Kj0E4v8n2nzd3naihwmKKZqvpklvflY9V-xB0-vg5pkFqB2dAyd_84'
         ics = urllib.request.urlopen(url).read()
         cal = Calendar.from_ical(ics)
@@ -45,11 +44,15 @@ class FlaskrTestCase(unittest.TestCase):
         result = self.app.get('/get_news_headlines')
         self.assertEqual(result.status_code, 200)
 
+    def test_weather(self):
+        result = self.app.get('/get_weather')
+        self.assertEqual(result.status_code, 200)
+        self.assertTrue(result.data)
+
     def test_compliment(self):
         result = self.app.get('/get_compliment')
         self.assertEqual(result.status_code, 200)
         self.assertTrue(result.data)
-
 
 if __name__ == '__main__':
     unittest.main()

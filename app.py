@@ -11,7 +11,7 @@ from flask import Flask, jsonify, render_template
 from icalendar import Calendar
 import compliments
 import ical_parser
-
+import weather
 
 app = Flask(__name__, static_url_path='/static', template_folder='./templates')
 app.config['SECRET_KEY'] = 'secret!'
@@ -44,6 +44,11 @@ def smart_date(raw_date):
 def index():
     return render_template('index.html')
 
+
+@ app.route('/get_weather')
+def get_weather():
+    print("getting that weather, bruh")
+    return jsonify({'weather': weather.weather()})
 
 @ app.route('/get_compliment')
 def get_compliment():
@@ -84,9 +89,6 @@ def get_calendar():
 
     for f in filtered:
         info = {}
-        test = f['summary']
-        foo = f['date']
-        print(f'{test}: {foo}')
         info['summary'] = f['summary']
         info['date'] = smart_date(f['date'])
         final.append(info)
