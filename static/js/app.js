@@ -96,6 +96,8 @@
 					hour = hour - 12 + 'PM';
 				} else if (hour === 0) {
 					hour = 12 + 'AM';
+				} else if (hour === 12) {
+					hour += 'PM';
 				} else {
 					hour += 'AM';
 				}
