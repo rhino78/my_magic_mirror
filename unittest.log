@@ -2525,3 +2525,34 @@ ERROR:root:got an error getting a random quote: 503
 INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:42] "GET /get_compliment HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:49] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
 INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2023 10:05:42] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2023 10:05:44] "[36mGET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2023 10:05:44] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2023 10:05:45] "[35m[1mGET /get_compliment HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [25/Apr/2023 10:05:45] "GET /get_calendar HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+ERROR:app:Exception on /get_compliment [GET]
+Traceback (most recent call last):
+  File "/home/rhino/.local/lib/python3.10/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/rhino/.local/lib/python3.10/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/rhino/.local/lib/python3.10/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/rhino/.local/lib/python3.10/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/rhino/github/my_magic_mirror/app.py", line 55, in get_compliment
+    return jsonify({'compliment': compliments.compliment()})
+  File "/home/rhino/github/my_magic_mirror/compliments.py", line 10, in compliment
+    complimentlist = api_interface.getquotes()
+  File "/home/rhino/github/my_magic_mirror/api_interface.py", line 39, in getquotes
+    if f in str(DO_NOT_CARE_LIST):
+TypeError: 'in <string>' requires string as left operand, not list
+ERROR:root:got an error getting a random quote: 503
+ERROR:root:got an error getting a random quote: 503
+ERROR:root:got an error getting a random quote: 503
+ERROR:root:got an error getting a random quote: 503
+ERROR:root:got an error getting a random quote: 503
+ERROR:root:got an error getting a random quote: 503
+ERROR:root:got an error getting a random quote: 503
