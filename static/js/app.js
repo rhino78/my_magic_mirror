@@ -28,41 +28,40 @@
 	}
 }
 
-        function startTime() {
-    	var today, h, h_mod, m, s, am_pm;
+		function startTime() {
+			var today, h, h_mod, m, s, am_pm;
 
-      today = new Date();
-      h = checkTime(today.getHours());
-      m = checkTime(today.getMinutes());
-      s = checkTime(today.getSeconds());
+			today = new Date();
+			h = checkTime(today.getHours());
+			m = checkTime(today.getMinutes());
+			s = checkTime(today.getSeconds());
 
-      am_pm = h < 12 ? 'am' : 'pm';
-      h_mod = h < 12 ? h : h - 12;
+			am_pm = h < 12 ? 'am' : 'pm';
+			h_mod = h < 12 ? h : h - 12;
 
-      if (h == 0) {
-      	h_mod = 12;
-      } else if (h == 12) {
-      	h_mod = 12;
-      } else if (h < 12) {
-      	h_mod = h;
-      } else {
-      	h_mom = h - 12;
-      }
+			if (h == 0) {
+				h_mod = 12;
+			} else if (h == 12) {
+				h_mod = 12;
+			} else if (h < 12) {
+				h_mod = h;
+			} else {
+				h_mod = h - 12;
+			}
 
-      //see if we can get the day in here also
-      $(".full-date").html(
-		weekdayNames[today.getDay()]
-      	+",  " +
-      	monthNames[today.getMonth()]
-      	+ " " +
-      	today.getDate());
-      $(".timer-hour").html(h_mod);
-      $(".timer-min").html(m);
-      $(".timer-suffix").html(am_pm);
-      t = setTimeout(function () {
+			$(".full-date").html(
+				weekdayNames[today.getDay()]
+					+",  " +
+					monthNames[today.getMonth()]
+					+ " " +
+					today.getDate());
+			$(".timer-hour").html(h_mod);
+			$(".timer-min").html(m);
+			$(".timer-suffix").html(am_pm);
+			t = setTimeout(function () {
 				startTime()
-			}, 500);
-    }
+				}, 500);
+		}
 
         // WEATHER
         function getWeather() {
@@ -86,6 +85,12 @@
 			for (var j = 0; j <= 7; j+=1) {
 				var mytime = new Date();
 				var hour = mytime.getHours() + j;
+
+				//because we are looking out a bit further
+				//we need to account for hours 25, 26, 27, ect
+				if (hour > 24){
+					hour = hour - 24;
+				}
 
 				if (hour > 12) {
 					hour = hour - 12 + 'PM';

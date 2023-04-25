@@ -2433,3 +2433,95 @@ ERROR:root:got an error getting a random quote: 503
 ERROR:root:got an error getting a random quote: 503
 ERROR:root:got an error getting a random quote: 503
 ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:20:13] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:20:13] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:20:14] "GET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:20:15] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:20:15] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:20:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:20:19] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "[36mGET /static/node_modules/jquery/dist/jquery.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "[36mGET /static/js/icon-map.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "[36mGET /static/js/config.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "GET /static/js/app.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "[36mGET /static/js/jquery.marquee.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:00] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:01] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:22:03] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "[36mGET /static/node_modules/jquery/dist/jquery.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "[36mGET /static/js/jquery.marquee.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "[36mGET /static/js/config.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "[36mGET /static/js/icon-map.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:00] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:02] "GET /get_weather HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:02] "[36mGET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1[0m" 304 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:32:03] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "[36mGET /static/node_modules/jquery/dist/jquery.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "[36mGET /static/js/config.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "[36mGET /static/js/jquery.marquee.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "[36mGET /static/js/icon-map.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "GET /static/js/app.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:39] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:40] "[36mGET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:40] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:38:42] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "[36mGET /static/js/jquery.marquee.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "[36mGET /static/node_modules/jquery/dist/jquery.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "[36mGET /static/js/config.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "[36mGET /static/js/icon-map.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "GET /static/js/app.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:57] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:58] "[36mGET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:58] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:39:59] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "[36mGET /static/node_modules/jquery/dist/jquery.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "[36mGET /static/js/jquery.marquee.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "[36mGET /static/js/config.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "[36mGET /static/js/icon-map.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "GET /static/js/app.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:47] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:48] "[36mGET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:48] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:42:49] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "[36mGET /static/js/jquery.marquee.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "[36mGET /static/node_modules/jquery/dist/jquery.min.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "[36mGET /static/js/config.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "[36mGET /static/js/icon-map.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:11] "GET /static/js/app.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:12] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:13] "[36mGET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:13] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 15:43:13] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:40] "GET /get_news_headlines HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:41] "GET /static/font/weathericons-regular-webfont.woff2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:41] "GET /get_weather HTTP/1.1" 200 -
+ERROR:root:got an error getting a random quote: 503
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:42] "GET /get_compliment HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:49] "[36mGET /static/css/weather-icons.min.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2023 20:31:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
