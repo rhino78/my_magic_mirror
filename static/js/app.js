@@ -71,11 +71,41 @@
 			});
 		}
 
+		function translateHour(hour){
+			results ="";
+			switch(hour){
+				case "0":
+					results = '12AM';
+					break;
+				case "300":
+					results = '3AM'
+					break;
+				case "600":
+					results = '6AM'
+					break;
+				case "900":
+					results = '9AM'
+					break;
+				case "1200":
+					results = '12PM'
+					break;
+				case "1500":
+					results = '3PM'
+					break;
+				case "1800":
+					results = '6PM'
+					break;
+				case "2100":
+					results = '9PM'
+					break;
+			}
+			return results;
+		}
+
 		function formatWeather(weather) {
 			var days = ['Sun', 'Mon', 'Tu', 'Wed', 'Th', 'Fri', 'Sat'];
 		  var dayOfWeek = new Date().getDay();
 		  var arrangedDays = (days.splice(dayOfWeek)).concat(days);
-
 
 		  // current weather
 			$('.current-temp').html(JSON.parse(weather['weather']['current_condition'][0]['FeelsLikeF']));
@@ -83,24 +113,7 @@
 
 			// hourly change weather
 			for (var j = 0; j <= 7; j+=1) {
-				var mytime = new Date();
-				var hour = mytime.getHours() + j;
-
-				//because we are looking out a bit further
-				//we need to account for hours 25, 26, 27, ect
-				if (hour > 24){
-					hour = hour - 24;
-				}
-
-				if (hour > 12) {
-					hour = hour - 12 + 'PM';
-				} else if (hour === 0) {
-					hour = 12 + 'AM';
-				} else if (hour === 12) {
-					hour += 'PM';
-				} else {
-					hour += 'AM';
-				}
+				var hour = translateHour(weather['weather']['weather'][0]['hourly'][j]['time']);
 
 				$('.hourly-change-container').append("<div class='hourly-change'></div>");
 				$('.hourly-change').last().append("<span class='hourly-change-label'>" + hour + " </span>");
