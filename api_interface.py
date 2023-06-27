@@ -28,7 +28,6 @@ def getquotes():
     results = []
     results.append(gettips())
     results.append(getsummer())
-    results.append(getkanye())
     results.append(getstockquotes())
     results.append(getconfuciousquotes())
     results.append(getquote())
@@ -89,8 +88,8 @@ def getconfuciousquotes():
         "He with whom neither slander that gradually soaks into the mind, nor statements that startle like a wound in the flesh, are successful may be called intelligent indeed. -Confucius",
         "If I am walking with two other men, each of them will serve as my teacher. I will pick out the good points of the one and imitate them, and the bad points of the other and correct them in myself. -Confucius",
         "Choose a job you love, and you will never have to work a day in your life. -Confucius",
-        "If you look into your own heart, and you find nothing wrong there, what is there to worry about? What is there to fear?"
-            "Ignorance is the night of the mind, but a night without moon and star. -Confucius",
+        "If you look into your own heart, and you find nothing wrong there, what is there to worry about? What is there to fear?",
+        "Ignorance is the night of the mind, but a night without moon and star. -Confucius",
         "It is easy to hate and it is difficult to love. This is how the whole scheme of things works. All good things are difficult to achieve, and bad things are very easy to get. -Confucius",
         "Without feelings of respect, what is there to distinguish men from beasts? -Confucius",
     ]
@@ -103,11 +102,7 @@ def getstockquotes():
         "The most difficult thing is the decision to act, the rest is merely tenacity -Amelia Earhart ",
         " The best time to plant a tree was 20 years ago. The second best time is now -Chinese Proverb ",
         "Every child is an artist.  The problem is how to remain an artist once he grows up -Pablo Picasso ",
-        "Más vale la pena en el rostro que la mancha en el corazón -Miguel de Cervantes ",
         "There is nothing to writing. All you do is sit down at a typewriter and bleed -Mark Twain ",
-        "You miss 100% of the shots you don't take. -Wayne Gretzky -Michael Scott ",
-        "Soy ateo gracias a Dios -Luis Buñuel ",
-        "Quisieron enterrarnos, pero no sabían que éramos semillas -Proverbio Mexicano ",
         "There is a time when the operation of the machine becomes so odious, makes you so sick at heart, that you can't take part -Mario Savio ",
         "Those who do not move, do not notice their chains -Rosa Luxemburg ",
         "What are thooooooose? -Ryan Shave"
@@ -153,8 +148,8 @@ def getquote():
 
 def getsummer():
     """returns the countdown to summer break"""
-    if getdelta(2023, 5, 25) > 0:
-        return "There are {0} days until summer break starts!!".format(getdelta(2023, 5, 25))
+    if getdelta(2023, 8, 15) > 0:
+        return "There are {0} days until school starts - muahahahah".format(getdelta(2023, 8, 15))
     return "Hello Handsome"
 
 
