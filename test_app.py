@@ -28,12 +28,16 @@ class FlaskrTestCase(unittest.TestCase):
     def test_app(self):
         url = 'http://p27-calendars.icloud.com/published/2/sAKB2qXoM7Kj0E4v8n2nzd3naihwmKKZqvpklvflY9V-xB0-vg5pkFqB2dAyd_84'
         ics = urllib.request.urlopen(url).read()
+        icstest = urllib.request.urlopen(url)
+        print('status from url: '.format(icstest.getcode()))
         cal = Calendar.from_ical(ics)
         entries = []
         entries = ical_parser.ical_parser(cal)
         sorted_events = sorted(entries, key=itemgetter('date'))
         filtered = [i for i in sorted_events if i['date'] >= time.strftime(
             "%Y-%m-%d %H:%M:%S")]
+        self.assertIsNotNone(ics)
+        self.assertIsNotNone(cal)
         self.assertIsNotNone(filtered)
 
     def test_cal(self):
