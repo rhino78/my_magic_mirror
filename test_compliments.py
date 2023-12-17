@@ -23,12 +23,6 @@ class TestCompliments(unittest.TestCase):
         summer = api_interface.getsummer()
         self.assertIsNotNone(summer)
 
-    def testkanye(self):
-        """tests that we get the kanye compliment"""
-        kanye = api_interface.getkanye()
-        self.assertIsNotNone(kanye)
-        self.assertNotEqual(kanye, "kanye is awesome")
-
     def testtips(self):
         """tests that we got a good tip"""
         tips = api_interface.gettips()

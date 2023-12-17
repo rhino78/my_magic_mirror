@@ -16,7 +16,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class Default(enum.Enum):
-    kanye = "kanye is awesome"
     dad = "dad quotes are cool"
     father = "love your father"
 
@@ -27,7 +26,7 @@ def getquotes():
     results.append(gettips())
     results.append(getsummer())
 
-    DO_NOT_CARE_LIST = [Default.kanye, Default.dad, Default.father]
+    DO_NOT_CARE_LIST = [Default.dad, Default.father]
 
     filtered_results = [word for word in results if len(word) < 150]
 
