@@ -36,7 +36,7 @@ def process_event(summary, ev_date, entries, rule, until):
 
 
 def get_until(count, event_start):
-    # we need to loop through the count until we geto the count, starting at the event_start
+    # we need to loop through the count until we geto the count
     d = datetime.timedelta(weeks=count)
     my_date = event_start + d
     uct = pytz.UTC
@@ -46,7 +46,6 @@ def get_until(count, event_start):
 def ical_parser(cal):
     entries = []
     todays_date = datetime.datetime.today()
-    print("the current date: ".format(todays_date))
     uct = pytz.UTC
     localized_start = uct.localize(todays_date)
 
@@ -90,11 +89,6 @@ def ical_parser(cal):
                     event_info = {}
                     event_info["summary"] = event.get("summary")
                     event_info["date"] = str(event.get("dtstart").dt)
-                    print(
-                        " info: {}:{}".format(event_info["summary"], event_info["date"])
-                    )
                     entries.append(event_info)
-                    print("the count of entries: {}".format(len(entries)))
 
-    print("count from inside parser: ".format(len(entries)))
     return entries

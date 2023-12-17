@@ -23,7 +23,6 @@ class Default(enum.Enum):
 
 def getquotes():
     """returns a list of all the quotes"""
-    logging.basicConfig(filename="unittest.log", encoding="utf-8", level=logging.ERROR)
     results = []
     results.append(gettips())
     results.append(getsummer())
@@ -37,22 +36,6 @@ def getquotes():
             filtered_results.remove(f)
 
     return filtered_results
-
-
-def getkanye():
-    """returns a random kanye quote from this cool api"""
-    results = str(Default.kanye)
-    kanye = requests.get("https://api.kanye.rest")
-
-    if kanye.status_code != 200:
-        logging.error("could not get a kanye quote: {}".format(kanye.status_code))
-        return results
-
-    if kanye.status_code == 200:
-        jsonres = kanye.json()
-        if len(jsonres) > 0:
-            results = jsonres["quote"] + " - kanye"
-    return results
 
 
 def getsummer():
