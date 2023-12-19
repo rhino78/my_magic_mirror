@@ -1,23 +1,46 @@
-import datetime
+from datetime import datetime, date, timedelta
+from dateutil import parser
+import calendar
 import pytz
 from dateutil.relativedelta import relativedelta
 
 
+def smart_date(raw_date):
+    dt = parser.parse(raw_date[:19])
+    dt_now = datetime.now()
+    diff = dt - dt_now
+    today = date.today()
+    tomorrow = today + timedelta(1)
+
+    if today.year == dt.year:
+        if today.day == dt.day:
+            return "Today at {}".format(dt.strftime("%I:%M %p"))
+        elif tomorrow.day == dt.day:
+            return "Tomorrow at {}".format(dt.strftime("%I:%M %p"))
+        elif diff.days < 7:
+            return "{} at {}".format(
+                calendar.day_name[dt.weekday()], dt.strftime("%I:%M %p")
+            )
+
+    return "in {} days".format(diff.days)
+
+
 def process_event(summary, ev_date, entries, rule, until):
     print("processing event: {}".format(summary))
-    d = datetime.timedelta(days=1)
-    todays_date = datetime.datetime.today()
+    print("processing ev_date: {}".format(ev_date))
+    d = timedelta(days=1)
+    todays_date = datetime.today()
     uct = pytz.UTC
     localized_start = uct.localize(todays_date)
 
     if rule == "DAILY":
-        d = datetime.timedelta(days=1)
+        d = timedelta(days=1)
     elif rule == "WEEKLY":
-        d = datetime.timedelta(days=7)
+        d = timedelta(days=7)
     elif rule == "MONTHLY":
         d = relativedelta(months=+1)
     elif rule == "YEARLY":
-        d = datetime.timedelta(days=365)
+        d = timedelta(days=365)
 
     for _ in range(0, 52):
         # increment the date
@@ -37,7 +60,7 @@ def process_event(summary, ev_date, entries, rule, until):
 
 def get_until(count, event_start):
     # we need to loop through the count until we geto the count
-    d = datetime.timedelta(weeks=count)
+    d = timedelta(weeks=count)
     my_date = event_start + d
     uct = pytz.UTC
     return uct.localize(my_date)
@@ -45,7 +68,7 @@ def get_until(count, event_start):
 
 def ical_parser(cal):
     entries = []
-    todays_date = datetime.datetime.today()
+    todays_date = datetime.today()
     uct = pytz.UTC
     localized_start = uct.localize(todays_date)
 
@@ -55,11 +78,9 @@ def ical_parser(cal):
             # seems dumb but I do this to strip the times off
             # found as bug where we weren't taking in to account the time
             if len(event_start) > 10:
-                event_start = datetime.datetime.strptime(
-                    event_start[:18], "%Y-%m-%d %H:%M:%S"
-                )
+                event_start = datetime.strptime(event_start[:18], "%Y-%m-%d %H:%M:%S")
             else:
-                event_start = datetime.datetime.strptime(event_start[:10], "%Y-%m-%d")
+                event_start = datetime.strptime(event_start[:10], "%Y-%m-%d")
 
             event_info = {}
             if event.get("rrule"):
