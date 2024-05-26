@@ -26,6 +26,7 @@ class TestCompliments(unittest.TestCase):
     def testtips(self):
         """tests that we got a good tip"""
         tips = api_interface.gettips()
+        print(tips)
         self.assertIsNotNone(tips)
 
     def testholiday(self):

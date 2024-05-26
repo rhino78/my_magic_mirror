@@ -4,16 +4,17 @@ we use this to connect to an external api
 all of these functions return a string
 """
 # from os import path
-from datetime import datetime  # , timedelta
-import string
-import logging
-import enum
-import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
+import enum
+import logging
+import quotes
+import random
+import requests
+import string
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 
 class Default(enum.Enum):
     dad = "dad quotes are cool"
@@ -36,13 +37,15 @@ def getquotes():
 
     return filtered_results
 
-
 def getsummer():
-    """returns the countdown to winter break"""
-    if getdelta(2024, 5, 25) > 0:
-        return "There are {0} days until summer break!".format(getdelta(2024, 5, 25))
+    """returns the countdown to school"""
+    if getdelta(2024, 8, 13) > 0:
+        return "There are {0} days until school starts!".format(getdelta(2024, 8, 13))
     return "Hello Handsome"
 
+def gettips():
+    """returns tips of the day from an awesome philosopher"""
+    return f'{quotes.QUOTES[random.randint(0, len(quotes.QUOTES)-1)]} -Marcus Aurelius'
 
 def getdelta(year, month, day):
     """returns the time between today and date in argument"""
@@ -50,21 +53,3 @@ def getdelta(year, month, day):
     givendate = datetime(year, month, day)
     converteddate = datetime(currentdate.year, currentdate.month, currentdate.day)
     return (givendate - converteddate).days
-
-
-def gettips():
-    """returns tips of the day from an awesome website"""
-    results = str(Default.father)
-    url = "http://fuckinghomepage.com/"
-    urllib3.disable_warnings()
-    response = requests.get(url, verify=False)
-
-    if response.status_code != 200:
-        logging.error("got an error getting the homepage: {}", response.status_code)
-        return results
-
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, "html.parser")
-        row = soup.find_all("p")[1:7]
-        results = string.capwords(row[1].string)
-    return results
