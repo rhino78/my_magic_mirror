@@ -45,7 +45,8 @@ def getsummer():
 
 def gettips():
     """returns tips of the day from an awesome philosopher"""
-    return f'{quotes.QUOTES[random.randint(0, len(quotes.QUOTES)-1)]} -Marcus Aurelius'
+
+    return quotes.QUOTES[random.randint(0, len(quotes.QUOTES)-1)] + " -Marcus Aurelius"
 
 def getdelta(year, month, day):
     """returns the time between today and date in argument"""
