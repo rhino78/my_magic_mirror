@@ -3,18 +3,19 @@ a class to handle all the api interfaces
 we use this to connect to an external api
 all of these functions return a string
 """
-# from os import path
-from bs4 import BeautifulSoup
-from datetime import datetime
+
 import enum
-import logging
-import quotes
 import random
-import requests
-import string
+
+# from os import path
+from datetime import datetime
+
 import urllib3
 
+import quotes
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 class Default(enum.Enum):
     dad = "dad quotes are cool"
@@ -37,16 +38,22 @@ def getquotes():
 
     return filtered_results
 
+
 def getsummer():
     """returns the countdown to school"""
-    if getdelta(2024, 8, 13) > 0:
-        return "There are {0} days until school starts!".format(getdelta(2024, 8, 13))
+    if getdelta(2024, 11, 22) > 0:
+        return "There are {0} days until we go to brazil!".format(
+            getdelta(2024, 11, 22)
+        )
     return "Hello Handsome"
+
 
 def gettips():
     """returns tips of the day from an awesome philosopher"""
+    return (
+        quotes.QUOTES[random.randint(0, len(quotes.QUOTES) - 1)] + " -Marcus Aurelius"
+    )
 
-    return quotes.QUOTES[random.randint(0, len(quotes.QUOTES)-1)] + " -Marcus Aurelius"
 
 def getdelta(year, month, day):
     """returns the time between today and date in argument"""
