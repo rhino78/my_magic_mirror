@@ -41,9 +41,9 @@ def getquotes():
 
 def getsummer():
     """returns the countdown to school"""
-    if getdelta(2024, 11, 22) > 0:
-        return "There are {0} days until we go to brazil!".format(
-            getdelta(2024, 11, 22)
+    if getdelta(2024, 12, 19) > 0:
+        return "There are {0} days until christmas break!".format(
+            getdelta(2024, 12, 19)
         )
     return "Hello Handsome"
 

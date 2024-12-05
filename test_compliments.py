@@ -1,4 +1,5 @@
-""" a test suite for all tests in compliments"""
+"""a test suite for all tests in compliments"""
+
 import unittest
 import compliments
 import api_interface
@@ -21,6 +22,7 @@ class TestCompliments(unittest.TestCase):
     def testsummer(self):
         """test the summer compliment"""
         summer = api_interface.getsummer()
+        print(summer)
         self.assertIsNotNone(summer)
 
     def testtips(self):
