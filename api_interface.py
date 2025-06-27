@@ -42,16 +42,15 @@ def getquotes():
 def getsummer():
     """returns the countdown to school"""
     if getdelta(2025, 5, 22) > 0:
-        return "There are {0} days until graduation!".format(
-            getdelta(2025, 5, 22)
-        )
-    return "Hello Handsome"
+        return "There are {0} days until graduation!".format(getdelta(2025, 5, 22))
+    return "Benvindo familia do brasil!"
 
 
 def gettips():
     """returns tips of the day from an awesome philosopher"""
     return (
-        quotes.QUOTES[random.randint(0, len(quotes.QUOTES) - 1)] + " -Marcus Aurelius"
+        quotes.QUOTES[random.randint(
+            0, len(quotes.QUOTES) - 1)] + " -Marcus Aurelius"
     )
 
 
@@ -59,5 +58,6 @@ def getdelta(year, month, day):
     """returns the time between today and date in argument"""
     currentdate = datetime.now()
     givendate = datetime(year, month, day)
-    converteddate = datetime(currentdate.year, currentdate.month, currentdate.day)
+    converteddate = datetime(
+        currentdate.year, currentdate.month, currentdate.day)
     return (givendate - converteddate).days
