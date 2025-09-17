@@ -9,6 +9,10 @@ QUOTES = [
     "Choose not to feel harmed and you won’t feel harmed. Don’t feel harmed and you haven’t been",
     "Waste no more time arguing what a good man should be. Be one",
     "All that exists will soon change.",
-    "What does not benefit the hive does not benefit the bee either."
+    "What does not benefit the hive does not benefit the bee either.",
+    "Everything we hear is an opinion, not a fact. Everything we see is a perspective, not the truth",
+    "The universe is change; our life is what our thoughts make it",
+    "Loss is nothing else but change, and change is Nature's delight",
+    "You have the power over your mind - not outside events. Realize this and you will find strength."
 ]
 
