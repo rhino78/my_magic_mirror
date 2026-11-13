@@ -19,15 +19,9 @@ class TestCompliments(unittest.TestCase):
         complimentresult = compliments.compliment()
         self.assertIsNotNone(complimentresult)
 
-    def testsummer2(self):
-        """test the summer compliment"""
-        summer = api_interface.getsummer2()
-        print(summer)
-        self.assertIsNotNone(summer)
-
     def testsummer1(self):
         """test the summer compliment"""
-        summer = api_interface.getsummer1()
+        summer = api_interface.getsummer()
         print(summer)
         self.assertIsNotNone(summer)
 

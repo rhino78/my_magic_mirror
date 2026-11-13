@@ -26,8 +26,7 @@ def getquotes():
     """returns a list of all the quotes"""
     results = []
     results.append(gettips())
-    results.append(getsummer1())
-    results.append(getsummer2())
+    results.append(getsummer())
 
     DO_NOT_CARE_LIST = [Default.dad, Default.father]
 
@@ -40,19 +39,11 @@ def getquotes():
     return filtered_results
 
 
-def getsummer1():
+def getsummer():
     """returns the countdown to school"""
-    if getdelta(2026, 8, 19) > 0:
-        return "There are {0} days until Texas State Begins Class".format(
-            getdelta(2026, 8, 19)
-        )
-    return "Ryan is the best"
-
-def getsummer2():
-    """returns the countdown to school"""
-    if getdelta(2026, 8, 24) > 0:
-        return "There are {0} days until LSU Begins Class".format(
-            getdelta(2026, 8, 24)
+    if getdelta(2027, 5, 13) > 0:
+        return "There are {0} days until Texas State Graduation!".format(
+            getdelta(2027, 5, 13)
         )
     return "Ryan is the best"
 
