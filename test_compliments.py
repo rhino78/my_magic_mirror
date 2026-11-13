@@ -19,6 +19,16 @@ class TestCompliments(unittest.TestCase):
         complimentresult = compliments.compliment()
         self.assertIsNotNone(complimentresult)
 
+    def testdelta(self):
+        """test the summer compliment"""
+        print("the delta is: ")
+        year = 2027
+        month = 5
+        day = 14
+        delta = api_interface.getdelta(year, month, day)
+        print(delta)
+        self.assertIsNotNone(delta)
+
     def testsummer1(self):
         """test the summer compliment"""
         summer = api_interface.getsummer()

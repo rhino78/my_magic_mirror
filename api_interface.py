@@ -50,7 +50,7 @@ def getsummer():
 
 def gettips():
     """returns tips of the day from an awesome philosopher"""
-    return quotes.QUOTES[random.randint(0, len(quotes.QUOTES) - 1)] + " -Nick Saban"
+    return quotes.QUOTES[random.randint(0, len(quotes.QUOTES) - 1)]
 
 
 def getdelta(year, month, day):
